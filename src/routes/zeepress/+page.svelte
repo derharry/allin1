@@ -1,1 +1,10 @@
-Select an article
+<script>
+    import App from './App.svelte'
+</script>
+
+
+<App>
+</App>
+
+<style>
+</style>

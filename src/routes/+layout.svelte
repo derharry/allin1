@@ -1,5 +1,5 @@
 
-
+<!--https://www.w3schools.com/css/css_navbar_horizontal.asp-->
 <nav>
     <ul>
         <li><a href="/">home </a></li>
@@ -7,6 +7,7 @@
         <li><a href="/10in2">10in2</a></li>
         <li><a href="/office-event">Athletes-Office</a></li>
         <li><a href="/office-surf">Surf-Office</a></li>
+        <li><a href="/singleplanets">SinglePlanets</a></li>
         <li><a href="/zeepress">ZeePress</a></li>
         <!--
         <li><a href="/svelteshowcase">Showcase</a></li>
