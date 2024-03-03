@@ -1,12 +1,15 @@
 <script>
-    import { get_files_from_dir } from '$lib/zeelte/io/io.directory.js'
+    //import { get_files_from_dir } from '$lib/zeelte/io/io.directory.js'
     //import { p } from '$lib/zeelte/inc.utils.js'
     //import * as utils from "$lib/zeelte/inc.utils"
 
-    let files = ['test']
+    export let load;
+    export let data;
 
-    files = get_files_from_dir('/zeepress/posts/posts')
+    console.log({load}, {data})
 
+    let files = data.files;
+  
 </script>
 
 <p>.posts.</p>

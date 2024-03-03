@@ -23,7 +23,9 @@
             <nav>
                 <ul>
                     <li><a href="/zeepress/aboutme">Über mich</a></li>
-                    <li><a href="/zeepress/posts">Beiträge</a></li>
+                    <li><a href="/zeepress/news">News</a></li>
+                    <li><a href="/zeepress/media">Media</a></li>
+                    <li><a href="/zeepress/partner">Partner/Links</a></li>
                     <li><a href="/zeepress/contact">Kontakt</a></li>
                     <li></li>
                 </ul>
@@ -59,6 +61,7 @@
                         <li>René van Zee</li>
                         <li>+43 664 3003 651</li>
                         <li><a href="mailto:rene@zeepress.at">rene@zeepress.at</a></li>
+                        <li><a href="/zeepress/impressum">Impressum</li>
                     </ul>
                 </div>
                 <div class="box">                    
