@@ -22,8 +22,9 @@
 
             <nav>
                 <ul>
-                    <li><a href="./zeepress/aboutme/" slot="zeepress">Über mich</a></li>
-                    <li><a href="./zeepress/press/" slot="zeepress">Beiträge</a></li>
+                    <li><a href="/zeepress/aboutme">Über mich</a></li>
+                    <li><a href="/zeepress/posts">Beiträge</a></li>
+                    <li><a href="/zeepress/contact">Kontakt</a></li>
                     <li></li>
                 </ul>
             </nav>
@@ -34,7 +35,7 @@
         <td class="main">
 
             <main>
-                <slot name="zeepress"></slot>  
+                <slot />
             </main>
 
         </td>
@@ -104,7 +105,6 @@
 
 
     nav {
-        width: 100%;
     }
 
     nav ul {
@@ -117,6 +117,7 @@
     }
 
     nav li {
+        float: left;
         border-right: 1px solid #bbb;
     }
 

@@ -8,12 +8,3 @@
     files = get_files_from_dir('/zeepress/posts/posts')
 
 </script>
-
-<p>.posts.</p>
-
-{#each files as file}
-    <p>{file}</p>
-{/each}
-
-<style>
-</style>
