@@ -1,4 +1,11 @@
 <script>
+
+    //export let load;
+    export let data;
+
+    //load = load
+    let recent_news = data.posts || [];
+
 </script>
 
 <main>
@@ -9,7 +16,7 @@
             <header>
                 <table>
                     <tr>
-                        <td><h1>ZeePress Austria</h1></td>
+                        <td><a href="/zeepress"><h1>ZeePress Austria</h1></a></td>
                         <td><input type="search" /></td>
                     </tr>
                 </table>
@@ -44,9 +51,11 @@
         <td class="aside">
 
             <aside>
-                <h3>Recent news</h3>
+                <h3>Latest news</h3>
                 <ul>
-                    <li>links naar news</li>
+                    {#each recent_news as post}
+                        <li><a href="/zeepress/news/{post.file}">{post.title}</a></li>
+                    {/each}  
                 </ul>
             </aside>
 
@@ -88,6 +97,7 @@
 
     .aside {
         width: 150px;
+        vertical-align: top;
     }
 
 
