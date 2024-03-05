@@ -1,10 +1,19 @@
+import fs from 'node:fs'
+import { read } from '$app/server';
 
 
-
-export function readfile(file) {
-    const fs = require('fs')
-    fs.readFile('tp.txt', (err, inputD) => {
-       if (err) throw err;
-          console.log(inputD.toString());
+export async function readfile(file) {
+    let data = '405 - error reading file'
+    try {
+        data = fs.readFileSync(file).toString()
+    } catch {}
+    /*
+    await fs.readFile(file, (err, data) => {
+       //if (err) throw err;
+       if (err) return '405 - error reading file'
+       return _return(data)
     })
+    */
+    //console.log({data})
+    return data
 }
