@@ -1,0 +1,62 @@
+html, body { font-size: 12px; }
+
+.textSmall { font-size: 11px; }
+
+.textDefault { font-size: 12px; }
+
+#SecondaryNav { padding-top: 10px; height: 40px; display: block !important; }
+
+#SecondaryNav a { color: #8d8d8d; text-decoration: none; border-bottom: 1px dotted #8d8d8d; font-size: 11px; }
+
+#SecondaryNav a.active { font-weight: bold; color: #9ac843; border-bottom: 1px solid #fff; }
+
+#SecondaryNav a:hover { border-bottom: 1px solid #fff; }
+
+#SecondaryNav .LeftContent, #SecondaryNav .RightContent, #SecondaryNav .CenterContent { padding-bottom: 0 !important; }
+
+#profileTabs { display: block; }
+
+.contentStretch { min-width: 998px; }
+
+.LeftContent, .RightContent { display: block; float: left; position: relative; padding-bottom: 18px; }
+
+.CenterContent { float: left; padding: 0 18px 18px 18px; }
+
+.contentFix .LeftContent, .contentFix .RightContent { width: 178px; }
+
+.contentFix .CenterContent { width: 606px; }
+
+.contentStretch .LeftContent, .contentStretch .RightContent { min-width: 196px; width: 19.6%; }
+
+.contentStretch .LeftContent { padding-left: 18px; }
+
+.contentStretch .RightContent { padding-right: 18px; }
+
+.contentStretch .CenterContent { min-width: 606px; width: 60.2%; }
+
+.inputsInnerWidth { width: 220px; margin-right: 18px; }
+
+#loadHeight .inputsInnerWidth, #loadWeight .inputsInnerWidth { float: left; }
+
+.profileSection.verticalalign { display: flex; align-items: center; }
+
+.profileIcon { float: left; width: 85px; }
+
+.profileInputs { float: left; width: 410px; }
+
+.profileFullContent { float: left; width: 410px; }
+
+.profileInputs .radio input { margin-top: 0; }
+
+.profileInputs .radio label { margin-top: 0; }
+
+.profileSection .clrFlt.visible-xs, .profileSection .col-xs-3.visible-xs { display: none !important; }
+
+.form-control { font-size: 12px; min-height: 0; }
+
+.input-lg { font-size: 15px; }
+
+#profileContent.nut_panel { border-radius: 0 6px 6px 6px; padding-top: 18px; }
+
+@media (min-width: 1200px) { .profileIcon { width: 25%; text-align: center; }
+  .profileFullContent { width: 75%; } }

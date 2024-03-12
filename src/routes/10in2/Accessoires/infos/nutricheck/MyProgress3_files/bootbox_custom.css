@@ -1,0 +1,101 @@
+.bootbox .modal-dialog-centered { margin-left: auto !important; margin-right: auto !important; }
+
+.bootbox .modal-content { background-color: #ececec; }
+
+.bootbox .modal-footer .btn { font-size: 16px; width: 100%; display: block; background: transparent !important; color: #378bb9 !important; font-family: -apple-system, Arial,  sans-serif; border: none !important; padding: 0; box-shadow: none !important; }
+
+.bootbox .bootbox-body { text-align: center; line-height: 1.25; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
+
+.bootbox.bootstrap_migrate { display: table; height: 100%; width: 100%; pointer-events: none; /* This makes sure that we can still click outside of the modal to close it */ }
+
+.bootbox.bootstrap_migrate .modal-dialog-centered { display: table-cell; vertical-align: middle; pointer-events: none; }
+
+.bootbox.bootstrap_migrate .modal-dialog-centered .modal-content { width: inherit; min-height: 92px; margin: auto; pointer-events: all; }
+
+.bootbox.bootstrap_migrate .modal-body { padding: 10px; }
+
+.bootbox.bootstrap_migrate .modal-footer { text-align: center; justify-content: center; border-color: #ccc; padding: 10px; }
+
+.bootbox.bootstrap_migrate .btn { outline: 0 !important; font-size: 14px; line-height: 21px; margin: 4px 0 4px 0; }
+
+.bootbox.bootstrap_migrate .bootbox-body { font-size: 16px; }
+
+.bootbox.bootstrap_migrate + .modal-backdrop { background-color: #303030; }
+
+.bootbox.bootstrap_migrate + .modal-backdrop.in { opacity: 0.5; }
+
+.basicAlert .modal-body { padding: 10px; }
+
+.basicAlert .modal-footer { text-align: center; justify-content: center; border-color: #ccc; padding: 10px; }
+
+.basicAlert .modal-footer .btn { line-height: 21px; }
+
+.basicAlertRoundedBtn .modal-content { box-shadow: none; }
+
+.basicConfirmAction .modal-footer { border-top: 1px solid #ccc; }
+
+.basicConfirmAction .modal-footer .btn { width: 46%; line-height: 21px; }
+
+.basicConfirmAction .bootbox-cancel { float: left; }
+
+.customConfirmAction .modal-title { text-align: center; color: #14AEA8; font-family: primaryNormal; font-weight: normal !important; font-style: normal; font-size: 24px; }
+
+.customConfirmAction .modal-body { text-align: center; font-size: 16px; }
+
+.customConfirmAction .modal-header { border-bottom: 0; padding-bottom: 0; }
+
+.customConfirmAction .modal-footer .btn-danger, .customConfirmAction .modal-footer .btn-default { color: #cd0000 !important; padding: 2px 0 2px 0; }
+
+.customConfirmAction .modal-footer .btn-primary, .customConfirmAction .modal-footer .btn-success { color: #303030 !important; padding: 2px 0 2px 0; margin-bottom: 10px !important; }
+
+.customConfirmAction .customConfirmAction { background-color: #fff; }
+
+.customConfirmAction .modal-dialog-centered { margin: 18px !important; }
+
+@media (min-width: 499px) { .bootbox.bootstrap_migrate + .modal-backdrop { background-color: transparent; }
+  .bootbox.bootstrap_migrate .modal-dialog-centered .modal-content { min-height: 0; }
+  .bootbox .modal-content { background-color: #fff; font-size: 12px; }
+  .bootbox .bootbox-body { text-align: left; line-height: 17.5px; font-family: Arial,Helvetica,sans-serif !important; color: #737070; }
+  .bootbox .modal-footer .btn { font-size: 14px; width: auto !important; display: inline-block; border: 1px solid !important; font-family: primaryBold; line-height: 21px; }
+  .bootbox .modal-footer .btn-sm { padding: 4px 12px 3px 12px; }
+  .bootbox .modal-footer .btn-success { background-color: #9ac843 !important; border-color: #8dbb37 !important; color: #fff !important; }
+  .bootbox .modal-footer .btn-default { background-color: #b4b4b4 !important; border-color: #a7a7a7 !important; color: #fff !important; }
+  .bootbox .modal-footer .btn-primary { background-color: #45a4c9 !important; border-color: #378bb9 !important; color: #fff !important; }
+  .bootbox .modal-footer .btn-default:hover, .bootbox .modal-footer .btn-default:focus, .bootbox .modal-footer .btn-default.focus, .bootbox .modal-footer .btn-default:active, .bootbox .modal-footer .btn-default.active, .open > .dropdown-toggle.btn-default { background-color: #8d8d8d !important; }
+  .bootbox .modal-footer .btn-primary:hover, .bootbox .modal-footer .btn-primary:focus, .bootbox .modal-footer .btn-primary.focus, .bootbox .modal-footer .btn-primary:active, .bootbox .modal-footer .btn-primary.active, .open > .dropdown-toggle.btn-primary { background-color: #378bb9 !important; }
+  .bootbox .modal-footer .btn-success:hover, .bootbox .modal-footer .btn-success:focus, .bootbox .modal-footer .btn-success.focus, .bootbox .modal-footer .btn-success:active, .bootbox .modal-footer .btn-success.active, .open > .dropdown-toggle.btn-success { background-color: #73b001 !important; }
+  .bootbox .modal-footer .btn-warning:hover, .bootbox .modal-footer .btn-warning:focus, .bootbox .modal-footer .btn-warning.focus, .bootbox .modal-footer .btn-warning:active, .bootbox .modal-footer .btn-warning.active, .open > .dropdown-toggle.btn-warning { background-color: #e47000 !important; }
+  .bootbox.bootstrap_migrate .bootbox-body { font-size: 14px; }
+  .basicAlert .bootbox-body { text-align: center; }
+  .basicAlert .modal-dialog { margin-top: 140px; }
+  .basicAlert .modal-footer .btn { background: transparent !important; border: none !important; padding: 0; padding: 0; box-shadow: none !important; font-family: Arial,Helvetica,sans-serif; font-size: 12px; color: #378bb9 !important; line-height: 18px; }
+  .basicAlert .modal-footer .btn:focus, .basicAlert .modal-footer .btn:active, .basicAlert .modal-footer .btn:hover { background: transparent !important; }
+  .bootbox.bootstrap_migrate .basicAlertRoundedBtn { background-color: transparent; }
+  .basicAlertRoundedBtn .modal-content { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); }
+  .basicAlertRoundedBtn .modal-body, .basicAlertRoundedBtn .modal-footer { padding: 18px !important; font-size: 14px; }
+  .basicAlertRoundedBtn .modal-sm .modal-content { width: 310px !important; }
+  .basicAlertRoundedBtn .modal-body { padding-bottom: 0 !important; }
+  .basicAlertRoundedBtn .bootbox-body { margin-bottom: 7.5px; }
+  .basicAlertRoundedBtn .modal-footer { border-top: 0; padding-top: 0 !important; }
+  .basicAlertRoundedBtn .modal-footer .btn { padding: 7px 14px 5px 14px; float: right; font-size: 18px !important; margin-top: 0 !important; margin-bottom: 0 !important; }
+  .basicConfirmAction { display: table; height: 100%; width: 100%; pointer-events: none; /* This makes sure that we can still click outside of the modal to close it */ }
+  .basicConfirmAction .modal-dialog-centered { display: table-cell; vertical-align: middle; pointer-events: none; margin: 0; }
+  .basicConfirmAction .modal-dialog-centered .modal-content { width: inherit; height: inherit; margin: auto; pointer-events: all; }
+  .basicConfirmAction .bootbox-body { font-size: 14px; }
+  .basicConfirmAction .modal-dialog.modal-sm { width: 310px; }
+  .basicConfirmAction .modal-body { padding-bottom: 0; min-height: 60px; }
+  .basicConfirmAction .bootbox-body { padding-left: 72px; line-height: 17.5px; text-align: left; }
+  .basicConfirmAction .modal-footer { border-top: 0; padding-top: 0; padding-left: 90px; }
+  .yesnoDeleteAction .modal-content { background-image: url("//d2lhwe7okuon6r.cloudfront.net/media/images/icons/confirm_delete.gif"); background-repeat: no-repeat; background-position: 18px 18px; }
+  .yesnoFavouriteAction .modal-content { background-image: url("//d2lhwe7okuon6r.cloudfront.net/media/images/icons/confirm_favs.gif"); background-repeat: no-repeat; background-position: 18px 18px; }
+  .customConfirmAction { display: table; height: 100%; width: 100%; pointer-events: none; /* This makes sure that we can still click outside of the modal to close it */ }
+  .customConfirmAction .modal-dialog-centered { display: table-cell; vertical-align: middle; pointer-events: none; margin: 0; }
+  .customConfirmAction .modal-dialog-centered .modal-content { width: inherit; height: inherit; margin: auto; pointer-events: all; }
+  .customConfirmAction .modal-title { text-align: left; }
+  .customConfirmAction .modal-header { border-bottom: 1px solid #e5e5e5; padding-bottom: 18px; }
+  .customConfirmAction .modal-body { text-align: left; font-size: 14px; }
+  .customConfirmAction .modal-footer { border-top: 0; padding-top: 0; }
+  .customConfirmAction .modal-footer .btn-danger { float: left; background-color: #cd0000 !important; color: #fff !important; border-color: #cb070c !important; }
+  .customConfirmAction .modal-footer .btn-danger:hover { background-color: #cb070c !important; }
+  .customConfirmAction .modal-footer .btn-default { float: left; }
+  .customConfirmAction .modal-footer .btn { margin-bottom: 0 !important; } }

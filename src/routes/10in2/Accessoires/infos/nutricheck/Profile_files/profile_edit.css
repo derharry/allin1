@@ -1,0 +1,242 @@
+h2.textExtraLarge { margin-bottom: 18px; }
+
+.profileSection label { font-weight: bold; }
+
+.profileSection em { font-weight: normal; }
+
+.profileInputs .afterLabel { padding-left: 0; }
+
+.profileInputs .form-group:last-child { margin-bottom: 0; }
+
+.profileInputs .form-group .checkbox { padding-left: 9px; }
+
+.profileInputs .radio input { margin-top: 4px; }
+
+.profileInputs .radio label { margin-top: -8px; }
+
+.orderAddress h3 { margin-bottom: 18px; }
+
+.billingAddress { font-size: 12px; }
+
+.deliveryAddress { font-size: 12px; }
+
+@media (min-width: 499px) { .inputsInnerWidth { width: 220px; margin-right: 18px; }
+  #loadHeight .inputsInnerWidth, #loadWeight .inputsInnerWidth { float: left; }
+  .profileSection.verticalalign { display: flex; align-items: center; }
+  .profileIcon { float: left; width: 85px; }
+  .profileInputs { float: left; width: 410px; }
+  .profileFullContent { float: left; width: 410px; }
+  .profileInputs .radio input { margin-top: 0; }
+  .profileInputs .radio label { margin-top: 0; }
+  .form-group.form-group-lg label { margin-top: 12px; font-size: 14px; }
+  .orderAddress .nut_panel { min-height: 135px; }
+  .orderAddress { width: 47% !important; min-width: 239px; }
+  .billingAddress { float: left; }
+  .deliveryAddress { float: right; } }
+@media (min-width: 1200px) { .profileIcon { width: 25%; text-align: center; }
+  .profileFullContent { width: 75%; }
+  h2.textLarger { font-size: 24px; } }
+.nut_iconList .listBloodPressure { background-image: url(/media/images/icons/bloodpressure.png); }
+
+.nut_iconList .listDiabetes { background-image: url(/media/images/icons/diabetes.png); }
+
+.nut_iconList .listCholesterol { background-image: url(/media/images/icons/heart.png); }
+
+.paymentImages { width: 70%; margin: 10px 0 10px 0; }
+
+#succeedWithUs .contentCenterAlign { padding: 10px 0 10px 0; }
+
+#whyTenPC { background-color: #6EAE1A; color: #fff; text-align: center; font-family: primaryBold; margin-bottom: 10px; padding: 6px 0 6px 0; font-weight: normal !important; font-style: normal; font-size: 18px; -ms-transform: skew(0, -5deg); /* IE 9 */ -webkit-transform: skew(0, -5deg); /* Safari */ transform: skew(0, -5deg); /* Standard syntax */ }
+
+.enterPromoCode { display: table; margin: 0 auto 18px auto; }
+
+.enterPromoCode label { display: block; text-align: center; margin-bottom: 10px; }
+
+.enterPromoCode .form-control { width: 58%; display: inline-block; margin-right: 16px; }
+
+.optionImage { padding: 18px 10px 18px 10px; }
+
+.optionImage .cornerFlash { background-repeat: no-repeat; background-position: 0 0; position: absolute; top: 0; left: 0; height: 110px; width: 110px; background-size: 110px 110px; }
+
+.membershipOption { width: 100%; position: relative; }
+
+.membershipOption td { display: block; }
+
+.membershipOption .optionPrice { background-color: #ebf3f8; text-align: center; padding: 18px 0 18px 0; border-top: 1px solid #ccc; }
+
+.membershipOption .optionText { padding: 0 10px 0 10px; }
+
+.membershipOption .optionText p { text-align: center; }
+
+.membershipOption .optionText p.text-left { text-align: left; }
+
+.outOfStock { text-align: center; color: #cd0000; margin-top: 10px; }
+
+@media (min-width: 499px) { #profileContent.nut_panel { border-radius: 0 6px 6px 6px; padding-top: 18px; }
+  .enterPromoCode label { display: inline; text-align: left; margin: 0; }
+  .enterPromoCode .form-control { width: 190px; margin: 0 16px 0 16px; }
+  .membershipOption td { display: table-cell; }
+  .membershipOption td.optionImage { width: 28%; padding-right: 18px; }
+  .membershipOption td.optionTex { width: 38%; }
+  .membershipOption td.optionPrice { width: 34%; }
+  .membershipOption.deliveryOption td.optionText { width: 55%; }
+  .membershipOption.deliveryOption td.optionPrice { width: 45%; }
+  .membershipOption .optionPrice { border-left: 1px solid #ccc; border-top: 0; padding: 10px; }
+  .membershipOption .optionText { padding: 10px; }
+  .membershipOption .optionText p { text-align: left; } }
+p.fb_descritption { max-width: 400px; margin: 18px 0 18px 0; }
+
+.vMargin { margin-top: 18px; margin-bottom: 18px; }
+
+.profileSection.deliverable label { color: #8d8d8d; font-weight: bold; }
+
+.profileSection.deliverable p { color: #8d8d8d; }
+
+.profileSection.deliverable .labelIndent { margin-left: 20px; }
+
+#tblOrderAmount { float: right; font-size: 11px; margin-top: 30px; }
+
+#tblOrderAmount td { font-size: 14px; }
+
+#tblOrderAmount td.amount { text-align: right; padding-left: 10px; }
+
+#tblOrderAmount .promotionalDiscount td { border-bottom: 1px solid #000; padding-bottom: 8px; }
+
+#tblOrderAmount #orderAmount td { padding-top: 8px; }
+
+#tblReviewOrder { width: 100%; margin-top: 18px; }
+
+#tblReviewOrder td { font-size: 14px; }
+
+#tblReviewOrder .rowDiscount td { padding-bottom: 18px; }
+
+#tblReviewOrder .rowNote td { padding-top: 30px; padding-bottom: 8px; }
+
+#tblReviewOrder .colAmount { text-align: right; width: 80px; }
+
+#tblReviewOrder .colCount { width: 20px; }
+
+#tblReviewOrder tfoot td { border-top: 1px solid #000; padding-top: 8px !important; font-weight: bold; }
+
+@media (min-width: 1200px) { .memberOption .memRenew { max-width: none; } }
+#profileTabs { list-style: none; margin: 0; height: 44px; padding: 0; position: relative; margin-bottom: -1px; z-index: 2; display: none; }
+
+#profileTabs li { background: #ebf3f8; float: left; height: 44px; width: 90px; border: 1px solid #ccc; text-align: center; border-radius: 6px 6px 0 0; margin-right: 2px; }
+
+#profileTabs li.offersTab { background: #378bb9; }
+
+#profileTabs li a { padding: 4px 2px 2px 2px; text-decoration: none; font-family: primaryNormal; font-size: 15px; color: #303030; display: block; }
+
+#profileTabs li.offersTab a { color: #fff; }
+
+#profileTabs li a:hover { color: #378bb9; }
+
+#profileTabs li.offersTab a:hover { color: #378bb9; background: #ebf3f8; }
+
+#profileTabs li.profileTabSelected { background: #fff; border-bottom-color: #fff; }
+
+#profileTabs li.profileTabSelected a { color: #378bb9; }
+
+#profileContent.nut_panel { border-radius: 0; padding-top: 0; }
+
+.profileCenterContent { width: 500px; margin: 0 auto 0 auto; }
+
+.profileCenterContent .mainContent { width: 400px; float: left; }
+
+#bmiHolder { position: relative; padding: 58px 0 58px 0; }
+
+#bmiHolder .BMIFig { font-size: 24px; text-align: center; }
+
+#bmrHolder { width: 500px; }
+
+.bmrIcons { background: url("//d2lhwe7okuon6r.cloudfront.net/media/images/sprites/profile_targets.png") no-repeat; background-size: 79px 468px; }
+
+#bmrNeeds { float: left; width: 360px; }
+
+#dailyNeeds { background-position: 0 0; height: 240px; padding-left: 100px; }
+
+#feedingNeeds { background-position: 0 -240px; height: 65px; padding: 20px 0 0 100px; margin-bottom: 75px; }
+
+#totalNeeds { padding: 0 0 0 100px; margin-top: 20px; }
+
+#bmrNeeds .atRest { padding: 20px 0 0 0; }
+
+#bmrNeeds .typicalActivities { margin: 95px 0 0 0; }
+
+#bmrPlus { height: 30px; width: 30px; background-position: 0 -436px; margin: 25px auto 25px auto; }
+
+#bmrEquals { height: 30px; width: 30px; background-position: 0 -396px; margin: 25px auto 25px auto; }
+
+#bmrKcal { float: right; margin-top: 10px; width: 136px; }
+
+.goals { margin-top: 15px; width: 134px; float: left; }
+
+.goals.intake { margin-right: 18px; }
+
+.bodyneeds { background-color: #fff; border-radius: 6px; border: 1px solid #ccc; height: 40px; width: 135px; padding: 7px 10px 7px 10px; }
+
+.foodintake { background-color: #9ac843; border-radius: 6px; border: 1px solid #ccc; height: 40px; width: 135px; padding: 7px 10px 7px 10px; }
+
+.calstoburn { background-color: #f09403; border-radius: 6px; border: 1px solid #ccc; height: 40px; width: 135px; padding: 7px 10px 7px 10px; }
+
+.goalWeightDate { text-align: center; background-color: #fff; border-radius: 6px; border: 1px solid #ccc; height: 40px; width: 195px; padding: 9px 10px 7px 10px; color: #9ac843; font-size: 18px; }
+
+#targetsIcon { height: 79px; width: 79px; background-position: 0 -313px; width: 100px; float: left; }
+
+#goalWeightDateIcon { float: left; width: 100px; }
+
+#accountAccordion .ui-state-default { background: none; border: none; font-size: 12px; }
+
+#accountAccordion .ui-accordion-header:focus { outline: none; }
+
+#accountAccordion .accordionHead table { width: 100%; }
+
+#accountAccordion.ui-accordion .ui-accordion-header { cursor: default; }
+
+#accountAccordion.ui-accordion .ui-accordion-header a { cursor: pointer; }
+
+#accountAccordion .ui-accordion-content { border: none; }
+
+#accountAccordion .ui-widget-content { background: none; border-bottom: 1px solid #378bb9; border-radius: 0; font-size: 12px; }
+
+#accountAccordion .accordionDivider { border-bottom: 1px solid #378bb9; height: 1px; margin: 18px 0 18px 0; }
+
+.colType { width: 37%; }
+
+.colValue { width: 37%; }
+
+#accountAccordion input[type="text"], #accountAccordion input[type="password"] { max-width: 300px; }
+
+.accordionHead .colType label { margin-top: 3px; margin-bottom: 0; }
+
+.accordionHead td { padding-top: 3px; }
+
+.accordionHead td.colType { padding-top: 0; }
+
+.accordionHead a label { cursor: pointer; }
+
+#accountStatus { padding-left: 2.2em; }
+
+#accountStatus .colType, #accountStatus .colValue { float: left; }
+
+#tblAccountHistory { width: 100%; margin: 18px 0 18px 0; }
+
+#tblAccountHistory th, #tblAccountHistory td { background-color: #fff; padding: 3px 0 4px 0; text-align: center; }
+
+#tblAccountHistory th { border: 2px solid #ebf3f8; border-bottom-width: 10px; color: #f09403; }
+
+#tblAccountHistory td { border: 2px solid #ebf3f8; }
+
+#tblAccountHistory th:first-child, #tblAccountHistory td:first-child { border-left: none; }
+
+#paymentCancel { display: none; }
+
+#displayDeliverable, #displayDeliveryAddress { display: none; }
+
+#displayDeliverable.exclusiveOffers { display: block; }
+
+#displayDeliverable.exclusiveOffers .continueTracking { display: none; }
+
+@media (min-width: 499px) { #profileContent.nut_panel { border-radius: 0 6px 6px 6px; padding-top: 18px; }
+  #profileTabs { display: block; } }
+@media (min-width: 1200px) { #profileTabs li { width: 110px; } }

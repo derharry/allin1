@@ -1,0 +1,1195 @@
+/* this file is reliant on the ajax code */
+var diarySearch_array=null;
+
+var currentdiaryobject =null;
+var timebox_p;
+
+var confirmoccasion=0;
+
+
+function diarySearch_InitialiseSize(size)
+{
+    diarySearch_array = new Array(size);
+    
+}
+function diarySearch_InitialiseData(pos,kcal,fatg,carbs,prot,salt,sugar,satfat,fibre)
+{
+    diarySearch_array[pos]={};
+    diarySearch_array[pos].quantity=1;
+    diarySearch_array[pos].kcal=(1 * kcal).toFixed(0);
+    diarySearch_array[pos].fatg=(1 * fatg).toFixed(3);
+    diarySearch_array[pos].carbs=(1 * carbs).toFixed(3);
+    diarySearch_array[pos].prot=(1 * prot).toFixed(3);
+    diarySearch_array[pos].salt=(1 * salt).toFixed(3);
+    diarySearch_array[pos].sugar=(1 * sugar).toFixed(3);
+    diarySearch_array[pos].satfat=(1 * satfat).toFixed(3);
+    diarySearch_array[pos].fibre=(1 * fibre).toFixed(3);
+}
+
+
+function getData(){
+
+	var f;
+	f = document.forms["searchresults"];
+	w = document.getElementById("weightportion").value;
+	m = document.getElementById("weightmeasure");
+	m = m.options[m.selectedIndex].value;
+      if(f.RecipeID){
+		f.RecipeID.value = getRecipeID();
+	}       
+	if(f!=null)
+	{
+		if(f.searchresults_measure)
+                {
+                    f.searchresults_measure.value = m;
+                    f.searchresults_txt_size.value = w;
+                    f.searchresults_addweight.value = "1";
+                }
+                else
+                {
+                    f.measure.value = m;
+                    f.txt_size.value = w;
+                    f.addweight.value = "1";
+                }
+		confirmAdd();
+	}
+	else
+	{
+		alert("form not found");
+	}
+}
+function confirmAddDo()
+{
+    var fo;
+    var foid ="";
+
+    var valueArray = "diaryAddItem,recipeAddItem,recipeAddItem1,frmbulkmanage".split(",");
+    for(var i=0; i<valueArray.length; i++){
+        foid = valueArray[i];
+        fo = jQuery("#"+foid);
+        if(fo.length>0)
+            break;
+        //do something by accessing ;
+    }
+
+    if(fo.length>0)
+    {
+        jQuery(fo).find('[name="occasion"]').val(confirmAddValue());
+        
+	 if(isRecipe()){
+            //if recipe we need to do an ajax submit
+            ajax_Submit(foid,saveIngredOK,alert_err,'',null);
+            closeSearch();
+	 }
+	 else{
+            // submit the diary
+            fo.submit(); 
+        }
+
+    }
+}
+function confirmAddValue()
+{
+    var frm =document['forms']['frmoccasion'];
+    var val=0;
+    if(frm)
+    {
+        var radioGrp = document['forms']['frmoccasion']['chkoccasion'];
+
+        for(i=0; i < radioGrp.length; i++)
+        {
+            if (radioGrp[i].checked == true) {
+                val = radioGrp[i].value;
+            }
+        }
+
+    }
+    return val;
+}
+
+function confirmAdd()
+{
+    if(isRecipe() || confirmoccasion==0){
+        confirmAddDo()
+        return;
+    }
+ /*   var box = document.getElementById("CONFIRMADD");
+
+    box = document.createElement("div");
+    box.id = "CONFIRMADD";
+    box.setAttribute('style','display:none;'); */
+
+    var occasion=4;
+    var d=new Date();
+    var hours = d.getHours();
+    if(hours>=7 && hours <11)
+        occasion=1;
+    else if(hours>=11 && hours<15)
+        occasion=2;
+    else if(hours>=17 && hours<21)
+        occasion=3;
+ //   box.innerHTML='<div id="AddItem" class="diaryPopTR"><div class="diaryPopTL"><div class="diaryPopHdr"><a title="Close" class="dpClose" onclick="closeOverLay(\'CONFIRMADD\')" href="#url"></a></div><div class="diaryPopBR"><div class="diaryPopBL"><div id="AddItemContent"><h2>Add this item to...</h2><form name="frmoccasion" action="/"><ul class="LSN"><li><input type="radio" id="bm" name="chkoccasion" value="1" ' + (occasion==1?'checked':'') + ' /> <label for="bm">Breakfast / Morning</label></li><li><input type="radio" id="la" name="chkoccasion" value="2" ' + (occasion==2?'checked':'') + ' /> <label for="la">Lunch / Afternoon </label></li><li><input type="radio" id="de" name="chkoccasion" value="3" ' + (occasion==3?'checked':'') + ' /> <label for="de">Dinner / Evening </label></li><li><input type="radio" id="sm" name="chkoccasion" value="4" ' + (occasion==4?'checked':'') + ' /> <label for="sm">Snacks / Misc. </label></li></ul><div class="ctaButton tlTXT"><a href="#" onclick="confirmAddDo()"><span class="tl"><span class="br"><span class="btnTXT"><span class="aBtnPad">+ Add to my diary</span></span></span></span></a></div><div class="clrFlt"></div></form></div></div></div></div></div>';
+        jQuery("#modalUpdaterTarget").load("/Ajax/ConfirmOccasion?occasion="+occasion);
+ /*   document.body.appendChild(box);
+
+    new Dialog.Box(document.getElementById("CONFIRMADD"));
+            if(ie6){
+                document.getElementById("CONFIRMADD").style.position = 'absolute';
+			document.getElementById("CONFIRMADD").style.top = '40px';
+            }
+            else{
+                document.getElementById("CONFIRMADD").style.position = 'fixed';
+            }
+            document.getElementById("CONFIRMADD").show();*/
+
+}
+
+function diarySearch_Consume(factor, description,num)
+{
+	var f;
+	f = document.forms["searchresults"];
+	if(f!=null)
+	{
+            if(isRecipe()){
+		f.RecipeID.value = getRecipeID();
+	     }
+                
+		if(f.searchresults_factor==null)
+                {
+                        f.factor.value = factor;
+                        f.servingdescription.value=description;
+                        f.quantity.value=diarySearch_getQuantity(diarySearch_array[num].quantity);
+                }
+                else
+		{
+			f.searchresults_factor.value=factor;
+			f.searchresults_servingdescription.value=description;
+			f.searchresults_quantity.value=diarySearch_getQuantity(diarySearch_array[num].quantity);
+                        
+		}
+                //we now beed to bring up
+                confirmAdd();
+	}
+	else
+	{
+		alert("There has been an error");
+	}
+        return false;
+}
+function diarySearch_getQuantity(quantity)
+{
+    switch(quantity)
+    {
+        case 0:
+            return 0.5;
+        case -1:
+            return 0.33333;
+        case -2:
+            return 0.25;
+        case -3:    
+            return 0.125;
+        default:
+            return quantity;
+    }
+    
+}
+function diarySearch_getFraction(quantity)
+{
+    if(quantity>0){
+        num = Math.floor(quantity);
+        frac = quantity%1;      
+        snum="";
+        sfrac="";
+        
+        if (num >= 1){
+            snum=num.toString();
+        }    
+        if(frac>0){
+            if(frac < 0.13){
+                sfrac="&frac18;";
+            } else if (frac < 0.17){
+                sfrac="&frac16;";
+            } else if (frac < 0.21){
+                sfrac="&frac15;";        
+            } else if (frac < 0.26){
+                sfrac="&frac14;";
+            } else if (frac < 0.35){
+                sfrac="&frac13;";
+            } else if (frac < 0.41){
+                sfrac="&frac25;";
+            } else if (frac < 0.51){
+                sfrac="&frac12;";
+            } else if (frac < 0.61){
+                sfrac="&frac35;";
+            } else if (frac < 0.67){
+                sfrac="&frac23;";
+            } else if (frac < 0.76){
+                sfrac="&frac34;";
+            } else if (frac < 0.81){
+                sfrac="&frac45;";
+            } else if (frac < 0.84){
+                sfrac="&frac56;";
+            } else{
+                sfrac="";
+            }
+        }    
+
+        return snum + sfrac + "x";
+        
+    } else {
+        switch(quantity)
+        {
+            case 0:
+                return "&frac12;x";
+            case -1:
+                return "&frac13;x";
+            case -2:
+                return "&frac14;x";
+            case -3:
+                return "&frac18;x";    
+            default:
+                return quantity + "x";
+        }
+    }
+    
+}
+function diarySearch_ServingUpdate(num,obj,prefix)
+{
+    if (typeof prefix === 'undefined') { prefix = ''; }
+    
+        jQuery("#" + prefix + "quan" + num).html("&nbsp;" + diarySearch_getFraction(obj.quantity) +"&nbsp;");
+
+  
+        jQuery("#" + prefix + "kcal" + num).html(obj.kcal<0 || obj.kcal=='NaN' ? '-': (obj.kcal * diarySearch_getQuantity(obj.quantity)).toFixed(0));
+        jQuery("#" + prefix + "fatg" + num).html(obj.fatg<0 || obj.fatg=='NaN' ? '-': (obj.fatg * diarySearch_getQuantity(obj.quantity)).toFixed(1));
+        jQuery("#" + prefix + "carbs" + num).html(obj.carbs<0 || obj.prot=='NaN' ? '-': (obj.carbs * diarySearch_getQuantity(obj.quantity)).toFixed(1));
+        jQuery("#" + prefix + "prot" + num).html(obj.prot<0 || obj.prot=='NaN' ? '-': (obj.prot * diarySearch_getQuantity(obj.quantity)).toFixed(1));
+        jQuery("#" + prefix + "salt" + num).html(obj.salt<0 || obj.salt=='NaN' ? '-': (obj.salt * diarySearch_getQuantity(obj.quantity)).toFixed(2));
+        jQuery("#" + prefix + "sugar" + num).html(obj.sugar<0 || obj.sugar=='NaN' ? '-': (obj.sugar * diarySearch_getQuantity(obj.quantity)).toFixed(1));
+        jQuery("#" + prefix + "satfat" + num).html(obj.satfat<0 || obj.satfat=='NaN' ? '-': (obj.satfat * diarySearch_getQuantity(obj.quantity)).toFixed(1));
+        jQuery("#" + prefix + "fibre" + num).html(obj.fibre<0 || obj.fibre=='NaN' ? '-': (obj.fibre * diarySearch_getQuantity(obj.quantity)).toFixed(1));
+}
+function diarySearch_ServingAdd(num)
+{
+        var obj = diarySearch_array[num];
+    
+	if(obj.quantity==9) return;
+        
+	obj.quantity = obj.quantity + 1;
+	
+        diarySearch_ServingUpdate(num,obj);
+
+
+}
+function diarySearch_ServingSubtract(num)
+{
+        var obj = diarySearch_array[num];
+	
+        if(obj.quantity==-3) return;
+	obj.quantity = obj.quantity - 1;
+	
+        diarySearch_ServingUpdate(num,obj);
+}
+
+
+
+function getDataServing(){
+
+	var f;
+	f = document.forms["searchresults"];
+	w = document.getElementById("weightportion").value;
+	m = document.getElementById("weightmeasure");
+	m = m.options[m.selectedIndex].value;
+	if(f!=null)
+	{
+		f.searchresults_measure.value = m;
+		f.searchresults_txt_size.value = w;
+		f.searchresults_addweight.value = "1";
+		f.submit();
+	}
+	else
+	{
+		alert("form not found");
+	}
+}
+
+function isDigit (c)
+   {
+      return ((c >= "0") && (c <= "9"))
+   }
+function isEmpty(s)
+{
+  return ((s == null) || (s.length == 0))
+}
+   function isInteger (s)
+   {
+      var i;
+
+      if (isEmpty(s))
+      if (isInteger.arguments.length == 1) return 0;
+      else return (isInteger.arguments[1] == true);
+
+      for (i = 0; i < s.length; i++)
+      {
+         var c = s.charAt(i);
+
+         if (!isDigit(c)) return false;
+      }
+
+      return true;
+   }
+
+function diaryServing_ServingAdd(num)
+{
+    
+    var obj = new Object();
+     var q =   parseFloat(jQuery("#pidq" + num).val());
+    if(q<1 && q>0)
+    {
+        if(q<=0.125)
+            obj.quantity=-3;
+        else if(q<=0.25)
+            obj.quantity=-2;
+        else if(q<=0.34)
+            obj.quantity=-1;
+        else if(q<=0.5)
+            obj.quantity=0;
+        
+    }
+    else
+        obj.quantity=parseFloat(jQuery("#pidq" + num).val());
+    
+    obj.kcal=(1 * jQuery("#pidkcal" + num).val()).toFixed(0);
+    obj.fatg=(1 * jQuery("#pidfatg" + num).val()).toFixed(3);
+    obj.carbs=(1 * jQuery("#pidcarbs" + num).val()).toFixed(3);
+    obj.prot=(1 * jQuery("#pidprot" + num).val()).toFixed(3);
+    obj.salt=(1 * jQuery("#pidsalt" + num).val()).toFixed(3);
+    obj.sugar=(1 * jQuery("#pidsugar" + num).val()).toFixed(3);
+    obj.satfat=(1 * jQuery("#pidsatfat" + num).val()).toFixed(3);    
+    obj.fibre=(1 * jQuery("#pidfibre" + num).val()).toFixed(3); 
+    
+    if(obj.quantity==9) return;
+
+    obj.quantity = obj.quantity + 1;
+
+    diarySearch_ServingUpdate(num,obj,'s');
+    
+    jQuery("#pidq" + num).val(obj.quantity);
+
+}
+function diaryServing_ServingSubtract(num)
+{
+
+      var obj = new Object();
+      
+    var q =   parseFloat(jQuery("#pidq" + num).val());
+      
+    if(q<1 && q>0)
+    {
+        if(q<=0.125)
+            obj.quantity=-3;
+        else if(q<=0.25)
+            obj.quantity=-2;
+        else if(q<=0.34)
+            obj.quantity=-1;
+        else if(q<=0.5)
+            obj.quantity=0;
+        
+    }
+    else
+        obj.quantity=parseFloat(jQuery("#pidq" + num).val());
+    obj.kcal=(1 * jQuery("#pidkcal" + num).val()).toFixed(0);
+    obj.fatg=(1 * jQuery("#pidfatg" + num).val()).toFixed(3);
+    obj.carbs=(1 * jQuery("#pidcarbs" + num).val()).toFixed(3);
+    obj.prot=(1 * jQuery("#pidprot" + num).val()).toFixed(3);
+    obj.salt=(1 * jQuery("#pidsalt" + num).val()).toFixed(3);
+    obj.sugar=(1 * jQuery("#pidsugar" + num).val()).toFixed(3);
+    obj.satfat=(1 * jQuery("#pidsatfat" + num).val()).toFixed(3);    
+    obj.fibre=(1 * jQuery("#pidfibre" + num).val()).toFixed(3);
+    
+    if(obj.quantity==-3) return;
+
+    obj.quantity = obj.quantity - 1;
+
+    diarySearch_ServingUpdate(num,obj,'s');
+    
+    jQuery("#pidq" + num).val(obj.quantity);
+
+
+
+}
+
+function displayServingBox()
+{
+    var tb =  document.getElementById("extendedQuanBox");
+    if(tb) tb.style.display = "block";
+}
+function removeServingsBox()
+{
+    var tb =  document.getElementById("extendedQuanBox");
+    if(tb)
+        document.body.removeChild(tb);
+}
+
+function createServingsBox(obj,diaryid, serving,productid,url)
+{
+
+        removeServingsBox();
+
+	var pos = getAbsolutePosition(obj);
+
+
+  	// Create timeBox
+	sbox = document.createElement("div");
+ 	sbox.className = "quanBox";
+	sbox.id = "extendedQuanBox";
+
+  	sbox.style.top = pos[1] + "px";
+	sbox.style.left = (pos[0]+40) + "px";
+
+        //obj.parentNode.id="showTB";
+	//obj.parentNode.appendChild(timebox);
+
+        document.body.appendChild(sbox);
+
+        ajax_UpdaterURL(url+"?diaryid=" + diaryid +"&productid="+productid + "&sf=" + serving,sbox.id,displayServingBox);
+}
+function notesclear(cnt)
+{
+    if(cnt.value.indexOf("Type here")>-1)
+        cnt.value="";
+
+}
+
+function removeTimeBox() {
+	obj = document.getElementById("extendedTimeBox");
+	//if (obj) {document.getElementById("showTB").removeChild(obj);}
+        if (obj) {document.body.removeChild(obj);}
+        //document.getElementById("showTB").id="";
+        return false;
+}
+
+function createTimeBox(obj,id)
+{
+
+	timebox_p =obj;
+	if (document.getElementById("extendedTimeBox")) removeTimeBox();
+	var pos = getAbsolutePosition(obj);
+
+
+  	// Create timeBox
+	timebox = document.createElement("div");
+ 	timebox.className = "timeBox";
+	timebox.id = "extendedTimeBox";
+
+  	timebox.style.top = pos[1] + "px";
+	timebox.style.left = (pos[0]+40) + "px";
+
+        //obj.parentNode.id="showTB";
+	//obj.parentNode.appendChild(timebox);
+
+        document.body.appendChild(timebox);
+
+        ajax_UpdaterURL("/Ajax/TimeBox?id="+ id + "&time=" + obj.firstChild.nodeValue,timebox.id,displayTimeBox);
+}
+function displayTimeBox()
+{
+    var tb =  document.getElementById("extendedTimeBox");
+    if(tb) tb.style.display = "block";
+}
+
+function showCustomBox(){
+    document.getElementById('customTime').style.display="block";
+    return false;
+}
+
+
+// Function to validate the custom time has been entered correctly.
+// Validates for 12 hour or 24 hour clock
+function validateTime(id,theForm) {
+	// Regular expression for hh:mm am/pm
+	// am/pm is optional and can uppercase or lowercase
+	var hr24 = false;
+	var regExp = /^(\d{1,2}):(\d{2})(\s?(AM|am|PM|pm))?$/;
+	var regExp1 = /^(\d{2})(\d{2})?$/;
+
+	// IE had trouble unless you specifically referred to the input box.
+	timeBox = document.getElementById("time");
+
+	timeBox.value = 	timeBox.value.replace(".",":")
+
+	var arrTime = timeBox.value.match(regExp);
+	//var arrTime = regExp.exec(theForm.time.value);
+
+	var errorMsg = "";
+
+	// If the regular expression is not matched, then it is not a valid time format
+	if (arrTime == null) {
+		arrTime = timeBox.value.match(regExp1);
+		if(arrTime==null)
+		{
+			alert("You have entered an incorrect time format");
+			return false;
+		}
+	// Load in hour,mins and am/pm from array
+	h = arrTime[1];
+	m = arrTime[2];
+	a = "";
+
+
+	}
+	else
+	{
+		// Load in hour,mins and am/pm from array
+		h = arrTime[1];
+		m = arrTime[2];
+		a = arrTime[3];
+
+	}
+
+	if (a == "") {a = null;} // Can't just do a string match for some reason
+
+	// If minutes are outside range...
+	if (m < 0 || m > 59) {
+		errorMsg = "Minutes must be between 0 and 59";
+	}
+
+	// If hour is outside range...
+	if (h < 0 || h > 23) {
+		errorMsg = "Hour must be between 1 and 12. (or 0 and 23 for 24 hour clock";
+	}
+
+
+	// If in 24 hour time with am/pm...
+	if (h > 12 && a != null) {
+		errorMsg = "Please remove am/pm for 24 hour clock";
+	}
+
+
+	// If any error was detected
+	if (errorMsg != "") {
+		alert(errorMsg); // Display error
+		return false;    // ..and do not submit
+	} else {
+
+		changeTime(id,timeBox.value);
+
+
+		return false;     // otherwise everything was fine.
+	}
+}
+
+function UncheckAll(f){
+        if(document.forms[f].ids.length)
+        {
+                count = document.forms[f].ids.length;
+                for (i=0; i < count; i++)
+                {
+                        document.forms[f].ids[i].checked = 0;
+                }
+        }
+        else
+        {
+                        document.forms[f].ids.checked = 0;
+        }
+        document.getElementById('copydiary_deselect').innerHTML = '<a href="javascript:checkAll(\''+f+'\');">Select all</a>';
+}
+
+function checkAll(f){
+        if(document.forms[f].ids.length)
+        {
+                count = document.forms[f].ids.length;
+                for (i=0; i < count; i++)
+                {
+                        document.forms[f].ids[i].checked = 1;
+                }
+        }
+        else
+        {
+                        document.forms[f].ids.checked = 1;
+        }
+        document.getElementById('copydiary_deselect').innerHTML = '<a href="javascript:UncheckAll(\''+f+'\');">Deselect all</a>';
+}
+
+function validateCopyTable(f){
+    var fo = document.forms[f];
+
+   
+    var suba = "";
+   
+    var SelectedOption = fo.subaction;
+    var SelectedItem = fo.ids;
+    var DeleteItem = fo.ID;
+
+
+    isSelected = -1;
+
+    /* sains ver with over lay box
+
+    for (i=SelectedOption.length-1; i > -1; i--) {
+            if (SelectedOption[i].checked) {
+                    suba = SelectedOption[i].value
+                    isSelected = i;
+                    i = -1;
+            }
+    }
+    if (isSelected == -1) {
+            alert("Please select an option!");
+            return false;
+    }
+
+    else{
+            isSelected = -1;
+            if(SelectedItem.length)
+            {
+                    for (i=0; i<SelectedItem.length; i++) {
+                            if (SelectedItem[i].checked) {
+                                    isSelected = i;
+                                    i = SelectedItem.length;
+                            }
+                    }
+            }
+            else
+            {
+                    if (SelectedItem.checked)
+                            isSelected = 0;
+            }
+            if (isSelected == -1) {
+                    alert("You have not selected any items");
+                    return false;
+            }
+            if(DeleteItem.checked){
+                    //return confirm("Are you sure you wish to delete the selected items ?");
+                    createYESNOForm('Are you sure you want to delete these items?','/media/images/diary/dialog/confirm_delete.gif',f);
+                    return false;
+            }
+            else{
+                    if(suba=='CopyDate'){
+                        if(ValidateCalendar()){
+                           createYESNOForm('Are you sure you want to add these items to your diary?','/media/images/diary/dialog/confirm_favs.gif',f);
+                           return false;
+                        }
+                        return false;
+                    }
+
+                    createYESNOForm('Are you sure you want to add these items to your diary?','/media/images/diary/dialog/confirm_favs.gif',f);
+                    return false;
+
+            }
+            return true;
+     }
+*/
+//nc ver
+
+		for (i=SelectedOption.length-1; i > -1; i--) {
+			if (SelectedOption[i].checked) {
+				suba = SelectedOption[i].value
+				isSelected = i;
+				i = -1;
+			}
+		}
+		if (isSelected == -1) {
+			alert("Please select an option!");
+			return false;
+		}
+
+		else{
+				isSelected = -1;
+				if(SelectedItem.length)
+				{
+					for (i=0; i<SelectedItem.length; i++) {
+						if (SelectedItem[i].checked) {
+							isSelected = i;
+							i = SelectedItem.length;
+						}
+					}
+				}
+				else
+				{
+					if (SelectedItem.checked)
+						isSelected = 0;
+				}
+				if (isSelected == -1) {
+					alert("You have not selected any items");
+					return false;
+				}
+				if(DeleteItem.checked){
+                                    //return confirm("Are you sure you wish to delete the selected items ?");
+                                    createYESNOForm('Are you sure you want to delete these items?','/media/images/parts/dialog/confirm_delete.gif',f,'Confirm');
+                                    return false;
+				}
+				else{
+		
+					if(suba=='CopyRecipe'){
+
+						alertBox('/Ajax/Search2/Updater/GroupAsRecipe',380);
+						return false;
+					} 
+
+					 if(suba=='CopyDate'){
+                                        if(ValidateCalendar()){
+                                           //createYESNOForm('Are you sure you want to add these items to your diary?','/media/images/parts/dialog/confirm_favs.gif',f);
+                                           return true;
+                                        }
+                                        return false;
+                                    } 
+
+					if(suba=='CopyFavourites'){
+                                           fo.action='/Diary/FavouriteAdd';
+                                           createYESNOForm('Are you sure you want to add these items to your Favourites?','/media/images/parts/dialog/confirm_favs.gif',f);
+                                           return false;
+                                    } 
+
+					if(suba=='CopyTriggers'){
+                                           
+                                           alertBox('/Diary/addTrigger?key=1&method=bulk');
+                                           return false;
+                                    }
+
+			
+					/* 
+                                    createYESNOForm('Are you sure you want to add these items to your diary?','/media/images/parts/dialog/confirm_favs.gif',f);
+                                    return false; */
+				}
+
+			}
+return true;
+}
+
+function ValidateCalendar(){
+        var ChooseDates = document.getElementById('CD');
+        var StartDate = document.getElementById('d1').value;
+        var EndDate = document.getElementById('d2').value;
+
+        if(EndDate=='')
+        {
+                alert("Please check the start and end dates for the time you wish to copy. Either the end date is before the start date or the difference more than 30 days.");
+                return false;
+        }
+
+        var date1 = new Date(parseInt(StartDate.substring(0,4),10),parseInt(StartDate.substring(5,7),10)-1,parseInt(StartDate.substring(8,10),10));
+        var date2 = new Date(parseInt(EndDate.substring(0,4),10),parseInt(EndDate.substring(5,7),10)-1,parseInt(EndDate.substring(8,10),10));
+
+        var ONE_DAY = 1000 * 60 * 60 * 24;
+
+        // Convert both dates to milliseconds
+        var date1_ms = date1.getTime();
+        var date2_ms = date2.getTime();
+
+        // Calculate the difference in milliseconds
+        var difference_ms = Math.abs(date1_ms - date2_ms);
+        var difference_days = Math.round(difference_ms/ONE_DAY);
+        if( difference_days > 29 || date2_ms < date1_ms ){
+                alert("Please check the start and end dates for the time you wish to copy. Either the end date is before the start date or the difference more than 30 days.");
+                return false;
+        }
+        return true;
+}
+
+function validateTime(id,theForm) {
+	// Regular expression for hh:mm am/pm
+	// am/pm is optional and can uppercase or lowercase
+	var hr24 = false;
+	var regExp = /^(\d{1,2}):(\d{2})(\s?(AM|am|PM|pm))?$/;
+	var regExp1 = /^(\d{2})(\d{2})?$/;
+
+	// IE had trouble unless you specifically referred to the input box.
+	timeBox = document.getElementById("time");
+
+	timeBox.value = 	timeBox.value.replace(".",":")
+
+	var arrTime = timeBox.value.match(regExp);
+	//var arrTime = regExp.exec(theForm.time.value);
+
+	var errorMsg = "";
+
+	// If the regular expression is not matched, then it is not a valid time format
+	if (arrTime == null) {
+		arrTime = timeBox.value.match(regExp1);
+		if(arrTime==null)
+		{
+			alert("You have entered an incorrect time format");
+			return false;
+		}
+	// Load in hour,mins and am/pm from array
+	h = arrTime[1];
+	m = arrTime[2];
+	a = "";
+
+
+	}
+	else
+	{
+		// Load in hour,mins and am/pm from array
+		h = arrTime[1];
+		m = arrTime[2];
+		a = arrTime[3];
+
+	}
+
+	if (a == "") {a = null;} // Can't just do a string match for some reason
+
+	// If minutes are outside range...
+	if (m < 0 || m > 59) {
+		errorMsg = "Minutes must be between 0 and 59";
+	}
+
+	// If hour is outside range...
+	if (h < 0 || h > 23) {
+		errorMsg = "Hour must be between 1 and 12 (or 0 and 23 for 24 hour clock).";
+	}
+
+
+	// If in 24 hour time with am/pm...
+	if (h > 12 && a != null) {
+		errorMsg = "Please remove am/pm for 24 hour clock";
+	}
+
+
+	// If any error was detected
+	if (errorMsg != "") {
+		alert(errorMsg); // Display error
+		return false;    // ..and do not submit
+	} else {
+
+		changeTime(id,timeBox.value);
+
+
+		return false;     // otherwise everything was fine.
+	}
+}
+
+function changeEmotion(e){
+    selectEmotion('Emotional',e.value)
+    return false;
+
+}
+
+function selectEmotion(r,meas){
+
+	var url = '/Diary/Reports/'+r+'?emotion='+meas;
+	id="diaryContentContainer";
+	ajax_UpdaterURL(url,id,null);
+
+	return false;
+}
+
+/**************************************************** Recipe functions ********************************************************/
+
+function confirmAddOccassion()
+{
+
+    if(typeof(confirmoccasion)=="undefined" || confirmoccasion==0)
+    {
+        confirmAddOccasionDo();
+        return;
+    }
+
+   /* var box = document.getElementById("CONFIRMADD");
+
+    box = document.createElement("div");
+    box.id = "CONFIRMADD";
+    box.setAttribute('style','display:none;'); */
+
+    var occasion=4;
+    var d=new Date();
+    var hours = d.getHours();
+    if(hours>=7 && hours <11)
+        occasion=1;
+    else if(hours>=11 && hours<15)
+        occasion=2;
+    else if(hours>=17 && hours<21)
+        occasion=3;
+
+   // box.innerHTML='<div id="AddItem" class="diaryPopTR"><div class="diaryPopTL"><div class="diaryPopHdr"><a title="Close" class="dpClose" onclick="closeOverLay(\'CONFIRMADD\')" href="#url"></a></div><div class="diaryPopBR"><div class="diaryPopBL"><div id="AddItemContent"><h2>Add this item to...</h2><form name="frmoccasion" action="/"><ul class="LSN"><li><input type="radio" id="bm" name="chkoccasion" value="1" ' + (occasion==1?'checked':'') + ' /> <label for="bm">Breakfast / Morning</label></li><li><input type="radio" id="la" name="chkoccasion" value="2" ' + (occasion==2?'checked':'') + ' /> <label for="la">Lunch / Afternoon </label></li><li><input type="radio" id="de" name="chkoccasion" value="3" ' + (occasion==3?'checked':'') + ' /> <label for="de">Dinner / Evening </label></li><li><input type="radio" id="sm" name="chkoccasion" value="4" ' + (occasion==4?'checked':'') + ' /> <label for="sm">Snacks / Misc. </label></li></ul><div class="ctaButton tlTXT"><a href="#" onclick="confirmAddOccasionDo()"><span class="tl"><span class="br"><span class="btnTXT"><span class="aBtnPad"><span class="arr">Add to my diary</span></span></span></span></span></a></div><div class="clrFlt"></div></form></div></div></div></div></div>';
+jQuery("#modalUpdaterTarget").load("/Recipes/Updater/confirmoccasion2?occasion="+occasion);
+  /*  document.body.appendChild(box);
+
+    new Dialog.Box(document.getElementById("CONFIRMADD"));
+            if(ie6){
+                document.getElementById("CONFIRMADD").style.position = 'absolute';
+                document.getElementById("CONFIRMADD").style.top = '40px';
+            }
+            else{
+                document.getElementById("CONFIRMADD").style.position = 'fixed';
+            }
+            document.getElementById("CONFIRMADD").show();*/
+
+}
+function confirmAddOccassion1(formid)
+{
+
+    if(typeof(confirmoccasion)=="undefined" || confirmoccasion==0)
+    {
+        jQuery("#"+formid).submit();
+        return;
+    }
+
+ /*   var box = document.getElementById("CONFIRMADD");
+
+    box = document.createElement("div");
+    box.id = "CONFIRMADD";
+    box.setAttribute('style','display:none;'); */
+
+    var occasion=4;
+    var d=new Date();
+    var hours = d.getHours();
+    if(hours>=7 && hours <11)
+        occasion=1;
+    else if(hours>=11 && hours<15)
+        occasion=2;
+    else if(hours>=17 && hours<21)
+        occasion=3;
+jQuery("#modalUpdaterTarget").load("/Recipes/Updater/confirmoccasion?occasion="+occasion+"&formid="+formid);
+   // box.innerHTML='<div id="AddItem" class="diaryPopTR"><div class="diaryPopTL"><div class="diaryPopHdr"><a title="Close" class="dpClose" onclick="closeOverLay(\'CONFIRMADD\')" href="#url"></a></div><div class="diaryPopBR"><div class="diaryPopBL"><div id="AddItemContent"><h2>Add this item to...</h2><form name="frmoccasion" action="/"><ul class="LSN"><li><input type="radio" id="bm" name="chkoccasion" value="1" ' + (occasion==1?'checked':'') + ' /> <label for="bm">Breakfast / Morning</label></li><li><input type="radio" id="la" name="chkoccasion" value="2" ' + (occasion==2?'checked':'') + ' /> <label for="la">Lunch / Afternoon </label></li><li><input type="radio" id="de" name="chkoccasion" value="3" ' + (occasion==3?'checked':'') + ' /> <label for="de">Dinner / Evening </label></li><li><input type="radio" id="sm" name="chkoccasion" value="4" ' + (occasion==4?'checked':'') + ' /> <label for="sm">Snacks / Misc. </label></li></ul><div class="ctaButton tlTXT"><a href="#" onclick="confirmAddOccasionDo1(\'' + formid + '\')"><span class="tl"><span class="br"><span class="btnTXT"><span class="aBtnPad"><span class="arr">Add to my diary</span></span></span></span></span></a></div><div class="clrFlt"></div></form></div></div></div></div></div>';
+
+   /* document.body.appendChild(box);
+
+    new Dialog.Box(document.getElementById("CONFIRMADD"));
+            if(ie6){
+                document.getElementById("CONFIRMADD").style.position = 'absolute';
+                document.getElementById("CONFIRMADD").style.top = '40px';
+            }
+            else{
+                document.getElementById("CONFIRMADD").style.position = 'fixed';
+            }
+            document.getElementById("CONFIRMADD").show(); */
+
+}
+
+function frmPagiGoto(f,pcount, p) {
+
+    var frm = $(f);
+    if(frm) {
+        frm.elements['start'].value = (p-1) * pcount;
+        if(frm.elements['resetstart']) {
+            frm.elements['resetstart'].value = (p-1) * pcount;
+        }
+        frm.submit();
+    }
+}
+function frmPagiNext(f,pcount){
+    var frm = $(f);
+    var start=frm.elements['start'];
+    var w = $('showby').selectedIndex;
+    var value = $('showby').options[w].value;
+    frm.sort.value = value;
+    start.value=(start.value*1)+(pcount*1);
+    //frm.resetstart.value = start.value;
+    frm.submit();
+}
+
+function frmPagiPrev(f,pcount){
+    var frm = $(f);
+    var start=frm.elements['start'];
+    var w = $('showby').selectedIndex;
+    var value = $('showby').options[w].value;
+    frm.sort.value = value;
+    start.value=(start.value*1)-(pcount*1);
+    //frm.resetstart.value = start.value;
+    frm.submit();
+}
+
+function changeOccasion(frm,occasion){
+
+    var frm = jQuery("#"+frm);
+    if(frm.length>0)
+    {
+        jQuery("#samplestart").val("0");
+        jQuery("#sampleid").val(occasion);
+
+
+        frm.submit();
+    }
+
+	return false;
+}
+
+function changeMemOrder(cnt){
+    var frm = jQuery('#fmemrecipesearch');
+    if(frm.length>0){
+        jQuery("#samplestart").val("0");
+        jQuery("#memRecipeSort").val(jQuery("#showby option:selected").val())
+        frm.submit();
+    }
+}
+
+function addRecipe() {
+        if(validateAdd())
+        {
+            var f = jQuery("#recipeForm");
+
+            if(jQuery("#nameerror").length>0){
+                if(jQuery("#nameerror").is(":visible")){
+                    jQuery("#nameerror").hide();
+                }
+            }
+
+            if(jQuery("#servingerror").length>0){
+                if(jQuery("#servingerror").is(":visible")){
+                    jQuery("#servingerror").hide();
+                }
+            }
+
+            if(jQuery("#occerror").length>0){
+                if(jQuery("#occerror").is(":visible")){
+                    jQuery("#occerror").hide();
+                }
+            }
+            f.submit();
+        }
+        return false;
+}
+
+function confirmAddOccasionDo()
+{
+    var fo;
+     var valueArray = "recipeAddItem,recipeAddItem1".split(",");
+    for(var i=0; i<valueArray.length; i++){
+
+        fo = $(valueArray[i]);
+        if(fo)
+            break;
+        //do something by accessing ;
+    }
+
+    if(fo)
+    {
+
+        fo.occasion.value=confirmAddValue();
+        if($('recipeForm'))
+            {
+        fo.recipeID.value=$('recipeForm').RecipeID.value;
+            fo.method.value=$('recipeForm').method.value;
+         }
+        //we need to do an ajx submit
+        fo.submit();
+    }
+}
+
+function confirmAddOccasionDo1(formid)
+{
+    log('heelo');
+    var fo = $(formid);
+    if(fo)
+    {
+
+        fo.diaryOccasion.value=confirmAddValue();
+
+	 if(fo.occasion)
+		fo.occasion.value=confirmAddValue();
+
+        fo.submit();
+    }
+}
+
+function validateAdd(){
+    var valid = true;
+    if(jQuery("#myrecipename2").length>0){
+        if(jQuery("#myrecipename2").val() == ''){
+            jQuery("#nameerror").text("*");
+            valid = false;
+        } else{
+            jQuery("#nameerror").text("");
+        }
+    }
+
+    if(jQuery("#myrecipedescription").length>0){
+        if(jQuery("#myrecipedescription").val() == ''){
+            jQuery("#descerror").text("*");
+            valid = false;
+        } else{
+            jQuery("#descerror").text("");
+        }
+    }
+
+    if(jQuery("#myrecipeservings").length>0){
+        if(jQuery("#myrecipeservings").val() == '' || jQuery("#myrecipeservings").val() == '0'){
+            jQuery("#servingerror").text("*");
+            valid = false;
+        } else{
+            jQuery("#servingerror").text("");
+        }
+    }
+
+    if(jQuery("#myrecipeoccasion").length>0){
+        if(jQuery("#myrecipeoccasion option:selected").val() == 0){
+            jQuery("#occerror").text("*");
+            valid = false;
+        } else{
+            jQuery("#occerror").text("");
+        }
+    }
+
+    return valid;
+}
+function saveIngredOK(){
+
+    ajax_UpdaterURL("/Recipes/MyRecipes/ViewIngredients?RecipeID=" + getRecipeID(),"ingredientsList",suc);
+    return false;
+}
+function suc(){
+    if(jQuery("#txt_productsearch").length>0){
+    	jQuery("#txt_productsearch").val("");
+    }	    
+}
+function getRecipeID(){
+    if(jQuery("#RecipeID").length>0){
+    	return jQuery("#RecipeID").val();
+    }	
+}
+function recipeDeleteIngredient(recipeid,ingredientid)
+{
+   var image="/media/images/parts/dialog/confirm_delete.gif";
+   var text="Are you sure you want to delete this item?";
+   var boxhtml = '<div id="YESNO" class="diaryPopTR"><div class="diaryPopTL"><div class="diaryPopHdr"><a title="Close" class="dpClose" onclick="closeOverLay(\'YESNO\')" href="#url"></a></div><div class="diaryPopBR"><div class="diaryPopBL"><div id="ynContent" style="background-image:url('+image+');"><p>'+text+'</p><div id="confirmBtns" class="tlTXT"><div class="retButtonSml"><a onclick="removeYESNO()" href="#url"><span class="tl"><span class="br"><span class="btnTXT"><span class="aBtnPad">Cancel</span></span></span></span></a></div><div class="ctaButtonSml"><a onclick="confirmIngredientDelete(\''+recipeid+'\',\''+ingredientid+'\')" href="#url"><span class="tl"><span class="br"><span class="btnTXT"><span class="aBtnPad">Confirm</span></span></span></span></a></div><div class="clrFlt"></div></div><div class="clrFlt"></div></div></div></div></div></div>';
+   return createYESNODialog(boxhtml);
+}
+
+function confirmIngredientDelete(recipeid,ingredientid){
+
+    ajax_UpdaterURL("/Recipes/MyRecipes/DeleteIngredient?RecipeID=" + recipeid + "&ingredientid=" + ingredientid,"ingredientsList",removeYESNO);
+}
+
+function recipeAddIngredient(productid)
+{
+    //based on this product id it should fill in the selected panel
+    ajax_UpdaterURL("/Ajax/UserRecipe/AddIngredient1?productid=" + productid,"recipeDetail",displaySearch);
+
+    return false;
+}
+
+function updateRecipe(frmaction){
+    var f = document.forms['frecipeForm'];
+   // f.method.value=$('method').value;
+    f.action=frmaction;
+    f.submit();
+}
+
+function saveAdd(frmaction){
+    var f = document.forms['frecipeForm'];
+   // f.method.value=$('method').value;
+    f.action=frmaction;
+    confirmAddOccassion1('recipeForm');
+}
+
+function saveRecipeOnly (id){
+    if(addRecipe())
+    {
+        id = getRecipeID();
+        location.href='/Recipes/Home';
+    }
+
+}
+
+var recipeID =0;
+
+
+function addRecipeToBook(sid){
+	ajax_UpdaterURL('/Recipes/Updater/AddShared?sharedID='+sid,'sharedtarget'+sid);
+	return false;
+}
+
+function isRecipe(){
+    return jQuery("#RecipeID").length>0;
+}
