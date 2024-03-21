@@ -8,7 +8,6 @@
         <li><a href="/office-event">Athletes-Office</a></li>
         <li><a href="/office-surf">Surf-Office</a></li>
         <li><a href="/singleplanets">SinglePlanets</a></li>
-        <li><a href="/zeepress">ZeePress</a></li>
         <!--
         <li><a href="/svelteshowcase">Showcase</a></li>
         <li><a href="/software">software</a></li>
