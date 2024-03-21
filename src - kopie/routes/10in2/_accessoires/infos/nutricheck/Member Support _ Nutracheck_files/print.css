@@ -1,0 +1,35 @@
+.LeftContent, .RightContent, header, #SecondaryNav, .btn { display: none !important; }
+
+.contentStretch .CenterContent { width: 100%; float: none; }
+
+#recipeActions { display: none !important; }
+
+#diaryCenterContent, .contentStretch .CenterContent, #diaryContentContainer { width: 100% !important; }
+
+.scrollwindow { height: auto !important; overflow-y: auto !important; }
+
+.dgfooter { padding-right: 0 !important; }
+
+#diaryPrintOptions { display: none; }
+
+.helpContent #supportSearch, .helpContent .relatedQuestions, .helpContent .contactUs, .hidePrint { display: none; }
+
+#diaryContentContainer table { width: auto; }
+
+#diaryContentContainer { border: none !important; padding: 0 !important; }
+
+#diaryContentContainer .printpage, #diaryContentContainer .returnToMenu { display: none; }
+
+#diaryContentContainer .colDescription { width: 300px; }
+
+#diaryContentContainer .colServing { width: 90px; }
+
+#diaryContentContainer .colNutri { width: 50px; }
+
+.hideMediaPrint { display: none; }
+
+.displayMediaPrint { display: block; }
+
+.shareMealsContainer.nut_border { border: none; }
+
+#addServingOccasions, #displayAddPreppedWeight { display: none !important; }

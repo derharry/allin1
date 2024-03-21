@@ -1,0 +1,677 @@
+var forumurl="//forum.nutracheck.co.uk";
+hasClubWeighInToday = false;
+var currentUserAvatar;
+
+function changeMeasureView(measure,weightformat){
+
+    if(window.location.pathname!='/Diary/MyProgress'){
+        window.location = '/Diary/MyProgress?pageView='+measure;
+    } else {
+
+	jQuery('#progMenu a').css({'color':'#000000','fontWeight':'normal'});
+        view = jQuery('#dataview').val();
+
+        if(weightformat=="")
+            weightformat = jQuery('#displayWeightFormat').val();
+        
+	if(weightformat == 2){
+		jQuery('#isMetric').val("0");
+	} else {
+		jQuery('#isMetric').val(weightformat);
+	}        
+        
+        var url="/Ajax/MyMeasurements/displaymeasure?measureID="+measure+"&view="+view+"&weightformat="+weightformat;
+	 jQuery('#weighinTarget').load(url);
+
+	 jQuery('#'+measure).css({'color':'#6CAA17','fontWeight':'bold'});
+
+    }
+}
+
+function switchView(v){
+    var view;
+    if(v==3){
+        view = v;
+    }
+    else if(v==2){
+        view = v;
+    }
+    else if(v==1){
+        view = v;
+    }
+    else{
+        view = parseInt(v.value);
+    }
+    var barChart = document.getElementById("barChart");
+    var dataTable = document.getElementById("dataTable");
+    var setView = document.getElementById("view");
+    setView.value=view;
+
+    switch(view){
+        case 1: 
+	     displayBarChart(highChartObj,highChartUserObj);	
+            barChart.style.display="block";
+            dataTable.style.display="none";
+            break;
+        case 2:
+	     displayTimePlot(highChartObj,highChartUserObj);	
+            barChart.style.display="block";
+            dataTable.style.display="none";
+            break;
+        case 3:
+            dataTable.style.display="block";
+            barChart.style.display="none";
+            break;
+    }
+}
+
+
+function isValidMeasure(f)
+{
+    var g;
+
+
+
+
+    if(!isMeasureMetric())
+    {
+        g= nu_convertToGrams(f.txtweight1.value,f.txtweight2.value)
+    }
+    else
+    {
+        g = (parseInteger(f.txtweight1.value) * 1000)
+    }
+    if(g<40000)
+    {
+    //alert("Please re-enter weight!");
+    //return false;
+    }
+
+}
+
+function isMeasureMetric()
+{
+    var obj;
+    if ((obj=document.getElementById('ismetric'))!=null)
+    {
+        if(obj.value=="1")
+            return true;
+        else
+            return false;
+    }
+    return false;
+}
+
+/*------------- [ Club Weighin] ------------ */
+   
+
+queueArray = []
+topArray = [0,60,180,300,300,300,300,300,300,300,300,300,300,300,300];
+leftArray = [0,10,10,10,90,170,250,330,410,490,570,650,730,810,900];
+queuePosition = 0;
+queueMax = 8;
+paused = false;
+speed = 5;
+moving = false;
+currentComment = 0;
+page = 2;
+memberName = '';
+nameAvailable = false;
+noHistory = false;
+
+function setupQueue() {
+    interval = setInterval(moveQueue, 5000);
+    var top;
+    var left;
+       
+    // move new entry to 8th position
+    if(weighinId>0){
+        jsondata.move(getQueuePosition(weighinId), queueMax);
+    }
+       
+       
+    jQuery.each(jsondata, function (i, member){
+            
+        queueArray.push(member.id);
+        
+            
+        if(i>0&&i<=queueMax){ // only add forst 8 to queue
+            // alert(member.user_id);
+            if (i>queueMax) {
+                top = topArray[queueMax];
+                left =leftArray[queueMax];
+            } else {
+                top = topArray[i];
+                left = leftArray[i];
+            }
+            addToQueue(i,member,top,left);   
+        }
+    });
+
+    jumpOnScales();
+}
+    
+function extendQueue() {
+    var top = topArray[queueMax];
+    var left = leftArray[queueMax];
+        
+    //if(queueTotalCount<(page-1)*10){
+    //    page=1;
+    //  } 
+        
+    $j.getJSON('/Diary/Club/JSONqueue?page='+page, function(data) {
+        if (data.length === 0) { // if no members are returned go back to the beginning
+            var cloneArray = queueArray;
+            $j.each(cloneArray, function (i, member){
+                queueArray.push(member);
+            });
+            cloneArray = jsondata;
+            $j.each(cloneArray, function (i, member){
+                jsondata.push(member);
+            });
+        }
+            
+        $j.each(data, function (i, member){
+            //i=9;
+            // addToQueue(i,member,top,left);      
+            queueArray.push(member.id);
+        });
+        /* if(page>3){ // need to remove old queue members
+                    //alert('remove oldies');
+                    $j.each(queueArray, function (i, member){
+                        if(i<10*(page-3)){
+                            //alert(member);
+                            removeFromQueue(member);
+                        }
+                    });
+                }*/
+
+        jsondata = $j.merge(jsondata, data);
+    });
+    page++;
+    
+}
+    
+function removeFromQueue(i) {
+       
+    $j('#queueMember'+i).fadeOut('fast', function() {
+        $j('#queueMember'+i).remove();
+    });
+}
+    
+function addToQueue(i,member,top,left,hide){
+    var nameLength = 10;
+        
+       
+    var htmlContent = '<div class="queueMember ';
+    if(member.user_id==userId) htmlContent += 'me'
+    htmlContent += '" id="queueMember'+member.id+'" style="top:'+top+'px;left:'+left+'px;'
+    if(hide==true) htmlContent += 'display:none'
+    htmlContent += '" ><div class="loz">'+ord(i)+' in queue</div><a href="/Diary/Club/Comments?id='+member.id+'"><object data="' + forumurl + '/images/avatars/'+member.avatar+'" width="64" height="64"><img'
+    if(member.user_id==userId)  htmlContent += ' class="myAvatarImg"';
+    htmlContent += ' height="64" width="64" src="'+nutmedia+'media/forum/images/profileimages/sil_3.png" alt="" /></object></a><span>'+member.name.substr(0, nameLength) + (member.name.length > nameLength ? '...' : '')+'</span></div>';
+    $j('#queue').append(htmlContent); 
+}
+
+function moveQueue(back) {
+    if(!moving){
+        moving=true;
+        if(back!=1){ // move forward
+               
+            for (var i = 0; i < queueArray.length; i++) { 
+                var offsetI = i-queuePosition;
+                       
+                        
+                var pos = i;
+                if (pos==queuePosition+1){
+                    removeFromQueue(queueArray[i]);     
+                }
+                        
+                if (pos==queuePosition+queueMax+1){                           
+                    addToQueue(queueMax,jsondata[i],topArray[queueMax],leftArray[queueMax],true); // add the new member   
+                    $j('#queueMember'+queueArray[i]).delay(300).fadeIn(); 
+                            
+                } else if ((pos>queuePosition+1)&&(pos<queuePosition+4)){
+                    $j('#queueMember'+queueArray[i]).animate({
+                        top: $j('#queueMember'+queueArray[i]).position().top-120
+                        }, speed*100, function() {});      
+                            
+                } else if ((pos>queuePosition+3)&&(pos<queuePosition+queueMax+1)) {
+                    $j('#queueMember'+queueArray[i]).animate({
+                        left: $j('#queueMember'+queueArray[i]).position().left-80
+                        }, speed*100, function() {});
+                      
+                } 
+                if (offsetI>1&&offsetI<queueMax+1){
+                    $j('#queueMember'+queueArray[i]+' .loz').html(ord(pos-queuePosition-1)+' in queue');
+                }
+            }
+                    
+            if ((queuePosition+13)==queueArray.length){
+                extendQueue();
+            }
+
+            queuePosition++;
+        } else { // move back
+            if (queuePosition>0){
+                for (var i = 0; i < queueArray.length; i++) {
+                    var offsetI = i-queuePosition+1;
+                    var pos = i;                            
+                 
+                    if (pos==queuePosition){
+                        addToQueue(1,jsondata[i],topArray[1],leftArray[1],true);
+                        $j('#queueMember'+queueArray[i]).fadeIn();
+
+                    }
+                    if (pos==queuePosition+queueMax){
+                        removeFromQueue(queueArray[i]);     
+
+                    }
+                    else if ((pos>queuePosition)&&(pos<queuePosition+3)){
+                        $j('#queueMember'+queueArray[i]).animate({
+                            top: $j('#queueMember'+queueArray[i]).position().top+120
+                            }, speed*100, function() {});
+                                  
+                    }else if(i==0){
+                    }else if ((pos>queuePosition+2)&&(pos<queuePosition+queueMax)) {
+                        $j('#queueMember'+queueArray[i]).animate({
+                            left: $j('#queueMember'+queueArray[i]).position().left+80
+                            }, speed*100, function() {});
+                                    
+                    }
+                    if (offsetI>0&&offsetI<queueMax+2){
+                        $j('#queueMember'+queueArray[i]+' .loz').html(ord(pos-queuePosition+1)+' in queue');
+                    }
+                }
+
+                queuePosition--;
+            }
+        }
+        jumpOnScales();
+
+
+    }
+}
+
+function jumpOnScales() {
+    var member = jsondata[queuePosition];
+    var rosetteGo = false;
+    $j('#scalesMember').fadeOut(500, function() {
+
+        var bbhtml = '<span class="name">'+member.name+'</span><span class="wiDate">'+member.date+'</span><h1 class="fontPrimaryNormal';
+        if ( member.weight_loss_lbs.charAt( 0 ) == '-' ) {
+            bbhtml += ' loss';
+        } else if ( member.weight_loss_lbs.charAt( 0 ) == '0' || member.weight_loss_lbs.charAt( 0 ) == 'S' ){ 
+            bbhtml += ' sts';
+            member.weight_loss_lbs = 'STS';
+            member.weight_loss_kg = 'stayed the same';
+        }
+        else if (member.weight_loss_lbs.charAt( 0 ) != '+') {
+            member.weight_loss_lbs= '+'+member.weight_loss_lbs
+        }
+        bbhtml += '">'+member.weight_loss_lbs+' <small>('+member.weight_loss_kg+')</small></h1>';
+        if ( member.comment != '' ) bbhtml += '<p>&ldquo;'+member.comment+'&rdquo;</p>';
+        bbhtml += '<div class="slug"><a class="likes" id="likes'+member.id+'" ';
+        if ( member.user_id==userId ) bbhtml += ' style="cursor:default;text-decoration:none"';
+        bbhtml += ' onclick="';
+        if ( !profileExists ) {bbhtml += 'likeWeighin(-1);';}
+        else if ( member.user_id!=userId ) {bbhtml += 'likeWeighin('+member.id+');';}
+        bbhtml +=  'return false;" href="">'+member.likes+'</a><span class="comment">';
+        bbhtml += '<a onclick="postCongratsModal('+member.id+')" href="#url">Post congratulation</a></span></div> ';
+        if ( Math.floor((Math.random()*3)+1)==2 ) {
+        //bbhtml +='<img id="trophyGold" style="width:85px;display:none" src="/media/images/diary/club/1stone.gif" ></div>';
+        //rosetteGo = true;
+        }
+                    
+        $j('#blackboard').html(bbhtml);
+        $j('#scalesMember span').html(member.name);
+        $j('#scalesMember #img').html('<object data="' + forumurl + '/images/avatars/'+member.avatar+'" width="70" height="70"><img height="70" width="70" src="' + nutmedia + 'media/forum/images/profileimages/sil_3.png" /></object>');
+        $j('#scalesMember').fadeIn(500, function() {
+            moving=false;
+        });
+     //   Cufon.replace('.cufon', {});
+      //  Cufon.now();
+                
+        //rosette
+        if (rosetteGo){
+            $j('#trophyGold').show();
+            $j('#trophyGold').animate({
+                top: '-=' + $j('#trophyGold').height() / 2,
+                left: '-=' + $j('#trophyGold').width() / 2,
+                width: $j('#trophyGold').width() * 2
+            }, 300, function(){
+                $j('#trophyGold').delay(900).fadeOut("slow");
+            });
+        }
+    });
+
+}
+
+function queuePlayPause() {
+    if(paused){
+        $j('#playPause').css('background-image','url("/media/images/diary/club/pause.gif")');
+        $j('#playPause').html('Pause');
+        moveQueue();
+        interval = setInterval(moveQueue, 5000);
+        paused=false;
+    } else {
+        queuePause()
+    }
+
+    return false;
+}
+
+function queuePause(){
+    if (typeof interval!="undefined"){
+        $j('#playPause').css('background-image','url("/media/images/diary/club/play.gif")')
+        $j('#playPause').html('Play');
+        clearInterval(interval);
+        paused=true;
+    }
+}
+
+function ord(n) {
+    var sfx = ["th","st","nd","rd"];
+    var val = n%100;
+    return n + (sfx[(val-20)%10] || sfx[val] || sfx[0]);
+}
+        
+function selectAvatar(num) {
+    newAvatar = num;
+        
+    // $j('#avatarSlot').css('background-image','url(\'/media/images/diary/club/'+num+'.gif\')');
+    jQuery('#avatarSlotImg').attr('src','/media/images/diary/club/'+num+'.gif');
+        
+    $j('.avatarBox').each(function(index) {
+        $j(this).removeClass('selected')
+    });
+
+    $j('#avatarBox'+num).addClass('selected');
+        
+    if(jQuery('#avatarInput').length)
+        jQuery('#avatarInput').val(num);
+} 
+    
+function showClubComments(id){
+        
+    jQuery('#scLink'+id).hide();
+    jQuery('#hcLink'+id).show();
+        
+    ajax_UpdaterURLComplete('/Weighin/Ajax/Comments?id='+id,'insertComments'+id,function () { 
+        jQuery('#weighinComment'+id).fadeIn(); 
+    });
+}
+    
+function hideClubComments(id){
+    jQuery('#scLink'+id).show();
+    jQuery('#hcLink'+id).hide();
+    jQuery('#weighinComment'+id).fadeOut();
+}
+
+function memberNameKey() {
+    if (typeof(memberKeyInt) != "undefined") clearTimeout(memberKeyInt);
+    memberKeyInt=setTimeout(function(){
+        checkMemberName()
+        },600);
+}
+function checkMemberName() {
+    if (jQuery('#memberNameInput').val().length>0) {
+        //alert($('memberNameInput').value) 
+        new Ajax.Request('/Weighin/Ajax/JSONnameExists', {
+            method:'post',
+            parameters: {
+                memberName: jQuery('#memberNameInput').val()          
+            },
+            requestHeaders: {
+                Accept: 'application/json'
+            },        
+            onSuccess: function(transport){
+                var json = transport.responseText.evalJSON(true);
+                if(json.exists){
+                    jQuery('#memberNameTaken').show();
+                    jQuery('#memberNameInput').css('background-color','#FFA6AC');
+                    nameAvailable = false;
+                } else {
+                    nameAvailable= true;
+                    memberName = json.membername;
+                    jQuery('#memberNameTaken').hide();
+                    jQuery('#memberNameInput').css('background-color','#fff');
+                }
+            }
+        });
+       
+    } else {
+        jQuery('#memberNameTaken').hide();
+        jQuery('#memberNameInput').css('background-color','#fff');
+    }
+}
+
+function createMember() {
+    
+    if (verifyCreateMember()) {
+        
+        document.forms['createProfile'].submit();
+    }
+  
+}
+
+function saveAvatar(){
+    new Ajax.Request('/Weighin/Ajax/JSONsaveAvatar', {
+        method:'post',
+        parameters: {
+            avatar: newAvatar          
+        },
+        requestHeaders: {
+            Accept: 'application/json'
+        },        
+        onSuccess: function(transport){
+            jQuery("#modalSelectAvatar").modal("toggle");
+        }
+    });
+}
+
+function startAvatarUpload(){
+    $('avatarUploadDiv').hide(); 
+    $('avatarUploadLoading').show(); 
+}
+function stopAvatarUpload(json){
+    $('avatarUploadLoading').hide(); 
+    $('avatarUploadButton').show(); 
+    ajax_remove('searchTarget','pane_search_extend'); 
+    $('myProgress').show(); 
+    setCurrentUserAvatar(json.image1);
+}
+
+function setCurrentUserAvatar(avatar){
+    $$('.myAvatar').each(function(s){ 
+        s.setStyle({
+            backgroundImage: 'url(\'/images/avatars/'+avatar+'\')'
+            });
+    });
+    $$('.myAvatarImg').each(function(s){
+        s.src = '/images/avatars/'+avatar;
+    });
+    currentUserAvatar = avatar;
+   
+}
+
+function textCounter( field, countfield, maxlimit ) {
+    if ( field.value.length > maxlimit ) {
+        field.value = field.value.substring( 0, maxlimit );
+        field.blur();
+        field.focus();
+        return false;
+    } else {
+        countfield.value = maxlimit - field.value.length + ' characters left';
+    }
+}
+
+function likeWeighin(id) {
+    if (id<0){
+         jQuery("#modalLikeNoID").modal("toggle");
+    } else {
+            new Ajax.Request('/Weighin/Ajax/JSONlike', {
+                method:'post',
+                parameters: {
+                    socialID: id          
+                },
+                requestHeaders: {
+                    Accept: 'application/json'
+                },        
+                onSuccess: function(transport){
+
+                    if (transport.responseText.length == 1){
+                        jQuery("#modalLikedAlready").modal("toggle");
+                    } 
+                    var json = transport.responseText.evalJSON(true);
+
+                    if(json){
+                        if ($("likes"+id) != undefined) {
+                            $("likes"+id).update(json.likecount);
+                        }
+                        if ($("sideLikes"+id) != undefined) {
+                            $("sideLikes"+id).update(json.likecount);
+                        }
+                    } else {
+
+                    }
+                }
+            });
+    }
+}
+
+function addFriend(id,name) {
+    new Ajax.Request('/Weighin/Ajax/JSONaddFriend', {
+        method:'post',
+        parameters: {
+            friendID: id          
+        },
+        requestHeaders: {
+            Accept: 'application/json'
+        },        
+        onSuccess: function(transport){
+            jQuery("#friendAddedName").html(name);
+            jQuery("#modalAddToFriends").modal("toggle");
+        }
+    });
+}
+
+function addWeighinComment(id,user,avatar) {
+    var comment = jQuery("#commentField"+id).val();
+
+    if(comment == ""){
+        alert("Please add a comment");
+        return false;
+    }
+    new Ajax.Request('/Weighin/Ajax/JSONcomment', {
+        method:'post',
+        parameters: {
+            socialID: id,
+            comment: comment
+        },
+        requestHeaders: {
+            Accept: 'application/json'
+        },        
+        onSuccess: function(transport){
+            //  var json = transport.responseText.evalJSON(true);
+            //   if(json.result=='success'){
+                   
+                      
+            ajax_UpdaterURLComplete('/Weighin/Ajax/Comments?id='+id,'insertComments'+id,function (){
+                jQuery("#commentField"+id).val("");
+                objDiv.scrollTop = objDiv.scrollHeight;
+            });
+                   
+                   
+        //  }
+        }
+    });
+}
+
+function getQueuePosition(id)
+{
+    for(var i=0;i<jsondata.length;i++){ 
+        if(jsondata[i].id==id)
+            return i;
+    }
+}
+Array.prototype.move = function (old_index, new_index) {
+    if (new_index >= this.length) {
+        var k = new_index - this.length;
+        while ((k--) + 1) {
+            this.push(undefined);
+        }
+    }
+    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
+    return this; // for testing purposes
+};
+
+function openAvatarUpload(){
+    jQuery("#avatarUploadDiv").show(); 
+    jQuery("#avatarUploadButton").hide(); 
+}
+
+function closeAvatarUpload(){
+    jQuery("#avatarUploadDiv").hide(); 
+    jQuery("#avatarUploadButton").show(); 
+}
+
+function emoticon(text) {
+    var textarea = jQuery('#commentField'+currentComment);
+    textarea.focus();
+    text = ' ' + text + ' ';
+    if (textarea.value=='Add reply') {
+        textarea.value='';
+        textarea.style.color='#000000';
+    }
+    if ( textarea.createTextRange &&  textarea.caretPos) {
+        textarea.focus();
+        textarea.val(textarea.val()+text);
+    } else {
+        textarea.focus();
+        textarea.val(textarea.val()+text); 
+    }
+    hideEmoticons();
+}
+
+function showEmoticons(num) {
+    currentComment = num;
+    jQuery("#modalEmoticons").modal("show");
+}
+
+function hideEmoticons() {
+    jQuery("#modalEmoticons").modal("hide");
+}
+
+function changeQueue(v){
+    ajax_UpdaterURLComplete('/Weighin/Ajax/ClubPanel?id='+v.value,'clubMembers',function (){
+        });
+}
+
+function changeComments(v){
+    window.location.href = '/Diary/Club/Comments?friends='+v.value;
+}
+
+function verifyCreateMember() {
+  
+    if(jQuery('#memberNameInput').length){
+        if(jQuery('#memberNameInput').val() == ''){
+            alert('please enter a name');
+            return false;
+        }
+        if(nameAvailable == false){
+            alert('please chose an available name');
+            return false;
+        }
+    }
+    
+    if (jQuery('#postcodeInput').length) {
+        if(jQuery('#postcodeInput').val()==''){
+            alert('please enter a postcode');
+            return false;
+        }
+    }
+        
+    return true;
+    
+}

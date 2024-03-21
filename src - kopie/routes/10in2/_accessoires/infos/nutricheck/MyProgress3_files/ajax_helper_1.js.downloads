@@ -1,0 +1,177 @@
+
+function alert_err(transport)
+{
+
+    if(transport.status==401)
+       window.location.href="/Home?errorMsg=Session expired";
+    else
+        alert("ajax error");
+
+}
+
+function ajax_fail(jqXHR){
+    if(jqXHR.status==401 || jqXHR.status==403){
+        window.location.replace("/Support/Login");
+    } else {
+        basicAlert("Whoops, there has been an error.");
+    } 
+}
+
+function displaySearch(){
+	//Dummy
+}
+
+function ajax_Submit(name,onsuccess,onfailure,action,validate){
+    if(action=='validate'){
+        if(! validate(name))
+        return false;
+    }
+
+    var f = jQuery("#"+name);
+    if(f.length){
+        jQuery.ajax({
+            method:'post',
+            url:f.attr("action"),
+            data:f.serialize(),
+            success: function(data){
+                if(!(onsuccess==undefined || onsuccess=='' || onsuccess==null)){
+                  onsuccess(data);
+                }
+            },
+            error: function(jqXHR){
+                if(!(onfailure==undefined || onfailure=='' || onfailure==null)){
+                  onfailure(jqXHR);
+                }
+            }
+        });
+    }
+    return false;
+}
+
+function ajax_serialiseFormSubmit(params,endpoint,funcSuccess){
+    
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000; 
+    var localISOTime = (new Date(Date.now() - tzoffset)).toISOString();     
+    
+    jQuery.ajax({
+        type:'post',
+        url:endpoint,  
+        dataType: 'json',	
+        data:params,
+        headers: {   
+            'X-Local-timestamp': localISOTime,
+            'Access-Control-Allow-Headers': 'X-Local-timestamp'
+        }         
+    }).done(function(){
+        if(!(funcSuccess==undefined || funcSuccess=='' || funcSuccess==null)){
+            funcSuccess();
+        }  
+    }).fail(function(jqXHR, textStatus, errorThrown){
+         ajax_fail(jqXHR);
+    }); 
+}
+
+function ajax_jsonSubmit(params,endpoint,funcSuccess){
+    
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000; 
+    var localISOTime = (new Date(Date.now() - tzoffset)).toISOString();     
+    
+    jQuery.ajax({
+        type:'post',
+        url:endpoint,  
+        dataType: 'json',
+        contentType: 'application/json', 
+        data:params,
+        headers: {   
+            'X-Local-timestamp': localISOTime,
+            'Access-Control-Allow-Headers': 'X-Local-timestamp'
+        }         
+    }).done(function(){
+        if(!(funcSuccess==undefined || funcSuccess=='' || funcSuccess==null)){
+            funcSuccess();
+        }  
+    }).fail(function(jqXHR, textStatus, errorThrown){
+         ajax_fail(jqXHR);
+    }); 
+}
+
+function ajax_Get(url,funcSuccess){
+    jQuery.ajax({
+        url: url,
+        type: "get",
+        success: function(data){
+            if(!(funcSuccess=="undefined" || funcSuccess == null || funcSuccess=="")){
+                funcSuccess(data);
+            }
+        },
+        error: function(jqXHR){
+            ajax_fail(jqXHR);
+        }
+    });      
+}
+
+function ajax_UpdaterURL(url,id,funcSuccess){
+    jQuery.ajax({
+       url: url,
+       type: "get",
+       dataType: "text",
+       success: function(data){
+         jQuery("#"+id).html(data);
+         if(!(funcSuccess=="undefined" || funcSuccess == null || funcSuccess=="")){
+             funcSuccess();
+         }
+       },
+       error: function(jqXHR){
+         ajax_fail(jqXHR);
+       }
+    });   
+}
+
+function ajax_PostURL(url,funcSuccess){
+    jQuery.ajax({
+       url: url,
+       type: "post",
+       success: function(){
+         if(!(funcSuccess=="undefined" || funcSuccess == null || funcSuccess=="")){
+             funcSuccess();
+         }
+       },
+       error: function(jqXHR){
+         ajax_fail(jqXHR);
+       }
+    });   
+}
+
+function ajax_UpdaterURLComplete(url,id,funcComplete) {
+	new Ajax.Updater(
+	{success: id},
+	url,
+	{method: 'get',  onFailure: alert_err, onComplete: funcComplete,evalScripts: true});
+	return false;
+}
+
+function ajax_Delete(endpoint,funcSuccess){
+    jQuery.ajax({
+        type:'Delete',
+        url:endpoint               
+    }).done(function(){
+        if(!(funcSuccess=="undefined" || funcSuccess == null || funcSuccess=="")){
+            funcSuccess();
+        }
+    }).fail(function(jqXHR){
+        ajax_fail(jqXHR); 
+    }); 
+}
+
+function ajax_remove(parent,id){
+    jQuery("#"+parent).html("");
+    return false;
+}
+ 
+function log(message){
+    if(typeof console == "object"){
+        console.log(message);
+    }
+}
+
+

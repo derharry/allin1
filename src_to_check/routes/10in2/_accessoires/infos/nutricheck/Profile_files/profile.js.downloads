@@ -1,0 +1,790 @@
+var ascending = true;
+var error = "";
+var DEBUG=false;
+var advicegiven = 0;
+
+function changeTarget()
+{
+    var f;
+    var ismaintain = false;
+
+    f = document.forms["fsignin"];
+    if(getGoal(f)===2) ismaintain = true;
+
+    if(ismaintain){
+        listClear(f.cmbtarget);
+        addOption = new Option("Select Goal Weight" ,"0" );
+        f.cmbtarget.options[0] = addOption;
+        weight= getWeight(f);
+        height=getHeight(f);
+        
+        if(weight!==0)
+        {
+            if(isMetricWeight(f))
+            {
+                addOption = new Option(f.txtweight1.value + 'kg ',weight);
+                f.cmbtarget.options[1] = addOption;
+            }
+            else if(jQuery('#displayWeight').val()===2)
+            {
+                addOption = new Option(f.txtweight2.value + 'lbs',weight);
+                f.cmbtarget.options[1] = addOption;
+            }
+            else 
+            {
+                addOption = new Option(f.txtweight1.value + 'st ' + (f.txtweight2.value===''?0:f.txtweight2.value) + 'lbs',weight);
+                f.cmbtarget.options[1] = addOption;
+            }
+            f.cmbtarget.selectedIndex=1;
+        }
+        else{
+            f.cmbtarget.selectedIndex=0;
+        }
+        
+    } else {
+        if(getGoal(f)===1){
+
+            if(f.C1){
+                if(jQuery("#goalratetxt").length){
+                    jQuery("#goalratetxt").text("loss");
+                } else {
+                    jQuery("#wtgainPerWeekB").show();    
+                }
+            }
+        }
+
+        if(getGoal(f)===3){
+            if(f.C1){
+                if(jQuery("#goalratetxt").length){
+                    jQuery("#goalratetxt").text("gain");
+                } else {
+                    jQuery("#wtgainPerWeekB").hide();
+                }                        
+            }
+        }
+        loadTargetWeight();
+    }
+}
+
+function getGoal(f){
+    //0 not set 1 = lose  2= maintain 3 = gain
+    var isarray;
+    try
+    {
+        isarray = f.optgoal.length;
+    }
+    catch(err) {}
+    if(typeof(isarray)==="undefined") isarray=0;
+    if(isarray===0)
+    {
+        return f.optgoal.value;
+    }
+    else
+    {
+        if (!(f.optgoal[0].checked || f.optgoal[1].checked || f.optgoal[2].checked))
+        {
+            return 0;
+        }
+        if(f.optgoal[0].checked) return 1;
+        if(f.optgoal[1].checked) return 2;
+        if(f.optgoal[2].checked) return 3;
+    }
+    return 0;
+}
+
+function listClear(cmb){
+    if(cmb){
+        for (var i = cmb.options.length - 1; i >= 0; i--){
+            cmb.options[i] = null;
+        }
+        cmb.selectedIndex = -1;
+    }
+}
+
+
+function loadTargetWeight(){
+    
+    var f;
+    var minTarget;
+    var maxTarget;
+    var numItems = 0;
+    var selectednum=-1;
+    var weight, percentage;
+    var tweight=0;
+    var goaltxt ="loss";
+
+    f = document.forms["fsignin"];
+
+    if(f.tweight){
+        if(f.tweight.value>0)
+            tweight = f.tweight.value;
+    }    
+
+    var gw = f.cmbtarget;
+
+    listClear(gw);
+
+    if(!isDataOK(f) && getGoal(f)!==3)
+    {
+        addOption = new Option("Select Goal Weight" ,"0" );
+        gw.options[numItems++] = addOption;
+        return;
+    }
+
+    minTarget=parseInt(minWeight(f));
+
+    maxTarget=parseInt(maxWeight(f));
+
+    if(getGoal(f)===3){
+        goaltxt="gain"; 
+        ascending =false;
+        minTarget=parseInt(getWeight(f)); // this line is getting in grams should get kg as * by 1000 below;
+        if(isMetricWeight(f)) minTarget = minTarget / 1000; 
+    }  else{
+        goaltxt="loss"; 
+        ascending =true;
+    }
+
+    addOption = new Option("Select Goal Weight" ,0 );
+    gw.options[numItems++] = addOption;
+
+    if(minTarget===0||maxTarget===0) return;
+    var i,kg,g;
+    weight = getWeight(f);
+
+    if(isMetricWeight(f))
+    {
+        minTarget = minTarget * 1000;
+        maxTarget = maxTarget * 1000;
+
+        if(getGoal(f)===3){                    
+            if((weight + weight/5) < maxTarget)
+            {
+                    minTarget = weight;
+                    maxTarget = weight + weight/5;
+            }
+            if((weight)>maxTarget) {
+                    maxTarget = weight;                   
+                    minTarget = weight;
+            }
+        }else{
+
+            if((weight - weight/5)>minTarget)
+            {
+                    minTarget = weight - weight/5;
+                    maxTarget = weight;
+            }
+            if((weight)<maxTarget)
+                    maxTarget = weight;
+        }                
+
+        if(ascending)
+        {
+            for (i = maxTarget; i >= minTarget; i=i-200){
+                percentage = -Math.floor((weight-i) * 100 /weight);
+                kg = i/1000;
+                addOption = new Option(kg + ' Kg   (' + percentage + '% '+goaltxt+')',i );
+                gw.options[numItems++] = addOption;
+                if(i==tweight)
+                        selectednum = numItems-1;
+            }
+        }
+        else
+        {
+            for (i = minTarget; i <= maxTarget; i=i+200){
+                percentage = -Math.floor((weight-i) * 100 /weight);
+                kg = i/1000;
+                addOption = new Option(kg + ' Kg   (' + percentage + '% '+goaltxt+')',i );
+                gw.options[numItems++] = addOption;
+                if(i==tweight)
+                    selectednum = numItems-1;
+            }
+        }
+        i--;
+    }
+    else
+    {
+        //minTarget = Convert_kg_lbs(minTarget);
+        //maxTarget = Convert_kg_lbs(maxTarget);
+
+        if(getGoal(f)===3){                    
+            if((weight + weight/5) < maxTarget){
+                minTarget = weight;
+                maxTarget = weight + weight/5;
+            }
+
+            if((weight)>maxTarget)
+                    maxTarget = weight;                    
+        }else{
+            if((weight - weight/5)>minTarget){
+                minTarget = weight - weight/5;
+                maxTarget = weight;
+            }
+            if((weight)<maxTarget)
+                    maxTarget = weight;
+        }
+
+        minTarget = Math.floor(minTarget);
+        maxTarget = Math.floor(maxTarget);             
+
+        if(ascending)
+        {
+            for (i = maxTarget; i >= minTarget; i--){
+                percentage = Math.floor((weight - i) * 100 /weight );
+                if(jQuery('input[name="displayWeight"]').val()==='2'){
+                    addOption = new Option(Math.floor(i) + 'lbs   (' + percentage + '% '+goaltxt+')',i );
+                } else {
+                    addOption = new Option(Math.floor(i/14) + 'st ' + (i % 14) + 'lbs   (' + percentage + '% '+goaltxt+')',i );
+                }    
+                gw.options[numItems++] = addOption;
+          
+                if(i==tweight){
+                    selectednum = numItems-1;
+                }
+                        
+            }
+        }
+        else
+        {
+            for (i = minTarget; i <= maxTarget; i++){
+                percentage = Math.floor((weight - i) * 100 /weight );
+                if(getGoal(f)===3){
+                    percentage = Math.floor((i-weight) * 100 /weight);  
+                } else{
+                    percentage = Math.floor((weight - i) * 100 /weight );
+                }
+                if(jQuery('input[name="displayWeight"]').val()==='2'){
+                    addOption = new Option(Math.floor(i) + 'lbs   (' + percentage + '% '+goaltxt+')',i );
+                } else {
+                    addOption = new Option(Math.floor(i/14) + 'st ' + (i % 14) + 'lbs   (' + percentage + '% '+goaltxt + ')',i );
+                }    
+
+                gw.options[numItems++] = addOption;
+
+                if(i==tweight)
+                        selectednum = numItems-1; 
+            }
+        }
+        i--;
+    }
+
+    f.min_weight.value=minTarget;
+    f.max_weight.value=i;
+    if(selectednum===-1) selectednum=0;
+    gw.selectedIndex= selectednum;
+}
+
+function checkAge(f){
+
+    if (f.txtage.value===''){
+        basicAlert('Please enter your age.','','basicAlertRoundedBtn bootstrap_migrate');             
+        return false;
+    }
+
+    if(parseInt(f.txtage.value)<18){
+        basicAlert('You must be over 18 years to use Nutracheck as the service uses adult nutritional guidelines.','','basicAlertRoundedBtn bootstrap_migrate');                 	
+        return false;
+    }
+
+
+    if(parseInt(f.txtage.value)>99){
+        basicAlert('Please check the age you have inputted as it looks a little high.','','basicAlertRoundedBtn bootstrap_migrate');                  	
+        return false;
+    }   
+    
+    return true;
+}
+
+function checkSex(f){
+    if(f.optsex[0]){
+        if (!(f.optsex[0].checked || f.optsex[1].checked)){
+            basicAlert('Please indicate your sex.','','basicAlertRoundedBtn bootstrap_migrate');
+            return false;
+        }
+    }
+    return true;
+}
+
+function checkWt(f){
+
+    weight = getWeight(f);
+    
+    if (isMetricWeight(f))
+    {
+
+        if ((weight < 40000) || (weight > 254000)){
+            basicAlert('The weight range currently accepted by the system is 40kg and 254kg. If this is a problem, please contact us.','','basicAlertRoundedBtn bootstrap_migrate');                   
+            return false;
+        }
+
+    } else {
+        if ((weight < 88) || (weight > 560)){
+            var acceptedweightrange="6st 4lbs to 40st";
+            if(f.displayWeight.value=="2"){
+                acceptedweightrange="88lbs to 560lbs";
+            }
+            basicAlert('The weight range currently accepted by the system is '+acceptedweightrange+'. If this is a problem, please contact us.','','basicAlertRoundedBtn bootstrap_migrate');                        
+            return false;
+        }
+    }
+    return true;
+}   
+
+function checkHt(f){
+    height = getHeight(f);
+
+    if (isMetricHeight(f)){
+        if ((height < 130) || (height > 240)){
+            basicAlert('The height range currently accepted by the system 1m 30cm and 2m 40cm. If this is a problem, please contact us.','','basicAlertRoundedBtn bootstrap_migrate');                 
+            return false;
+        }
+    }  else {
+        if ((height < 51) || (height > 94)){
+            basicAlert('The height range currently accepted by the system is 4ft 3in to 7ft 10in. If this is a problem, please contact us.','','basicAlertRoundedBtn bootstrap_migrate');                 
+            return false;
+        }
+    }
+    return true;
+}
+
+function getWeight(f)
+{
+    if(isMetricWeight(f)){
+        if(f.txtweight1.value==='') return 0;
+            return (parseInt(f.txtweight1.value) * 1000);
+    }
+    else
+    {
+        return (parseInt(f.txtweight1.value==='' ? 0 : f.txtweight1.value) * 14) + parseInt(f.txtweight2.value===''?0:f.txtweight2.value);
+    }
+}
+
+function isMetricWeight(f){
+    var obj = f.displayWeight;
+    if (obj !== null)
+    {
+        return (obj.value === "1");
+    }
+    else
+    {
+        var obj = f.ismetric;
+        if (obj !== null)
+        {
+            return (obj.value === "1");
+        }
+    }
+    return false;
+}
+
+function getHeight(f){
+    var h1 = f.txtheight1.value;
+    var h2 = f.txtheight2.value;
+    if(h1==='') h1="0";
+    if(h2==='') h2="0";
+
+    if(isMetricHeight(f)){
+        return (parseInt(h1) * 100) + parseInt(h2);
+    }
+    else{
+        return (parseInt(h1) * 12) + parseInt(h2);
+    }
+}
+
+function isMetricHeight(f){	
+    var obj =f.displayHeight;
+    if (obj!==null)
+    {
+        return (obj.value==="1");
+    }
+    else
+    {
+        var obj =f.ismetric;
+        if(obj!==null)
+        {
+            return (obj.value==="1");
+        }    
+    }
+    return false;
+}
+
+function checkMedical(f){
+    var val=0;
+
+    for(i=0;i<f.healthstatus.length;i++){
+        if(f.healthstatus[i].checked)
+            val = parseInt(f.healthstatus[i].value);
+    }
+
+    if(val === 1 && f.medicalPregnant.value === '0'){
+        jQuery("#modalPregnant").modal("show");   
+        return false;
+    }
+
+    if(val === 2 && f.medicalBreastEx.value === '0'){
+        jQuery("#modalBreastExclusive").modal("show");   
+        return false;
+    }
+
+    if(val === 4 && f.medicalBreastNonEx.value === '0'){
+        jQuery("#modalBreastNonExclusive").modal("show");         
+        return false;
+    }
+    if(val === 3){
+         basicAlert("We're sorry, Nutracheck may not be the most appropriate service for you right now. You are advised to consult your "+doctorGP+".",'','basicAlertRoundedBtn bootstrap_migrate');  
+        return false;
+    }        
+
+    return true;
+}     
+
+function fadeInOut(fadeout,fadein){
+    jQuery("#"+fadeout).fadeOut(200, function(){
+        jQuery("#"+fadein).fadeIn(200,function(){
+            jQuery("#"+fadein).find("input:first").focus(); 
+        });
+    }); 
+}  
+
+function resetMedical(){
+    jQuery("input[name='medicalBreastEx']").val("0");
+    jQuery("input[name='medicalBreastNonEx']").val("0");
+    jQuery("input[name='medicalPregnant']").val("0");
+    jQuery('#confirmBreastEx').prop('checked', false);
+    jQuery('#confirmPregnant').prop('checked', false);        
+    jQuery('#confirmBreastNonEx').prop('checked', false);        
+}  
+
+function wtGainAdvice(f){
+
+    bmi =  getBMI(getMetricWeight(f),getMetricHeight(f));
+    targetbmi = getBMI(getMetricTargetWeight(f),getMetricHeight(f));
+    jQuery("input[name='confirmWeightGainAdvice']").attr('checked', false);
+
+    if(isMetricWeight(f)){
+        bmi = bmi / 1000;
+        targetbmi =  targetbmi /1000;
+    }
+
+    if(bmi<20){
+        jQuery("#yourBMIUnder20").text(bmi.toFixed(1));
+        jQuery("#modalBMIUnder20").modal("show");
+        return true;
+    }	
+
+    if(bmi>=25){
+        jQuery("#yourBMICurrentOver25").text(bmi.toFixed(1));
+        jQuery("#modalBMICurrentOver25").modal("show");         
+        return true;
+    }
+
+    if((bmi > 18.5 && bmi < 25) && targetbmi > 25){
+        jQuery("#yourBMITargetOver25").text(bmi.toFixed(1));
+        jQuery("#modalBMITargetOver25").modal("show");              
+        return true;
+    }
+    
+    if((bmi > 18.5 && bmi < 25) && targetbmi <= 25){
+        jQuery("input[name='continueweightgain']").val("1");              
+        return true;
+    }    
+    
+    return false;
+}
+
+function getMetricHeight(f){
+    var h1 = f.txtheight1.value;
+    var h2 = f.txtheight2.value;
+    if(h1==='') h1="0";
+    if(h2==='') h2="0";
+
+    if(isMetricHeight(f)){
+        return (parseInt(h1) * 100) + parseInt(h2);
+    } else { 
+        return 2.54 * ((parseInt(h1) * 12) + parseInt(h2)) ;
+    } 
+}
+
+function getMetricWeight(f){
+    if(isMetricWeight(f)){
+        if(f.txtweight1.value==='') return 0;
+            return (parseInt(f.txtweight1.value) * 1000);
+    } else {
+         return (((parseInt(f.txtweight1.value==='' ? 0 : f.txtweight1.value) * 14) + parseInt(f.txtweight2.value===''?0:f.txtweight2.value))  * 0.453592).toFixed(0);
+    }
+}
+function getMetricTargetWeight(f){
+    targetweight = f.cmbtarget.value;
+    if(!isMetricWeight(f)){
+        targetweight = (targetweight * 0.453592).toFixed(0);
+    }
+    return targetweight;
+}
+
+function checkTarget(f){
+    
+    if(f.cmbtarget.length==1){
+        basicAlert('Our system has been unable to calculate a target weight. This is usually due to you entering an incorrect weight/height or to your Body Mass Index being lower than the acceptable level for further weight loss to be recommended, hence why registration with our service is prevented. If you have an issue with your weight, please consult your doctor.','','basicAlertRoundedBtn bootstrap_migrate');                
+        return false;
+    }
+    
+    if(f.cmbtarget.selectedIndex<=0){
+        basicAlert('Please enter a target weight.','','basicAlertRoundedBtn bootstrap_migrate');              
+        return false;
+    }
+    
+    var bmi,targetweight,targetbmi;
+    targetweight = f.cmbtarget.value;
+
+
+    bmi =  getBMI(getMetricWeight(f),getMetricHeight(f));
+    targetbmi = getBMI(getMetricTargetWeight(f),getMetricHeight(f));
+
+    if(getGoal(f) != "3"){
+        if(bmi<=18.5 || targetbmi<=18.5){
+            basicAlert("Our system has calculated that your Body Mass Index is below 18.5. Weight loss isn't recommended so our diet service isn't allowing you to continue with your registration at present. If you are concerned about your weight or would like to gain weight, we suggest you speak to your doctor who will be able to advise on the best dietary approach for you.",'','basicAlertRoundedBtn bootstrap_migrate');        
+            return false;
+        }
+    }
+    return true;
+}
+
+function isDataOK(f){
+    height= getHeight(f);
+    weight = getWeight(f);
+    if(isMetricHeight(f)){
+        if(height<130 || height>240) return false;
+    }
+    else{
+        if(height<51 || height>94) return false;
+    }
+    if(isMetricWeight(f)){
+        if(weight<40000 || weight>254000) return false;
+    }
+    else{
+        if(weight<88 || weight>560) return false;
+    }
+    return true;
+}
+
+function checkGoal(f){
+    if(getGoal(f)===0){
+        alert('Please enter your goal!');
+        return false;
+    }
+    return true;
+}
+
+function minWeight(f){
+    var height = getMetricHeight(f);
+    if(isMetricWeight(f))
+        return ((18.5 * height * height /10000 ) ).toFixed(0);
+    else{
+        return ((18.5 * height * height /10000) / 0.4536).toFixed(0); 
+    }		
+}
+
+function maxWeight(f){
+    maxbmi = 24.99;
+    if(getGoal(f)==3) maxbmi=34.99;
+    var height = getMetricHeight(f);
+    if(isMetricWeight(f)){
+            return parseInt(maxbmi * height * height /10000);
+    }else{
+            return parseInt(maxbmi * height * height /10000 / 0.4536);
+    }        
+}
+
+function getBMI(metricweight,metricheight){
+   return (metricweight) / (metricheight * metricheight / 10000);
+}
+
+function submitCreateProfile(){
+    jQuery("#timezoneprofile").val(getLoginTime());
+    f = jQuery('form[name="fsignin"]');
+    f.submit();
+
+    return false;
+}
+
+function checkBreastFreeding(){
+    feeding = false;
+    
+    if(jQuery('#breastexclusive').val()==='1' || jQuery('#breastnonexclusive').val()==='1'){
+        feeding = true;
+    }
+    return feeding;
+}
+
+function checkDetails(formname,flag)
+{
+    if(validDetails(formname, flag))
+         jQuery("#"+formname).submit();
+}
+function validDetails(formname, flag)
+{
+    jQuery("#detailserrors").html("");
+    jQuery("#termserrors").html("");
+
+    var error = "";
+    var valid = true;
+    
+    if(flag === true)
+    {
+        var f = document.forms[formname];
+
+        if(!checkRadio(formname,'membershipID'))
+        {    
+            if(jQuery("input[name=additional]").length>0 || jQuery("input[name=additionalBook]").length>0)
+            {
+                if (jQuery("input[name=additional]:checkbox:checked").length === 0 && jQuery("input[name=additionalBook]:checkbox:checked").length === 0)
+                 error += "<li><strong>Please select your membership type or an item to purchase</strong></li>";
+            }
+            else
+            {
+                error += "<li><strong>Please select your membership type</strong></li>";
+            }
+        }    
+
+        if(!validAccountDetails(formname, flag))
+        valid = false;
+    
+        if(error.length > 0)
+        {
+            jQuery("#detailserrors").html("<ul>"+error+"</ul>");
+            valid = false;
+        }
+
+        if(jQuery("#privacyconsent").length > 0){
+        if (!jQuery('#tsandcs').prop('checked')||!jQuery('#privacyconsent').prop('checked')){
+            jQuery("#termserrors").html("<ul><li><strong>In order to register and use the Nutracheck service, please ensure both boxes are ticked. If you prefer to withhold consent, we will unfortunately be unable to process your data and complete your registration to use the Nutracheck service.</strong></li></ul>");
+            valid = false;
+        }
+        }	
+
+    }
+    return valid;
+}
+
+function validAccountDetails(formname, flag)
+{  
+    jQuery("#accounterrors").html("");
+    var error = "";
+    var valid = true;
+
+    if(flag === true)
+    {
+
+        var fname = jQuery("input[name='firstname']").val(); 
+        if(fname != null){
+            if(fname === "")  error += "<li><strong>Please enter your Firstname</strong></li>";
+        }
+
+        var email = jQuery("input[name='email']").val();
+        if(email != null){
+            if(email === ''){
+                error += "<li><strong>Please enter your Email</strong></li>";
+            } else  {
+                if(!emailCheck(email))
+                    error += "<li><strong>Please enter a valid Email</strong></li>";
+            }
+        }    
+         
+           
+        var pas = jQuery("input[name='password']").val();
+        if(pas!=null){
+            if(pas === ''){
+                error += "<li><strong>Please enter your password</strong></li>";
+            } else {
+                if(pas.length<6)
+                    error += "<li><strong>Please enter at least 6 characters for your password</strong></li>";
+            }
+        }    
+ 
+        var heard = jQuery("select[name='txtheard']").val();
+        if(heard!=null){
+            if(heard === ''){
+                error += "<li><strong>Please select how you heard about us</strong></li>";
+            }	
+        }
+
+       if(error.length > 0)
+       {
+           jQuery("#accounterrors").html("<ul>"+error+"</ul>");
+           valid = false;
+       }
+
+    }
+    return valid;
+}
+
+function checkRadio (frmName, radioName) {
+    var radios = document[frmName].elements[radioName];
+
+    if(radios)
+    {
+        for (var i=0; i <radios.length; i++)
+        {
+          if (radios[i].checked)
+          {
+             return true;
+          }
+       }
+    }
+    return false;
+}
+
+function emailCheck (emailStr) {
+
+var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+   var address = emailStr;
+   if(reg.test(address) === false) {
+      return false;
+   }
+	return true;
+}
+
+function checkWeekly(f){
+    var maintain = false;
+    var wtgain = false;
+    if(getGoal(f)==2) maintain = true;
+    if(getGoal(f)==3) wtgain = true;
+
+    if(!maintain)
+    {
+        if(f.C1)
+        {
+            if(countChecked(f.name,"C1")==0)
+            {
+                if(wtgain){
+                    jQuery("#modalCheckWeeklyGain").modal("show");
+                } else {
+                   jQuery("#modalCheckWeeklyLoss").modal("show");
+                }    
+                 return false;
+            }
+        }
+    }
+    return true;
+}
+function countChecked(f,check)
+{
+     var frm = document.forms[f]; // or name where the first form is 0
+     var count =0;
+     if(f)
+     {
+        var ele = frm.elements[check];
+        if(ele)
+        {
+            for(i=0; i < ele.length; i++) {
+                if(ele[i].checked) count++;
+            }
+        }
+     }
+    return count;
+
+}
+
+function cancelFP(fpID){
+    jQuery("#paymentCancel").load("/Support/Cancel?fpid="+fpID);
+}
+

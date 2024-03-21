@@ -1,0 +1,289 @@
+#welcomeMiddleCol { border-left: 1px dashed #ccc; padding-left: 18px; }
+
+.welcomeContent { min-height: 147px; }
+
+#weighInArrow { position: absolute; right: -24px; margin-top: 8px; }
+
+#chooseAvater img { border: 1px solid #fff; }
+
+#chooseAvater:hover img { border-color: #dfdfdf; }
+
+#dataMenu.nut_iconList li { background-image: url("//d2lhwe7okuon6r.cloudfront.net/media/images/sprites/weighin_icons.png"); background-repeat: no-repeat; background-size: 23px 426px; }
+
+.nut_iconList .listWeight { background-position: 0 0; }
+
+.nut_iconList .listWaist { background-position: 0 -31px; }
+
+.nut_iconList .listChest { background-position: 0 -62px; }
+
+.nut_iconList .listHips { background-position: 0 -93px; }
+
+.nut_iconList .listThighs { background-position: 0 -124px; }
+
+.nut_iconList .listCalf { background-position: 0 -155px; }
+
+.nut_iconList .listUpperArm { background-position: 0 -186px; }
+
+.nut_iconList .listSize { background-position: 0 -217px; }
+
+.nut_iconList .listNeck { background-position: 0 -248px; }
+
+.nut_iconList .listMuscle { background-position: 0 -279px; }
+
+.nut_iconList .listFat { background-position: 0 -310px; }
+
+.nut_iconList .listBone { background-position: 0 -341px; }
+
+.nut_iconList .listHydra { background-position: 0 -372px; }
+
+.nut_iconList .listOther { background-position: 0 -403px; }
+
+#clubMembersPanel { height: 368px; overflow-y: scroll; margin: 10px 4px 8px 4px; }
+
+#clubMembers { margin-right: 10px; }
+
+#clubMembers a { text-decoration: none; }
+
+#clubMembers p { margin: 10px 5px; text-align: center; }
+
+.clubMemberWeighIn { padding: 4% 0 5% 0; font-size: 24px; }
+
+#headerDeleteEntry { padding: 5px 18px 0 0; }
+
+.dataTable .dataTableHdr { padding-right: 17px; }
+
+.dataTable .scrollwindow { overflow-y: scroll; height: 200px; border-bottom: 1px solid #ccc; }
+
+.dataTable .scrollwindow table tr:last-child td { border-bottom: none; }
+
+.dataTable table { width: 100%; border: 1px solid #ccc; border-bottom: none; }
+
+.dataTable table.dataTableContent { border-top: none; }
+
+.dataTable .dataTableOther tr:nth-child(even) td { background-color: #f7f7f7; }
+
+.dataTable th, .dataTable td { border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 2px 4px 2px 4px; }
+
+.dataTable th { border-bottom: 2px solid #ccc; }
+
+.dataTable .colDate { width: 22%; }
+
+.dataTable .colWeight { width: 22%; }
+
+.dataTable .colSoFar { width: 22%; }
+
+.dataTable .colLeft { width: 22%; }
+
+.dataTable .colDelete { width: 5%; text-align: center; border-right: none; }
+
+.addNewMeasure .addNewHeader { padding-bottom: 8px; }
+
+.addNewMeasure .addNewInputs { padding-bottom: 18px; }
+
+.addNewMeasure .addNewInputs .form-control { margin-right: 2px; }
+
+.addNewMeasure .addNewInputs label { font-weight: normal; }
+
+.addNewMeasure .addNewInputs .inputLBS { margin-left: 8px; }
+
+.addNewMeasure #txtdate { width: 70px; }
+
+#weighincomment { display: none; padding-bottom: 18px; }
+
+.addNewMeasure .commentCharsLeft { margin-bottom: 3px; background: none repeat scroll 0 center transparent; border: 0 none; color: #cd0000; font-weight: bold; }
+
+.addNewMeasure #commentBox { height: 80px; }
+
+#datepicker { width: 75px; }
+
+.tblAwards { width: 100%; margin-bottom: 18px; }
+
+.tblAwards .rowAwardsHdr td { padding-top: 10px; padding-bottom: 6px; }
+
+#addMeasureInput.form-control { width: 40px; }
+
+#showdatepicker { border-bottom: none; display: inline-block; width: 19px; vertical-align: middle; }
+
+@media (min-width: 1200px) { .clubMemberWeighIn { padding: 6% 0 8% 0; } }
+html, body { font-size: 12px; }
+
+.textSmall { font-size: 11px; }
+
+.textDefault { font-size: 12px; }
+
+#SecondaryNav { padding-top: 10px; height: 40px; }
+
+#SecondaryNav a { color: #8d8d8d; text-decoration: none; border-bottom: 1px dotted #8d8d8d; font-size: 11px; }
+
+#SecondaryNav a.active { font-weight: bold; color: #9ac843; border-bottom: 1px solid #fff; }
+
+#SecondaryNav a:hover { border-bottom: 1px solid #fff; }
+
+#SecondaryNav .LeftContent, #SecondaryNav .RightContent, #SecondaryNav .CenterContent { padding-bottom: 0 !important; }
+
+.contentStretch { min-width: 998px; }
+
+.LeftContent, .RightContent { display: block; float: left; position: relative; padding-bottom: 18px; }
+
+.CenterContent { float: left; padding: 0 18px 18px 18px; }
+
+.contentFix .LeftContent, .contentFix .RightContent { width: 178px; }
+
+.contentFix .CenterContent { width: 606px; }
+
+.contentStretch .LeftContent, .contentStretch .RightContent { min-width: 196px; width: 19.6%; }
+
+.contentStretch .LeftContent { padding-left: 18px; }
+
+.contentStretch .RightContent { padding-right: 18px; }
+
+.contentStretch .CenterContent { min-width: 606px; width: 60.2%; }
+
+#modalWeightConverter .form-inline .form-control { margin-right: 4px; }
+
+#modalWeightConverter .form-inline label { margin-right: 12px; font-weight: normal; }
+
+/* ---------------------------[ Club Weighin ]--------------------------- */
+#queueContainer { height: 400px; position: relative; overflow: hidden; }
+
+#queueContainer .queueMember { width: 70px; position: absolute; z-index: 99; font-size: 11px; }
+
+#queueContainer .queueMember .loz { padding: 2px; background-color: #ec6912; color: #fff; border-radius: 6px; text-align: center; margin-bottom: 7px; }
+
+#queueContainer .queueMember.me .loz { background-color: #b1c001; }
+
+#queueContainer .queueMember span { display: block; text-align: center; color: #359dc0; }
+
+#queueContainer .queueMember img { padding: 0 3px 5px; }
+
+#queueContainer #scales { width: 80px; height: 160px; background: #ffffff url("/media/images/diary/club/scales.jpg") no-repeat left top; position: absolute; top: 10px; left: 130px; }
+
+#queueContainer #scales #scalesMember { width: 70px; height: 70px; margin: 52px 5px 0; }
+
+#queueContainer #scales #scalesMember span { position: absolute; bottom: 0px; display: block; text-align: center; width: 80px; font-size: 12px; }
+
+#queueContainer #blackboard { background: url("/media/images/diary/club/blackboard.gif?v=1") no-repeat right top; width: 311px; height: 346px; position: absolute; top: 0; right: -18px; padding: 20px 55px 20px 25px; z-index: 0; }
+
+#queueContainer #blackboard span.name { color: #e0770c; font-size: 14px; font-weight: bold; display: block; width: 130px; padding-left: 10px; text-align: left; }
+
+#queueContainer #blackboard span.wiDate { color: #ffffff; font-size: 10px; font-weight: bold; text-align: right; display: block; position: absolute; top: 22px; right: 58px; }
+
+#queueContainer #blackboard h1 { color: #FF6969; font-size: 34px; margin: 15px 0; text-align: center; }
+
+#queueContainer #blackboard h1.loss { color: #cbf88b; }
+
+#queueContainer #blackboard h1.sts { color: #FFD269; }
+
+#queueContainer #blackboard small { font-size: 15px; }
+
+#queueContainer #blackboard p { color: #ffffff; margin: 15px 5px 0; text-align: center; width: 180px; }
+
+#queueContainer #blackboard .slug { position: absolute; top: 190px; }
+
+#queueContainer #blackboard .slug .likes { background: url("/media/images/diary/club/thumb.jpg") no-repeat; color: #A3C464; font-size: 15px; height: 20px; padding: 0 0 0 22px; text-decoration: none; }
+
+#queueContainer #blackboard .slug .likes a { text-decoration: none; color: #A3C464; }
+
+#queueContainer #blackboard .slug .comment a { color: #3E94CA; font-size: 11px; padding-left: 8px; }
+
+#queueContainer #transport { height: 50px; margin: 0 auto 0 auto; width: 220px; padding: 215px 0 10px 0; position: relative; z-index: 20; }
+
+#queueContainer #transport a { display: block; width: 45px; float: left; margin: 2px 12px; padding: 50px 0 0; text-align: center; text-decoration: none; background-repeat: no-repeat; }
+
+#queueContainer #transport #playPause { background-image: url("/media/images/diary/club/pause.gif"); }
+
+#queueContainer #transport #backBtn { background-image: url("/media/images/diary/club/back.gif"); }
+
+#queueContainer #transport #nextBtn { background-image: url("/media/images/diary/club/next.gif"); }
+
+#queueContainer #trophyGold { left: -120px; position: absolute; top: 35px; width: 165px; }
+
+.tagtip .member { height: 36px; position: relative; border-bottom: 1px solid #E0E0E0; }
+
+.tagtip .member.last { border: 0; }
+
+.tagtip .member img { position: absolute; top: 3px; left: 2px; }
+
+.tagtip .member p { position: absolute; top: 10px; left: 38px; }
+
+.tblWeighinComments .avatar { width: 14%; text-align: center; }
+
+.tblWeighinComments table { width: 100%; }
+
+#modalCommentsModal.tblWeighinComments .avatar { width: 20%; }
+
+.tblWeighinComments .avatar img { margin-bottom: 5px; }
+
+.tblWeighinComments .weighin { vertical-align: middle; white-space: nowrap; text-align: center; position: relative; }
+
+.tblWeighinComments .weighinComment { position: relative; width: 60%; }
+
+#modalCommentsModal .tblWeighinComments .weighinComment { width: 65%; }
+
+.tblWeighinComments .weighinCommentBox { margin-bottom: 25px; }
+
+.tblWeighinComments .weighinRespond { float: right; padding-right: 16px; }
+
+.tblWeighinComments .weighinReply { display: none; }
+
+.tblWeighinComments textarea { height: 80px; margin-bottom: 10px; }
+
+.weighinCommentsBtm { width: 100%; position: absolute; bottom: 8px; }
+
+.weighinComment .weighinCommentsBtm { bottom: 4px; }
+
+#modalEmoticons .modal-content { background-color: #e8f6e2; }
+
+.paginated a { margin: 0 4px 0 4px; display: inline-block; text-decoration: none; }
+
+.paginated a:hover { text-decoration: underline; }
+
+#modalSelectAvatar #avatarGrid { height: 400px; overflow-y: scroll; }
+
+#avatarGrid table { width: 100%; }
+
+#avatarGrid td a { margin: 0 3px 10px 0; border: #E6E4E5 1px solid; border-radius: 6px; display: block; padding: 3px; height: 74px; width: 74px; }
+
+#avatarGrid td a:hover { border: #ABABAB 1px solid; }
+
+#avatarGrid td a.selected { border: #b2c200 2px solid; }
+
+#avatarGrid tr td:last-child a { padding-right: 0; }
+
+#avatarSlot { border-radius: 6px; border: #E6E4E5 1px solid; padding: 3px; height: 74px; width: 74px; background-color: #fff; }
+
+#avatarUploadDiv, #avatarUploadLoading { display: none; }
+
+html, body { font-size: 12px; }
+
+.textSmall { font-size: 11px; }
+
+.textDefault { font-size: 12px; }
+
+#SecondaryNav { padding-top: 10px; height: 40px; }
+
+#SecondaryNav a { color: #8d8d8d; text-decoration: none; border-bottom: 1px dotted #8d8d8d; font-size: 11px; }
+
+#SecondaryNav a.active { font-weight: bold; color: #9ac843; border-bottom: 1px solid #fff; }
+
+#SecondaryNav a:hover { border-bottom: 1px solid #fff; }
+
+#SecondaryNav .LeftContent, #SecondaryNav .RightContent, #SecondaryNav .CenterContent { padding-bottom: 0 !important; }
+
+.contentStretch { min-width: 998px; }
+
+.LeftContent, .RightContent { display: block; float: left; position: relative; padding-bottom: 18px; }
+
+.CenterContent { float: left; padding: 0 18px 18px 18px; }
+
+.contentFix .LeftContent, .contentFix .RightContent { width: 178px; }
+
+.contentFix .CenterContent { width: 606px; }
+
+.contentStretch .LeftContent, .contentStretch .RightContent { min-width: 196px; width: 19.6%; }
+
+.contentStretch .LeftContent { padding-left: 18px; }
+
+.contentStretch .RightContent { padding-right: 18px; }
+
+.contentStretch .CenterContent { min-width: 606px; width: 60.2%; }

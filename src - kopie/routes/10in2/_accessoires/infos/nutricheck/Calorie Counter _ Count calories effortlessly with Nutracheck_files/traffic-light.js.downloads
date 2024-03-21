@@ -1,0 +1,119 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+var NutrientTrafficValues = {
+    fatgHighPortion: 21.0,
+    fatgHigh: 17.5,
+    fatgLow: 3.0,
+    liquidfatgHighPortion: 10.5,
+    liquidfatgHigh: 8.75,
+    liquidfatgLow: 1.5,
+    satfatHighPortion: 6.0,
+    satfatHigh: 5.0,
+    satfatLow: 1.5,
+    liquidsatfatHighPortion: 3,
+    liquidsatfatHigh: 2.5,
+    liquidsatfatLow: 0.75,
+    sugarHighPortion: 27,
+    sugarHigh: 22.5,
+    sugarLow: 5,
+    liquidsugarHighPortion: 13.5,
+    liquidsugarHigh: 11.25,
+    liquidsugarLow: 2.5,
+    saltHighPortion: 1.8,
+    saltHigh: 1.5,
+    saltLow: 0.3,
+    liquidsaltHighPortion: 0.9,
+    liquidsaltHigh: 0.75,
+    liquidsaltLow: 0.3
+};
+
+var TRAFFIC_LIGHT = {
+    NONE: 0,
+    LOW: 1,
+    MEDIUM: 2,
+    HIGH: 3
+};
+
+function getTrafficLightValue(nutritionType, nutritionValue, productSize, productMeasure, fcpSum) {
+    trafficLightStatus = TRAFFIC_LIGHT.NONE;
+
+    if (nutritionType === 'fatg'
+            || nutritionType === 'satfat'
+            || nutritionType === 'sugar'
+            || nutritionType === 'salt'
+            || nutritionType === 'sodium') {
+
+        criteriaHighPortionKey = nutritionType + "HighPortion";
+        criteriaHighKey = nutritionType + "High";
+        criteriaLowKey = nutritionType + "Low";
+        criteriaLiquidHighPortionKey = "liquid" + criteriaHighPortionKey;
+        criteriaLiquidHighKey = "liquid" + criteriaHighKey;
+        criteriaLiquidLowKey = "liquid" + criteriaLowKey;
+
+        if (productSize === null
+                || productSize === ""
+                || productMeasure === null) {
+            trafficLightStatus
+                    = getTrafficValueNoWeight(
+                            nutritionValue,
+                            NutrientTrafficValues[criteriaHighPortionKey],
+                            fcpSum,
+                            NutrientTrafficValues[criteriaLiquidLowKey]);
+        } else {
+            if (productMeasure === "ml") {
+                trafficLightStatus
+                        = getTrafficValue(
+                                nutritionValue,
+                                productSize,
+                                NutrientTrafficValues[criteriaLiquidHighPortionKey],
+                                NutrientTrafficValues[criteriaLiquidHighKey],
+                                NutrientTrafficValues[criteriaLiquidLowKey]);
+            } else if (productMeasure === "g" || productMeasure === "") {
+                trafficLightStatus
+                        = getTrafficValue(
+                                nutritionValue,
+                                productSize,
+                                NutrientTrafficValues[criteriaHighPortionKey],
+                                NutrientTrafficValues[criteriaHighKey],
+                                NutrientTrafficValues[criteriaLowKey]);
+            }
+        }
+    }
+
+    return trafficLightStatus;
+}
+
+function getTrafficValue(nutrientValue, size, highPortion, high, low) {
+    nutrientValueBd = +nutrientValue.toFixed(2);
+    factor = +(size / 100).toFixed(2);
+
+    if (nutrientValueBd > highPortion || (factor > 0 && (nutrientValueBd / factor > high))) {
+        return TRAFFIC_LIGHT.HIGH;
+    } else if (factor > 0 && nutrientValueBd / factor > low) {
+        return TRAFFIC_LIGHT.MEDIUM;
+    } else {
+        return size <= 0.00 ? TRAFFIC_LIGHT.NONE : TRAFFIC_LIGHT.LOW;
+    }
+}
+
+function getTrafficValueNoWeight(nutrientValue, highPortion, fcpSum, low) {
+    nutrientValueBd = +nutrientValue.toFixed(2);
+
+    if (nutrientValueBd > highPortion) {
+        return TRAFFIC_LIGHT.HIGH;
+    } else if (nutrientValueBd / fcpSum * 100 <= low) {
+        return TRAFFIC_LIGHT.LOW;
+    }
+
+    return TRAFFIC_LIGHT.NONE;
+}
+
+if (typeof(exports) !== 'undefined') {
+    exports.getTrafficLightValue = getTrafficLightValue;
+    exports.NutrientTrafficValues = NutrientTrafficValues;
+    exports.TRAFFIC_LIGHT = TRAFFIC_LIGHT;
+}

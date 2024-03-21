@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)https://www.nutracheck.co.uk/MyProfile/Targets -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+    
+
+   
+
+
+
+
+     
+
+
+ 
+<script type="text/javascript" src="./Profile_files/vendor.cae487cb.js.downloads"></script><script type="text/javascript" src="./Profile_files/main.cb9acb96.js.downloads"></script><script type="text/javascript" async="" src="./Profile_files/saved_resource"></script><script type="text/javascript" async="" src="./Profile_files/js"></script><script type="text/javascript" async="" src="./Profile_files/analytics.js.downloads"></script><script async="" src="./Profile_files/gtm.js.downloads"></script><script async="" src="./Profile_files/gtm.js(1).downloads"></script><script type="text/javascript">
+    nutmedia="//d2lhwe7okuon6r.cloudfront.net/";
+    regionDB="US";
+    var nut_spinner = '<div class="nut_spinner"><img src="'+nutmedia+'media/images/parts/spinner.gif" class="img-responsive" alt="Waiting..." /></div>';  
+    var emptytrolly="//d2lhwe7okuon6r.cloudfront.net/media/productimages/trolly.webp";
+    var exercise_placeholder="//d2lhwe7okuon6r.cloudfront.net/media/productimages/exercise_placeholder.png";
+</script>    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    displayBarcode="0";
+</script>    
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="keywords" content="calorie counter, calorie counter , online calorie counter">
+ 
+<link href="./Profile_files/bootstrap.min.css" type="text/css" rel="stylesheet">
+<script src="./Profile_files/jquery-1.12.4.min.js.downloads"></script>  
+    
+<script src="./Profile_files/bootstrap.min.js.downloads"></script>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="/js/shiv/html5shiv.js"></script>
+<script type="text/javascript" src="/js/shiv/html5shiv-printshiv.js"></script>
+<script type="text/javascript" src="/js/shiv/respond.min.js"></script>
+<![endif]-->
+
+<script type="text/javascript" src="./Profile_files/bootbox.min.js.downloads"></script>
+<script type="text/javascript" src="./Profile_files/bootbox_helper.js.downloads"></script>
+<link href="./Profile_files/bootbox_custom.css" type="text/css" rel="stylesheet">
+
+<link rel="stylesheet" href="./Profile_files/jquery-ui.css">
+<script src="./Profile_files/jquery-ui.js.downloads"></script><style type="text/css" id="operaUserStyle"></style>
+<link href="./Profile_files/global.css" type="text/css" rel="stylesheet">
+
+    
+        <link href="./Profile_files/responsiveless.css" type="text/css" rel="stylesheet">
+        
+
+<link rel="stylesheet" type="text/css" href="./Profile_files/print.css" media="print">        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    displayBarcode="0";
+</script>    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    kcallabel = "Cal";
+    kcalslabel = "Cals";
+    fibrelabel = "fiber";
+    examplebrand="e.g. Cheerios";
+    exampledescripiton="e.g. Breakfast Cereal";
+    examplepacksize="e.g. 14oz";
+    exampleserving="e.g. 1 cup (28g)";
+    doctorGP="Doctor";
+</script>    
+<link href="./Profile_files/profile_edit.css" type="text/css" rel="stylesheet">
+
+<script type="text/javascript" src="./Profile_files/f.js.downloads"></script>
+<script type="text/javascript" src="./Profile_files/profile.js.downloads"></script>
+
+<script type="text/javascript">
+   
+    jQuery(document).ready(function(){
+        
+        f = document.forms["fsignin"];
+        continueweightgain = jQuery("input[name='continueweightgain']");        
+        
+        jQuery("input[name='optsex']").bind("change",function(){
+            // resets medical and changes display
+            gender = jQuery(this).val();
+            jQuery("input[id='iamhealthy']").prop('checked', true);
+            resetMedical();
+
+            if(gender==='m'){
+               jQuery("#displayPregnant").hide();
+            } else {
+                jQuery('#displayPregnant').show();
+            }
+        });          
+        
+        jQuery("input[name='healthstatus']").bind("change",function(){
+            // resets and displays the confirm medical popups
+            jQuery("#displayWeightLossGoal").show();
+            resetMedical();
+
+            healthstatus = jQuery(this).val();        
+
+            if(healthstatus==='1'){
+                jQuery("#displayWeightLossGoal").hide();
+                jQuery("input[id='maintain']").attr("checked", "checked");
+                jQuery("#modalPregnant").modal("show");
+            } 
+            if(healthstatus==='2') jQuery("#modalBreastExclusive").modal("show");       
+            if(healthstatus==='4') jQuery("#modalBreastNonExclusive").modal("show");
+
+        });
+        
+        jQuery("input[name='confirmhealthstatus']").bind("change",function(){
+            // confirm medical and update form
+            confirmhealthstatus = jQuery(this).attr("id");
+            confirmmedical =  confirmhealthstatus.replace("confirm","medical");
+            jQuery("input[name='"+confirmmedical+"']").val("1");
+        });
+        
+        jQuery("input[name='confirmWeightGainAdvice']").on("change",function(){
+            adviceconfirmed = jQuery(this).is(':checked');
+            if(adviceconfirmed){
+                continueweightgain.val("1");
+            } else{
+                continueweightgain.val("0");
+            }
+        });
+
+        jQuery("select[name='cmbtarget']").on("change",function(){
+            continueweightgain.val("0");
+        });         
+        
+    });
+    
+</script>    
+
+<script src="./Profile_files/parsley.min.js.downloads"></script>
+    <link href="./Profile_files/profile_responsiveless.css" type="text/css" rel="stylesheet">
+<style type="text/css">:root zeus-ad, :root topadblock, :root span[id^="ezoic-pub-ad-placeholder-"], :root guj-ad, :root gpt-ad, :root div[jsdata*="CarouselPLA-"][data-id^="CarouselPLA-"], :root div[id^="zergnet-widget"], :root div[id^="yandex_ad"], :root div[id^="vuukle-ad-"], :root div[id^="sticky_ad_"], :root div[id^="rc-widget-"], :root div[id^="lazyad-"], :root div[id^="gpt_ad_"], :root div[id^="ezoic-pub-ad-"], :root div[id^="div-gpt-"], :root div[id^="dfp-ad-"], :root div[id^="advads_ad_"], :root div[id^="adspot-"], :root div[id^="ads300_250-widget-"], :root div[id^="ads300_100-widget-"], :root div[id^="ads250_250-widget-"], :root div[id^="adrotate_widgets-"], :root div[id^="adngin-"], :root div[id^="_vdo_ads_player_ai_"], :root div[id*="ScriptRoot"], :root div[id*="MarketGid"], :root div[data-native_ad], :root div[data-mpu1], :root div[data-insertion], :root div[data-id-advertdfpconf], :root div[data-google-query-id], :root hl-adsense, :root div[data-contentexchange-widget], :root div[data-content="Advertisement"], :root div[data-alias="300x250 Ad 2"], :root div[data-alias="300x250 Ad 1"], :root div[data-adzone], :root div[data-adunit-path], :root div[data-ad-wrapper], :root div[data-ad-targeting], :root div[data-ad-placeholder], :root div[class^="native-ad-"], :root div[data-dfp-id], :root div[class^="kiwi-ad-wrapper"], :root div[class^="Adstyled__AdWrapper-"], :root div[aria-label="Ads"], :root display-ads, :root display-ad-component, :root aside[id^="adrotate_widgets-"], :root article.ad, :root ark-top-ad, :root app-advertisement, :root app-ad, :root amp-fx-flying-carpet, :root amp-embed[type="taboola"], :root amp-connatix-player, :root amp-ad-custom, :root ad-shield-ads, :root ad-desktop-sidebar, :root a[onmousedown^="this.href='https://paid.outbrain.com/network/redir?"][target="_blank"] + .ob_source, :root a[onmousedown^="this.href='https://paid.outbrain.com/network/redir?"][target="_blank"], :root a[onmousedown^="this.href='http://paid.outbrain.com/network/redir?"][target="_blank"] + .ob_source, :root a[href^="https://yogacomplyfuel.com/"], :root a[href^="https://bngpt.com/"], :root a[href^="https://www.sheetmusicplus.com/"][href*="?aff_id="], :root a[href^="https://www.mypornstarcams.com/landing/click/"], :root a[href^="https://financeads.net/tc.php?"], :root a[href^="https://www.mrskin.com/tour"], :root a[href^="https://www.kingsoffetish.com/tour?partner_id="], :root a[href^="https://www.infowarsstore.com/"] > img, :root a[href^="https://t.grtyi.com/"], :root a[href^="https://www.highperformancecpmgate.com/"], :root a[href^="https://www.highcpmrevenuenetwork.com/"], :root a[href^="https://www.get-express-vpn.com/offer/"], :root a[href^="https://www.financeads.net/tc.php?"], :root a[href^="https://www.brazzersnetwork.com/landing/"], :root div[class^="Display_displayAd"], :root a[href^="https://www.sheetmusicplus.com/?aff_id="], :root a[href^="https://www.bang.com/?aff="], :root [data-template-type="nativead"], :root a[href^="https://www.adultempire.com/"][href*="?partner_id="], :root a[href^="https://webroutetrk.com/"], :root a[href^="https://wantopticalfreelance.com/"], :root a[href^="https://twinrdsyn.com/"], :root a[href^="https://tsartech.g2afse.com/"], :root a[href^="https://tragency-clesburg.icu/"], :root a[href^="https://tracking.avapartner.com/"], :root a[href^="https://track.afcpatrk.com/"], :root a[href^="https://track.adform.net/"], :root a[href^="https://torguard.net/aff.php"] > img, :root [data-role="tile-ads-module"], :root a[href^="https://adsrv4k.com/"], :root a[href^="https://go.xlviirdr.com"], :root a[href^="https://thaudray.com/"], :root a[href^="https://taghaugh.com/"], :root a[href^="https://www.sweetdeals.com"], :root [href^="https://zstacklife.com/"] img, :root a[href^="https://t.aslnk.link/"], :root a[href^="https://t.adating.link/"], :root [href^="https://track.fiverr.com/visit/"] > img, :root a[href^="https://go.trackitalltheway.com/"], :root a[href^="https://syndication.exoclick.com/"], :root a[href^="https://syndication.dynsrvtbg.com/"], :root a[href^="https://streamate.com/landing/click/"], :root a[href^="https://ad.doubleclick.net/"], :root a[href^="https://static.fleshlight.com/images/banners/"], :root a[href^="https://go.strpjmp.com/"], :root a[href^="https://refpa4903566.top/"], :root a[href^="https://prf.hn/click/"][href*="/camref:"] > img, :root a[href^="https://serve.awmdelivery.com/"], :root a[href^="https://prf.hn/click/"][href*="/adref:"] > img, :root [href^="https://r.kraken.com/"], :root a[href^="https://mmwebhandler.aff-online.com/"], :root a[href^="https://www.bet365.com/"][href*="affiliate="], :root iframe[id^="google_ads_frame"], :root a[href^="https://pb-track.com/"], :root a[href^="https://paid.outbrain.com/network/redir?"], :root div[id^="ad_position_"], :root a[href^="https://ovb.im/"], :root div[id^="ad-div-"], :root a[href^="https://newbinotracs.com/"], :root a[href^="https://natour.naughtyamerica.com/track/"], :root [href^="https://stvkr.com/"], :root a[href^="https://mediaserver.entainpartners.com/renderBanner.do?"], :root [href^="https://www.herbanomic.com/"] > img, :root a[href^="//moksoxos.com/"], :root a[href^="https://maymooth-stopic.com/"], :root a[href^="https://loboclick.com"], :root [href^="https://routewebtk.com/"], :root a[href^="https://see.kmisln.com/"], :root a[href^="https://a.bestcontentweb.top/"], :root a[href^="https://lobimax.com/"], :root a[href^="https://lead1.pl/"], :root a[href^="https://landing.brazzersnetwork.com/"], :root a[href^="https://ads.leovegas.com/redirect.aspx?"], :root a[href^="https://land.brazzersnetwork.com/landing/"], :root a[href^="https://juicyads.in/"], :root a[href^="https://itubego.com/video-downloader/?affid="], :root a[href^="https://iqbroker.com/"][href*="?aff="], :root a[href^="https://incisivetrk.cvtr.io/click?"], :root a[href^="https://iactrivago.ampxdirect.com/"], :root [data-revive-zoneid], :root a[href^="https://googleads.g.doubleclick.net/pcs/click"], :root a[href^="https://clk.wrenchsound.store/"], :root a[href^="https://go.zybrdr.com"], :root [href^="http://join.michelle-austin.com/"], :root a[href^="https://go.xxxiijmp.com"], :root a[href^="https://go.xtbaffiliates.com/"], :root a[href^="https://ismlks.com/"], :root [href^="https://www.mypillow.com/"] > img, :root a[href^="https://azpresearch.club/"], :root a[href^="https://go.xlirdr.com"], :root [data-css-class="dfp-inarticle"], :root .card-captioned.crd > .crd--cnt > .s2nPlayer, :root a[href^="https://go.tmrjmp.com"], :root a[href^="https://go.skinstrip.net"][href*="?campaignId="], :root a[href^="https://go.markets.com/visit/?bta="], :root a[href^="//lambingsyddir.com/"], :root a[href^="https://billing.purevpn.com/aff.php"] > img, :root a[href^="https://go.hpyrdr.com/"], :root a[href^="https://go.goaserv.com/"], :root a[href^="https://track.wg-aff.com"], :root a[href^="https://go.ebrokerserve.com/"], :root a[href^="https://go.dmzjmp.com"], :root a[href^="https://go.admjmp.com/"], :root a[href^="https://www.nutaku.net/signup/landing/"], :root [href^="https://kingered-banctours.com/"], :root a[href^="https://get.surfshark.net/aff_c?"][href*="&aff_id="] > img, :root a-ad, :root a[href^="https://affiliate.rusvpn.com/click.php?"], :root a[href^="https://geniusdexchange.com/"], :root a[href^="https://go.gldrdr.com/"], :root [id^="ad_sky"], :root a[href^="https://funkydaters.com/"], :root a[href^="https://frameworkdeserve.com/"], :root a[href^="https://flirtandsweets.life/"], :root a[href^="https://www.mrskin.com/account/"], :root bottomadblock, :root a[href^="https://fertilitycommand.com/"], :root [data-freestar-ad], :root a[href^="https://fc.lc/ref/"], :root div[data-native-ad], :root a[href^="https://engine.trackingdesks.com/"], :root [href^="https://totlnkcl.com/"], :root a[href^="https://www.adskeeper.com"], :root a[data-redirect^="https://paid.outbrain.com/network/redir?"], :root [href^="https://www.reimageplus.com/"], :root a[href^="https://engine.phn.doublepimp.com/"], :root a[href^="https://engine.blueistheneworanges.com/"], :root a[href^="https://clixtrac.com/"], :root div.fadeInDown[id$="____equal"][class$="____equal"], :root a[href^="https://mediaserver.gvcaffiliates.com/renderBanner.do?"], :root a[href^="https://join.dreamsexworld.com/"], :root a[href^="https://click.linksynergy.com/fs-bin/"], :root AD-TRIPLE-BOX, :root a[href^="https://click.hoolig.app/"], :root a[href^="https://track.totalav.com/"], :root img[src^="https://images.purevpnaffiliates.com"], :root a[href^="https://porntubemate.com/"], :root a[href^="http://www.gfrevenge.com/landing/"], :root a[href^="https://clickadilla.com/"], :root a[href^="https://click.dtiserv2.com/"], :root a[href^="https://go.xlvirdr.com"], :root a[href^="https://claring-loccelkin.com/"], :root [class^="s2nPlayer"], :root a[href^="https://chaturbate.jjgirls.com/?track="], :root a[href^="https://www.nudeidols.com/cams/"], :root a[href^="https://chaturbate.com/in/?track="], :root a[href^="https://www.onlineusershielder.com/"], :root a[href^="https://chaturbate.com/in/?tour="], :root a[href^="https://cams.imagetwist.com/in/?track="], :root a[href^="https://camfapr.com/landing/click/"], :root a[href^="https://cam4com.go2cloud.org/"], :root a[href^="https://affcpatrk.com/"], :root a[href^="https://bongacams2.com/track?"], :root a[href^="https://bluedelivery.pro/"], :root #topstuff > #tads, :root a[href^="https://black77854.com/"], :root a[href^="https://burpee.xyz/"], :root a[href^="https://ndt5.net/"], :root a[href^="https://batheunits.com/"], :root a[target="_blank"][onmousedown="this.href^='http://paid.outbrain.com/network/redir?"], :root a[href^="https://banners.livepartners.com/"], :root a[href^="https://m.do.co/c/"] > img, :root [href="https://masstortfinancing.com"] img, :root a[href^="https://bongacams10.com/track?"], :root a[href^="https://albionsoftwares.com/"], :root a[href^="https://t.hrtye.com/"], :root a[href^="https://go.etoro.com/"] > img, :root a[href^="https://join.sexworld3d.com/track/"], :root a[href^="https://intenseaffiliates.com/redirect/"], :root a[href^="https://aweptjmp.com/"], :root a[href^="https://ads.ad4game.com/"], :root [id^="google_ads_iframe"], :root a[href^="https://syndication.optimizesrv.com/"], :root a[href^="https://affpa.top/"], :root a[href^="https://adnetwrk.com/"], :root a[href^="https://adjoincomprise.com/"], :root [href^="http://misslinkvocation.com/"], :root a[href^="https://adclick.g.doubleclick.net/"], :root a[href^="https://go.nordvpn.net/aff"] > img, :root [href^="http://clicks.totemcash.com/"], :root a[href^="https://misspkl.com/"], :root a[href^="https://ad.zanox.com/ppc/"] > img, :root a[href^="https://ad.kubiccomps.icu/"], :root a[href^="https://adswick.com/"], :root a[href^="https://a2.adform.net/"], :root [data-m-ad-id], :root a[href^="https://a-ads.com/"], :root [href="https://ourgoldguy.com/contact/"] img, :root a[href^="https://brightadnetwork.com/"], :root [href^="https://www.avantlink.com/click.php"] img, :root iframe[src^="https://pagead2.googlesyndication.com/"], :root a[href^="http://www.onwebcam.com/random?t_link="], :root a[href^="https://agacelebir.com/"], :root a[href^="https://spygasm.com/track?"], :root a[href^="http://d2.zedo.com/"], :root a[href^="http://www.friendlyduck.com/AF_"], :root a[href^="http://trk.globwo.online/"], :root a[href^="https://prf.hn/click/"][href*="/creativeref:"] > img, :root a[href^="http://www.adultempire.com/unlimited/promo?"][href*="&partner_id="], :root a[href^="http://traffic.tc-clicks.com/"], :root a[href^="http://tour.mrskin.com/"], :root a[href^="https://join.virtualtaboo.com/track/"], :root a[href^="http://https://www.get-express-vpn.com/offer/"], :root a[href^="https://cagothie.net/"], :root div[id^="google_dfp_"], :root a[href^="http://googleads.g.doubleclick.net/pcs/click"], :root a[href^="https://awentw.com/"], :root a[href^="https://www.googleadservices.com/pagead/aclk?"], :root a[href^="http://www.mrskin.com/tour"], :root a[href^="https://www.purevpn.com/"][href*="&utm_source=aff-"], :root a[href^="http://deloplen.com/"], :root .rc-cta[data-target], :root [href^="http://go.cm-trk2.com/"], :root a[href^="http://adtrack1.club/"], :root a[href^="http://click.payserve.com/"], :root a[href^="https://porngames.adult/?SID="], :root a[href^="https://landing1.brazzersnetwork.com"], :root #slashboxes > .deals-rail, :root [href^="http://globsads.com/"], :root [href^="https://www.brighteonstore.com/products/"] img, :root a[href^="http://bc.vc/?r="], :root .trc_rbox_border_elm .syndicatedItem, :root a[href^="http://www.onclickmega.com/jump/next.php?"], :root a[href^="http://adf.ly/?id="], :root [href^="http://homemoviestube.com/"], :root a[href^="http://ad.doubleclick.net/"], :root .commercial-unit-mobile-top .jackpot-main-content-container > .UpgKEd + .nZZLFc > .vci, :root a[href^="//syndication.dynsrvtbg.com/"], :root a[href^="http://static.fleshlight.com/images/banners/"], :root a[href^="https://a.adtng.com/"], :root a[href^="//pubads.g.doubleclick.net/"], :root [href^="https://traffserve.com/"], :root div[data-adname], :root a[href^="https://thechleads.pro/"], :root a[href^="//intorterraon.com/"], :root a[href^="https://fastestvpn.com/lifetime-special-deal?a_aid="], :root a[href^="https://tour.mrskin.com/"], :root a[href^="http://allaptair.club/"], :root a[href^="//go.eabids.com/"], :root [data-d-ad-id], :root a[href*=".engine.adglare.net/"], :root a[href^="https://a.bestcontentoperation.top/"], :root a[href^="//go.xlviiirdr.com"], :root [data-dynamic-ads], :root a[data-widget-outbrain-redirect^="http://paid.outbrain.com/network/redir?"], :root [data-ad-width], :root [href^="https://join.playboyplus.com/track/"], :root a[data-url^="http://paid.outbrain.com/network/redir?"] + .author, :root a[href^="https://axdsz.pro/"], :root a[href^="http://bodelen.com/"], :root a[data-oburl^="https://paid.outbrain.com/network/redir?"], :root [href^="https://cpa.10kfreesilver.com/"], :root a[href^="https://a.bestcontentfood.top/"], :root a[href^="https://reinstandpointdumbest.com/"], :root a[data-obtrack^="http://paid.outbrain.com/network/redir?"], :root [href^="https://goldforyourfuture.com/clk.trk"] img, :root a[href^="http://wct.link/"], :root [href^="https://infinitytrk.com/"], :root [onclick^="location.href='http://www.reimageplus.com"], :root [id^="section-ad-banner"], :root .commercial-unit-mobile-top > div[data-pla="1"], :root [id^="chp_ads_block"], :root a[href^="https://go.julrdr.com/"], :root .trc_rbox_div .syndicatedItemUB, :root [href^="https://zone.gotrackier.com/"], :root [href^="https://www.targetingpartner.com/"], :root [href^="https://detachedbates.com/"], :root a[href^="https://fourwhenstatistics.com/"], :root [href^="https://www.restoro.com/"], :root div[id^="ad-position-"], :root a[href^="http://adultfriendfinder.com/go/page/landing"], :root a[href^="http://affiliate.glbtracker.com/"], :root a[href^="https://leg.xyz/?track="], :root a[href^="https://go.cmtaffiliates.com/"], :root [data-name="adaptiveConstructorAd"], :root [href^="https://optimizedelite.com/"] > img, :root a[href^="//thaudray.com/"], :root div[id^="crt-"][style], :root a[href^="http://adultgames.xxx/"], :root a[href^="https://traffic.bannerator.com/"], :root [href^="https://shiftnetwork.infusionsoft.com/go/"] > img, :root [href^="https://www.mypatriotsupply.com/"] > img, :root a[onmousedown^="this.href='http://paid.outbrain.com/network/redir?"][target="_blank"], :root [href^="https://secure.bmtmicro.com/servlets/"], :root a[href^="https://losingoldfry.com/"], :root .scroll-fixable.rail-right > .deals-rail, :root a[href^="https://oackoubs.com/"], :root a[href^="https://awptjmp.com/"], :root a[href^="https://go.goasrv.com/"], :root .commercial-unit-mobile-top > .v7hl4d, :root [href^="http://mypillow.com/"] > img, :root a[href^="http://bongacams.com/track?"], :root a[href^="https://fleshlight.sjv.io/"], :root [data-ad-manager-id], :root a[href^="https://promo-bc.com/"], :root a[href^="https://clicks.pipaffiliates.com/"], :root [href^="https://noqreport.com/"] > img, :root a[href^="https://go.hpyjmp.com"], :root ADS-RIGHT, :root [href^="https://mystore.com/"] > img, :root [href^="https://mypatriotsupply.com/"] > img, :root [href^="https://mylead.global/stl/"] > img, :root #leader-companion > a[href], :root a[href^="https://transfer.xe.com/signup/track/redirect?"], :root .vid-present > .van_vid_carousel__padding, :root a[href^="https://go.xxxijmp.com"], :root [href^="https://istlnkcl.com/"], :root [href^="https://www.hostg.xyz/"] > img, :root .section-subheader > .section-hotel-prices-header, :root [href^="https://go.affiliatexe.com/"], :root [href^="https://go.4rabettraff.com/"], :root [href^="https://glersakr.com/"], :root ins.adsbygoogle, :root a[href^="https://1startfiledownload1.com/"], :root a[href^="https://wittered-mainging.com/"], :root [href^="https://engine.gettopple.com/"], :root [href^="https://awbbjmp.com/"], :root a[href^="https://k2s.cc/pr/"], :root [href^="https://affect3dnetwork.com/track/"], :root a[href^="https://go.currency.com/"], :root [href^="http://www.mypillow.com/"] > img, :root [href^="https://v.investologic.co.uk/"], :root [href^="https://cipledecline.buzz/"], :root [href^="http://join.trannies-fuck.com/"], :root [href^="http://www.fleshlightgirls.com/"], :root div[id^="div-ads-"], :root [href^="https://rapidgator.net/article/premium/ref/"], :root a[href^="https://www.sugarinstant.com/?partner_id="], :root a[href^="https://adultfriendfinder.com/go/page/landing"], :root div[data-role="sidebarAd"], :root [href^="https://join3.bannedsextapes.com"], :root div[data-spotim-slot], :root [href^="https://antiagingbed.com/discount/"] > img, :root a[href^="https://go.247traffic.com/"], :root [href^="https://join.girlsoutwest.com/"], :root [href^="http://trafficare.net/"], :root a[href^="https://tc.tradetracker.net/"] > img, :root a[href^="https://adserver.adreactor.com/"], :root [href^="http://join.shemalesfromhell.com/"], :root [id^="ad_slider"], :root a[href^="http://www.adultdvdempire.com/?partner_id="][href*="&utm_"], :root [href^="http://join.shemale.xxx/"], :root [href^="https://ilovemyfreedoms.com/landing-"], :root a[href^="https://ads.betfair.com/redirect.aspx?"], :root .trc_rbox .syndicatedItem, :root a[href^="http://cam4com.go2cloud.org/aff_c?"], :root a[href^="https://cpmspace.com/"], :root [href^="https://freecourseweb.com/"] > .sitefriend, :root [class^="adDisplay-module"], :root [class^="chp_ads_block"], :root a[href^="https://ads.planetwin365affiliate.com/redirect.aspx?"], :root [href^="http://join.rodneymoore.com/"], :root a[href^="https://www.privateinternetaccess.com/"] > img, :root a[href*=".trust.zone"], :root [href^="https://shrugartisticelder.com"], :root [href^="https://go.xlrdr.com"], :root [name^="google_ads_iframe"], :root [href^="https://safer-redirection.com"], :root [href^="//ngeoziadiyc4hi2e.com/"], :root a[href^="https://go.xxxjmp.com"], :root [data-desktop-ad-id], :root [href^="https://wct.link/"], :root #kt_player > a[target="_blank"], :root [href="https://www.masstortfinancing.com/"] > img, :root .ob_container .item-container-obpd, :root [id^="div-gpt-ad"], :root [href^="https://mypillow.com/"] > img, :root [href^="https://ad.admitad.com/"], :root a[href^="https://u.expresstech.io/"], :root [href="https://jdrucker.com/gold"] > img, :root a[href^="https://www.iyalc.com/"], :root a[href^="https://track.ultravpn.com/"], :root [href^="https://goldcometals.com/clk.trk"], :root [data-mobile-ad-id], :root a[href^="http://tc.tradetracker.net/"] > img, :root a[href^="https://www.geekbuying.com/dynamic-ads/"], :root a[href^="http://affiliates.thrixxx.com/"], :root #searchResultsList > div > div[onclick$="'inline.ad'});"], :root a[href^="https://trk.sportsflix4k.club/"], :root a[href^="https://go.xlivrdr.com"], :root [data-ez-name], :root AMP-AD, :root [data-ad-cls], :root a[href^="https://www.goldenfrog.com/vyprvpn?offer_id="][href*="&aff_id="], :root [id^="ad-wrap-"], :root div[id^="taboola-stream-"], :root [href^="https://go.astutelinks.com/"], :root [onclick*="content.ad/"], :root [href^="http://residenceseeingstanding.com/"], :root div[data-adunit], :root app-large-ad, :root [href^="https://turtlebids.irauctions.com/"] img, :root [class^="amp-ad-"], :root [href^="https://affiliate.fastcomet.com/"] > img, :root a[href^="http://go.xtbaffiliates.com/"], :root .grid > .container > #aside-promotion, :root DFP-AD, :root AD-SLOT, :root .ob_dual_right > .ob_ads_header ~ .odb_div, :root [href^="https://click2cvs.com/"], :root .trc_related_container div[data-item-syndicated="true"], :root [href^="http://join.shemalepornstar.com/"], :root a[href^="https://go.xlviiirdr.com"], :root .trc_rbox_div .syndicatedItem, :root [data-ad-module], :root [href^="https://trackfin.asia/"], :root .plistaList > .plista_widget_underArticle_item[data-type="pet"], :root a[href*="//lkstrck2.com/"], :root .plistaList > .itemLinkPET, :root atf-ad-slot, :root .commercial-unit-mobile-top .jackpot-main-content-container > .UpgKEd + .nZZLFc > div > .vci, :root a[href^="http://partners.etoro.com/"], :root [data-advadstrackid], :root #atvcap + #tvcap > .mnr-c > .commercial-unit-mobile-top, :root a[href^="https://traffdaq.com/"], :root a[href^="https://tm-offers.gamingadult.com/"], :root [class^="div-gpt-ad"], :root a[href^="https://bs.serving-sys.com"], :root [href^="https://www.cloudways.com/en/?id"], :root a[href^="https://refpazkjixes.top/"], :root #mgb-container > #mgb, :root a[href^="https://join.virtuallust3d.com/"], :root #taw > .med + div > #tvcap > .mnr-c:not(.qs-ic) > .commercial-unit-mobile-top, :root [data-adblockkey] { display: none !important; }</style></head>
+<body>
+ <script>
+  dataLayer = [];
+</script>   
+    
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+	
+
+
+
+
+
+    <script type="text/javascript">
+        window.dataLayer = window.dataLayer || [];
+        dataLayer.push({   
+         'memberOption': '1',
+         'memberStatus': 'trialist',
+         'memberSex': 'm',     
+         'memberGoal': '1', 
+         'memberInvalid': '7'
+        });
+    </script>
+        
+    <!-- Google FUNCTIONAL Tag Manager -->
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-WQX2LB"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WQX2LB');</script>
+    <!-- End Google Tag Manager -->
+     
+    
+    
+    <!-- Google TARGETING Tag Manager -->
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KWRR6X"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KWRR6X');</script>
+    <!-- End Google Tag Manager -->    
+    
+
+
+
+   
+
+<div id="Container">
+    <header role="banner">
+    <div class="contentStretch bgPrimaryLight">
+        <div id="SiteBnr" class="bootstrap_migrate">
+            <nav class="navbar navbar-default" role="navigation">                   
+                <div class="navbar-header">                
+                    <a id="BrandLogo" href="https://www.nutracheck.co.uk/Home"><img src="./Profile_files/logo_nutracheck_nav.png" alt="Nutracheck.co.uk" class="img-responsive"></a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".dt-sitenav">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button> 
+                </div>     
+                                 
+                    
+                     
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+	
+
+
+
+
+<div id="WelcomeBack" class="hidden-xs">
+    <h6 class="textExtraLarge colorNCGreen text-right fontPrimaryNormal">Sean's Diary</h6>
+    <div class="text-right fontPrimaryNormal textLarge"><a href="https://www.nutracheck.co.uk/Logout"><span class="colorNCGreen">Logout</span></a></div>
+</div>
+<div class="navbar-collapse collapse dt-sitenav">
+    <ul class="nav navbar-nav">
+        
+            
+                    <li class="active dropdown"><a href="https://www.nutracheck.co.uk/MyProfile/MembershipOptions" data-trackevent="MemberOptions"><span id="menuIconProfile" class="menuIcon"></span> Profile</a>	
+   <ul class="dropdown-menu" role="menu">
+        <li class="dropSection">
+            <h3>Membership Options</h3>
+            <ul id="menuMemberOptions">
+                <li><a href="https://www.nutracheck.co.uk/MyProfile/MembershipOptions" data-trackevent="MemberOptions">Prices</a></li>
+                <li><a href="https://www.nutracheck.co.uk/MyProfile/MembershipOptions" data-trackevent="MemberOptions">Upgrade to full membership</a></li>
+                    
+            </ul>
+        </li>
+        <li class="dropSection">
+            <h3>My Account</h3>
+            <ul id="menuMemberAccount">
+                <li><a href="https://www.nutracheck.co.uk/MyProfile/MyDietAccount?displaysetting=1" data-trackevent="MemberAccountEmail">Change my email address</a></li>
+                <li><a href="https://www.nutracheck.co.uk/MyProfile/MyDietAccount?displaysetting=2" data-trackevent="MemberAccountPassword">Change my password</a></li> 
+                <li><a href="https://www.nutracheck.co.uk/MyProfile/MyDietAccount?displaysetting=4" data-trackevent="MemberAccountEmail">Manage email &amp; privacy preferences</a></li>
+		  <li><a href="https://www.nutracheck.co.uk/ThirdParty/Status" data-trackevent="MemberLinkDevices">Link devices &amp; apps</a></li>  
+            </ul>
+        </li>        
+        <li class="dropSection">
+            <h3>My Targets</h3>
+            <ul id="menuMemberTargets">
+                <li><a href="https://www.nutracheck.co.uk/MyProfile/Results" data-trackevent="MemberResults">View how calculated</a></li>
+                <li><a href="https://www.nutracheck.co.uk/Diary/Settings?displaysetting=0" data-trackevent="profileNutTracking">Choose which nutrients to track</a></li>
+                <li><a href="https://www.nutracheck.co.uk/Diary/Settings?displaysetting=1" data-trackevent="profileNutGuide">Select a nutrition goal</a></li>                
+            </ul>
+        </li> 
+        <li class="dropSection">
+            <h3>Personal Details</h3>
+            <ul id="menuMemberDetails">
+                <li><a href="https://www.nutracheck.co.uk/MyProfile/Targets#height" data-trackevent="MemberStartWeight">Change start weight</a></li>
+                <li><a href="https://www.nutracheck.co.uk/MyProfile/Targets#targets" data-trackevent="MemberChangeGoal">Change goal weight</a></li>
+                <li><a href="https://www.nutracheck.co.uk/MyProfile/Targets#activity" data-trackevent="MemberActivity">Change activity levels</a></li>
+                <li><a href="https://www.nutracheck.co.uk/MyProfile/Targets#targets" data-trackevent="MemberLossPW">Change rate of weight loss</a></li> 
+            </ul>
+        </li>               
+    </ul> 
+</li>    
+            
+            
+         
+        <li><a href="https://www.nutracheck.co.uk/Diary/View"><span id="menuIconDiary" class="menuIcon"></span> Diary</a></li>
+        <li><a href="https://www.nutracheck.co.uk/MyMeals"><span id="menuIconRecipes" class="menuIcon"></span> My Meals</a></li>    
+        <li class="dropdown"><a href="https://www.nutracheck.co.uk/Diary/Club/Welcome"><span id="menuIconWeighIn" class="menuIcon"></span> Progress</a>
+            <ul class="dropdown-menu" role="menu">
+                <li class="dropSection">
+                    <h3>Actions</h3>
+                    <ul id="menuWeighInActions">
+                        <li><a href="https://www.nutracheck.co.uk/Diary/MyProgress">Weigh in now!</a></li>
+                        <li><a href="https://www.nutracheck.co.uk/Diary/MyProgress">View my progress</a></li>
+                        <li><a href="https://www.nutracheck.co.uk/Diary/Club/Queue">View Live Club Weigh-ins</a></li>
+                    </ul>
+                </li>                 
+            </ul>
+        </li>
+        <li><a href="https://www.nutracheck.co.uk/Forums"><span id="menuIconForums" class="menuIcon"></span> Forums</a></li>   
+        <li class="dropdown"><a href="https://www.nutracheck.co.uk/Library/directory"><span id="menuIconResources" class="menuIcon"></span> Resources</a>
+            <ul class="dropdown-menu" role="menu">
+                <li class="dropSection">
+                    <h3>Support and advice</h3>
+                    <ul id="menuResources">
+                        <li><a href="https://www.nutracheck.co.uk/Blog">Nutracheck blog</a></li>                         
+                        <li><a href="https://www.nutracheck.co.uk/Library/Forum/Nutrition">Nutrition Q&amp;As from members</a></li>
+                        <li><a href="https://www.nutracheck.co.uk/Library/Forum/Fitness">Fitness Q&amp;As from members</a></li>
+                        <li><a href="https://www.nutracheck.co.uk/Library/directory">Diet, health &amp; fitness articles</a></li>
+                        <li><a href="https://www.nutracheck.co.uk/Resources/ExerciseVideos">Exercise videos - 5 min toners</a></li>
+                        <li><a href="https://www.nutracheck.co.uk/MemberSupport" target="_blank">Support</a></li>
+                    </ul>
+                </li>	
+            </ul>        
+        </li> 
+        <li><a href="https://www.nutracheck.co.uk/MemberSupport" target="_blank"><span id="menuIconSupport" class="menuIcon"></span> Support</a></li> 
+    </ul>  
+</div>
+	
+                    
+                                           
+                    
+                
+            </nav>            
+        </div>                
+    </div>                  
+</header>    
+
+    
+        <div id="SecondaryNav" class="contentStretch"></div>    
+           
+            
+    
+    
+ 
+
+
+<div class="bootstrap_migrate">
+    <div class="modal fade" id="modalSignIn" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close textSmall colorGrayDark" data-dismiss="modal"><span aria-hidden="true">close [×]</span><span class="sr-only">Close</span></button>  
+                <h4 class="modal-title fontPrimaryNormal">Sign in</h4>  
+            </div>	
+            <div class="modal-body">	
+                <form id="dietuserloginnav" action="https://www.nutracheck.co.uk/Support/login" name="dietuserlogin" onkeypress="checkEnterLogin(event,&#39;dietuserlogin&#39;)" method="post" role="form">
+                    <input type="hidden" name="lasturl" value=""> 
+                    <input type="hidden" name="time" id="tztime" value="">
+                  <div class="form-group">
+                    <input type="text" id="enterEmailinp" name="Email" class="form-control input-lg" placeholder="Nutracheck email" autofocus="">
+                  </div>
+                  <div class="form-group">
+                    <input type="password" name="Password" class="form-control input-lg" id="enterPWinp" placeholder="Password">
+                  </div>
+                  <div class="text-right textSmall"><a href="https://www.nutracheck.co.uk/Support/PasswordForgot"><span class="colorGrayDark">forgotten password</span></a></div> 
+                  <div id="remMe"><input type="checkbox" value="1" id="RememberMe" name="RememberMe"> <label for="RememberMe" class="colorGrayDark">Keep me signed in</label></div> 
+                  <div class="contentCenterAlign"><button class="btn btn-success" data-submitnav="dietuserloginnav">Sign in</button></div> 
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>     
+</div>              
+<script type="text/javascript">
+jQuery('#modalSignIn').on('shown.bs.modal', function() {
+  jQuery('#enterEmailinp').focus();
+});
+jQuery("[data-submitnav]").on("click",function(){
+   frm=jQuery(this).attr("data-submitnav"); 
+   tztime = getLoginTime();
+   jQuery("#tztime").val(tztime);
+   jQuery("#"+frm).submit();
+});
+</script>    
+
+                
+                
+
+
+    <div class="contentStretch">
+        <div class="LeftContent">
+            
+<div class="nut_sidepanel">
+    <div class="nut_sidecontentpadding">	
+        <h2 class="colorSuccess fontPrimaryBold textLarger">Tip for setting your goal</h2>
+        <p>Doctors and dietitians recommend a 10% weight loss as an ideal and achievable first step</p>
+    </div>
+    <div id="whyTenPC">
+        Why 10%?
+    </div>
+    <div class="nut_sidecontentpadding">
+        <div class="nut_panelBlue">
+            <p>Losing just 10% of your body weight has measurable benefits for your health. Including:</p>
+            <ul class="nut_iconList large">
+                <li class="listBloodPressure">Lowering blood pressure</li>
+                <li class="listCholesterol">Reducing 'bad' cholesterol levels</li>
+                <li class="listDiabetes nut_listLast">Reducing the risk of developing Type 2 diabetes</li>
+            </ul>
+        </div>
+        <p>Aside from the health benefits, setting smaller achievable goals is a much more motivating approach to losing weight. </p>
+        <p>When selecting your goal weight, check how much it is as a percentage - shown in brackets next to it.</p>
+    </div>
+</div>
+
+&nbsp;
+        </div>
+        <div class="CenterContent">
+                  
+<ul id="profileTabs">
+    <li class="profileTabSelected"><a href="https://www.nutracheck.co.uk/MyProfile/Targets">Personal<br>details</a></li>
+    <li><a href="https://www.nutracheck.co.uk/MyProfile/Results">My<br>targets</a></li>
+    <li><a href="https://www.nutracheck.co.uk/MyProfile/MyDietAccount">My<br>account</a></li>
+    <li><a href="https://www.nutracheck.co.uk/MyProfile/MembershipOptions">Membership<br>options</a></li>
+    
+    <li><a href="https://www.nutracheck.co.uk/ThirdParty/FitnessDevice/Status">Link<br>devices</a></li>
+</ul> 
+
+            <div id="profileContent" class="nut_panel nut_content_height">
+
+                <form name="fsignin" id="personalForm" action="https://www.nutracheck.co.uk/MyProfile/TargetsSave" method="post" class="form-horizontal">
+                    
+                    <h2 class="fontPrimaryBold colorWarning textExtraLarge">My vital statistics</h2>
+                    <div class="nut_panelBlue profileSection verticalalign">
+                        <div class="profileIcon">
+                            <img src="./Profile_files/myvitalstats_icon.gif" alt="">
+                        </div>
+                        <div class="profileInputs">                    
+
+                            <div class="inputsInnerWidth form-group">
+                                <div class="col-xs-3"><label for="age" class="control-label">Sex</label></div>
+                                <div class="col-xs-3">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="optsex" value="f" id="female">
+                                            <em class="colorGray">female</em>
+                                        </label>     
+                                    </div>
+                                </div>
+                                <div class="col-xs-1"></div>            
+                                <div class="col-xs-3">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="optsex" checked="checked" value="m" id="male">
+                                            <em class="colorGray">male</em>
+                                        </label>     
+                                    </div>  
+                                </div>
+                            </div>         
+
+                            <div class="inputsInnerWidth form-group">
+                                <label for="age" class="col-xs-3 control-label">Age</label>
+                                <div class="col-xs-3">
+                                    <input type="text" maxlength="2" min="0" max="99" class="form-control" onkeypress="return nu_validateKeyPress(event,validInt);" name="txtage" value="35" id="age">
+                                </div>
+                                <label class="pull-left control-label"><em class="colorGray">years</em></label>                             
+                            </div>                         
+
+                            <div class="form-group">
+                                <div id="loadHeight">	
+                                    
+                                        
+                                            
+
+
+
+
+<div class="inputsInnerWidth">
+    <label class="col-xs-3 control-label inputAlign">Height</label> 
+    <div class="col-xs-3">
+        <input type="text" min="0" max="99" maxlength="4" class="form-control" value="176" onkeypress="return nu_validateKeyPress(event,validInt);" name="txtheight2" id="txtheight2" onchange="changeTarget()">
+    </div>
+    <label class="col-xs-1 control-label inputAlign afterLabel" for="txtheight2"><em id="heightlabel2" class="colorGray">cm</em></label>                             
+</div>
+
+<div class="clrFlt visible-xs wrapMarginBottom"></div>
+<div class="col-xs-3 visible-xs"></div>
+
+<div id="selectMeasureHeight" class="btn-group pull-left" data-toggle="buttons">
+    <label class="btn btn-info">ft &amp; in  <input type="radio" id="HeightImperial" value="0" checked="checked"></label>
+    <label class="btn btn-info active">cm  <input type="radio" id="HeightMetric" value="1"></label>
+</div>                            
+
+<div class="clrFlt"></div>
+<input type="hidden" value="0" name="txtheight1" id="txtheight1" autocomplete="off">
+                                        
+                                        
+                                    	
+                                </div>
+                            </div>  
+                            <div class="form-group">            
+                                <div id="loadWeight">
+                                                     
+                                        
+                                            
+
+
+
+
+
+
+<div class="inputsInnerWidth">
+	<label class="col-xs-3 control-label inputAlign">Weight</label>
+	<div class="col-xs-3">
+		<input type="text" min="0" max="99" maxlength="5" class="form-control" id="txtweight1" onkeypress="return nu_validateKeyPress(event,validNums);" name="txtweight1" value="80.0" onchange="changeTarget()">
+	</div>
+	<label class="control-label col-xs-1 inputAlign" for="txtweight1"><em id="weightlabel1" class="colorGray">kg</em></label>   
+                         
+</div>   
+
+<div class="clrFlt visible-xs wrapMarginBottom"></div>
+<div class="col-xs-3 visible-xs"></div>
+
+<div id="selectMeasureWeight" class="btn-group pull-left" data-toggle="buttons">
+	<label class="btn btn-info">st &amp; lbs <input type="radio" id="WeightImperial" value="0"></label>
+	<label class="btn btn-info">lbs  <input type="radio" id="WeightLbs" value="2"></label>
+	<label class="btn btn-info active">kg  <input type="radio" id="WeightMetric" value="1"></label>
+</div>
+
+<input type="hidden" id="txtweight2" name="txtweight2" value="0" autocomplete="off">
+<input type="hidden" id="txtmeasure" name="txtmeasure" value="1">
+
+               
+                                        
+                                        
+                                        
+                                      
+                                </div>                                
+                            </div>                        
+                            
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label for="autoWeight">
+                                        <input type="checkbox" value="0" checked="checked" id="autoWeight" name="autoWeight">
+                                        <em class="colorGray">Don't add this weight to my Weight Tracker charts automatically</em>
+                                    </label>
+                                </div> 
+                            </div>    
+                        </div>
+                        <div class="clrFlt"></div>
+                    </div>    
+                    
+                    <h2 class="fontPrimaryBold colorWarning textExtraLarge">About me</h2>
+                    <div class="profileSection nut_panelBlue verticalalign">
+                        <div class="profileIcon">
+                            <img src="./Profile_files/aboutme_icon.gif" alt="">
+                        </div>
+                        <div class="profileInputs"> 
+                            <div id="displayPregnant" style="display:none;">
+                                <div class="checkbox">
+                                    <label for="selectMedicalPregnant">
+                                        <input id="selectMedicalPregnant" name="healthstatus" type="radio" value="1">
+                                        <em class="colorGray">I'm pregnant</em>
+                                    </label>
+                                </div>                 
+                                <div class="checkbox">
+                                    <label for="selectMedicalBreastEx">
+                                        <input id="selectMedicalBreastEx" name="healthstatus" type="radio" value="2"> 
+                                        <em class="colorGray">I'm exclusively breastfeeding</em>
+                                    </label>         
+                                </div>
+                                <div class="checkbox">
+                                    <label for="selectMedicalBreastNonEx">
+                                        <input id="selectMedicalBreastNonEx" name="healthstatus" type="radio" value="4"> 
+                                        <em class="colorGray">I'm not exclusively breastfeeding</em>
+                                    </label>         
+                                </div>
+                            </div>             
+                            <div class="checkbox">
+                                <label for="eating">
+                                    <input id="eating" name="healthstatus" type="radio" value="3">
+                                    <em class="colorGray">I've got an eating disorder</em>
+                                </label>         
+                            </div>       
+                            <div class="checkbox">
+                                <label for="iamhealthy">
+                                    <input id="iamhealthy" name="healthstatus" type="radio" value="0" checked="checked">
+                                    <em class="colorGray">None of the above apply</em>
+                                </label>         
+                            </div>                
+                        </div>
+                        <div class="clrFlt"></div>          
+                    </div>
+                                
+                                
+                    <h2 class="fontPrimaryBold colorWarning textExtraLarge">Activity levels <a href="https://www.nutracheck.co.uk/MyProfile/Targets#url" data-toggle="modal" data-target="#modalActivityLevels"><img src="./Profile_files/icon_help.gif" alt="?" class="sectionTitle"></a></h2>
+<div class="profileSection nut_panelBlue verticalalign">
+    <div class="profileIcon"><img src="./Profile_files/activitylevels_icon.gif" alt=""></div>
+    <div class="profileInputs">
+        <input type="text" name="txtsleephours" size="3" maxlength="2" value="0" onkeypress="return nu_validateKeyPress(event,validInt);" style="display:none;">                
+        <div class="col-xs-9 form-group">
+            <label for="cmbwork" class="control-label">Select your activity level at work</label>
+            <select id="cmbwork" name="cmbwork" class="form-control">
+                <option selected="selected" value="1">Light</option>
+                <option value="2">Moderate</option>
+                <option value="3">Moderate\Heavy</option>
+            </select>                    
+        </div>
+        <div class="col-xs-9 form-group">
+            <label for="cmbex" class="control-label">Select your activity level in your leisure time</label>
+            <select id="cmbex" name="cmbex" class="form-control">
+                <option selected="selected" value="1">Inactive</option>
+                <option value="2">Moderately Active</option>
+                <option value="3">Very Active</option>
+            </select>                  
+        </div>
+    </div>
+    <div class="clrFlt"></div> 
+</div>
+                   
+<div class="modal fade" id="modalActivityLevels" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close textSmall colorGrayDark" data-dismiss="modal">
+                    <span aria-hidden="true">close [×]</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title colorPrimary fontPrimaryNormal">Activity Levels</h4>
+            </div>
+            <div class="modal-body">
+                <h6 class="colorWarning">Work/Daytime Activity Level</h6>
+                <p><strong>Light</strong> - Have a job that involves long periods of sitting (office-based / driving) or are home-based and sitting for much of the day. Typical jobs: office worker, sales rep, bus/taxi/lorry driver.</p>
+                <p><strong>Moderate</strong> - On your feet for much of the day, either standing or occasional slow paced walking. Typical jobs: shop assistant, teacher, chef/cook, bar worker, engineer. </p>
+                <p><strong>Heavy</strong> - Active for much of the day, walking non-stop and carrying objects. Typical jobs: hospital/ward nurse, waitressing in a busy restaurant, cleaner, porter, labourer/construction worker, gardener, farm worker.</p>
+                <h6 class="colorWarning">Leisure Activity Level</h6>
+                <p><strong>Inactive</strong> - Do very little exercise, going for the occasional walk (moderate pace, low intensity). Spend majority of leisure time doing activities such as watching TV, playing computer games, on the internet, reading, cooking, driving, general household chores.</p>
+                <p><strong>Moderately active</strong> -  Do light to moderate intensity exercise 3-4 times a week. E.g. going to the gym / swimming / cycling / horse riding / dance classes / playing golf. Daily dog walking (brisk pace, twice a day).</p>
+                <p><strong>Very active</strong> - You exercise almost every day of the week doing high intensity training such as running, spinning, team or competitive sports. Or regularly undertake activities such as heavy gardening, heavy DIY work.</p>
+            </div>
+        </div>
+    </div>
+</div>                       
+           
+
+                    <h2 class="fontPrimaryBold colorWarning textExtraLarge">My personal goals <a href="https://www.nutracheck.co.uk/MyProfile/Targets#url" id="personalGoalsAdvice"><img src="./Profile_files/icon_help.gif" alt="?" class="sectionTitle"></a></h2>
+                    <div class="profileSection nut_panelBlue verticalalign">
+                        <div class="profileIcon"><img src="./Profile_files/personalgoals_icon.gif" alt=""></div>
+                        <div class="profileInputs">
+                            <div class="form-group">
+                                <div class="col-xs-5">
+                                    <p><label class="control-label colorPrimary">What is your overall goal?</label></p>
+                                </div>
+                                <div class="col-xs-5">
+                                    <div id="displayWeightLossGoal" class="radio">
+                                      <label>
+                                        <input type="radio" name="optgoal" checked="checked" value="1" id="lose">
+                                        <em class="colorGray">lose weight</em>
+                                      </label>
+                                    </div>
+                                    <div class="radio">
+                                      <label>
+                                        <input type="radio" name="optgoal" value="2" id="maintain">
+                                        <em class="colorGray">maintain weight</em>
+                                      </label>
+                                    </div>    
+                                    <div class="radio">
+                                      <label>
+                                        <input type="radio" name="optgoal" value="3" id="gain">
+                                        <em class="colorGray">gain weight</em>
+                                      </label>
+                                    </div>                 
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <div class="col-xs-5">
+                                    <p><label for="" class="control-label colorPrimary">What is your goal weight?</label><br>
+                                        <span id="gainadvice" style="display:none;"><a href="https://www.nutracheck.co.uk/MyProfile/Targets#url" data-toggle="modal" data-target="#modalWeightGainAdvice" class="colorGray"><strong>Advice for weight gain</strong></a></span>
+                                        <span id="loseadvice" style="display:inline;"><a href="https://www.nutracheck.co.uk/MyProfile/Targets#url" id="goalWeightAdvice" class="colorGray"><strong>Need advice?</strong></a></span>
+                                    </p>
+                                </div>
+                                <div class="col-xs-5">
+                                    <select id="glwt" name="cmbtarget" class="form-control"><option value="0">Select Goal Weight</option><option value="80000">80 Kg   (0% loss)</option><option value="79800">79.8 Kg   (0% loss)</option><option value="79600">79.6 Kg   (0% loss)</option><option value="79400">79.4 Kg   (0% loss)</option><option value="79200">79.2 Kg   (-1% loss)</option><option value="79000">79 Kg   (-1% loss)</option><option value="78800">78.8 Kg   (-1% loss)</option><option value="78600">78.6 Kg   (-1% loss)</option><option value="78400">78.4 Kg   (-2% loss)</option><option value="78200">78.2 Kg   (-2% loss)</option><option value="78000">78 Kg   (-2% loss)</option><option value="77800">77.8 Kg   (-2% loss)</option><option value="77600">77.6 Kg   (-3% loss)</option><option value="77400">77.4 Kg   (-3% loss)</option><option value="77200">77.2 Kg   (-3% loss)</option><option value="77000">77 Kg   (-3% loss)</option><option value="76800">76.8 Kg   (-4% loss)</option><option value="76600">76.6 Kg   (-4% loss)</option><option value="76400">76.4 Kg   (-4% loss)</option><option value="76200">76.2 Kg   (-4% loss)</option><option value="76000">76 Kg   (-5% loss)</option><option value="75800">75.8 Kg   (-5% loss)</option><option value="75600">75.6 Kg   (-5% loss)</option><option value="75400">75.4 Kg   (-5% loss)</option><option value="75200">75.2 Kg   (-6% loss)</option><option value="75000">75 Kg   (-6% loss)</option><option value="74800">74.8 Kg   (-6% loss)</option><option value="74600">74.6 Kg   (-6% loss)</option><option value="74400">74.4 Kg   (-7% loss)</option><option value="74200">74.2 Kg   (-7% loss)</option><option value="74000">74 Kg   (-7% loss)</option><option value="73800">73.8 Kg   (-7% loss)</option><option value="73600">73.6 Kg   (-8% loss)</option><option value="73400">73.4 Kg   (-8% loss)</option><option value="73200">73.2 Kg   (-8% loss)</option><option value="73000">73 Kg   (-8% loss)</option><option value="72800">72.8 Kg   (-9% loss)</option><option value="72600">72.6 Kg   (-9% loss)</option><option value="72400">72.4 Kg   (-9% loss)</option><option value="72200">72.2 Kg   (-9% loss)</option><option value="72000">72 Kg   (-10% loss)</option><option value="71800">71.8 Kg   (-10% loss)</option><option value="71600">71.6 Kg   (-10% loss)</option><option value="71400">71.4 Kg   (-10% loss)</option><option value="71200">71.2 Kg   (-11% loss)</option><option value="71000">71 Kg   (-11% loss)</option><option value="70800">70.8 Kg   (-11% loss)</option><option value="70600">70.6 Kg   (-11% loss)</option><option value="70400">70.4 Kg   (-12% loss)</option><option value="70200">70.2 Kg   (-12% loss)</option><option value="70000">70 Kg   (-12% loss)</option><option value="69800">69.8 Kg   (-12% loss)</option><option value="69600">69.6 Kg   (-13% loss)</option><option value="69400">69.4 Kg   (-13% loss)</option><option value="69200">69.2 Kg   (-13% loss)</option><option value="69000">69 Kg   (-13% loss)</option><option value="68800">68.8 Kg   (-14% loss)</option><option value="68600">68.6 Kg   (-14% loss)</option><option value="68400">68.4 Kg   (-14% loss)</option><option value="68200">68.2 Kg   (-14% loss)</option><option value="68000">68 Kg   (-15% loss)</option><option value="67800">67.8 Kg   (-15% loss)</option><option value="67600">67.6 Kg   (-15% loss)</option><option value="67400">67.4 Kg   (-15% loss)</option><option value="67200">67.2 Kg   (-16% loss)</option><option value="67000">67 Kg   (-16% loss)</option><option value="66800">66.8 Kg   (-16% loss)</option><option value="66600">66.6 Kg   (-16% loss)</option><option value="66400">66.4 Kg   (-17% loss)</option><option value="66200">66.2 Kg   (-17% loss)</option><option value="66000">66 Kg   (-17% loss)</option><option value="65800">65.8 Kg   (-17% loss)</option><option value="65600">65.6 Kg   (-18% loss)</option><option value="65400">65.4 Kg   (-18% loss)</option><option value="65200">65.2 Kg   (-18% loss)</option><option value="65000">65 Kg   (-18% loss)</option><option value="64800">64.8 Kg   (-19% loss)</option><option value="64600">64.6 Kg   (-19% loss)</option><option value="64400">64.4 Kg   (-19% loss)</option><option value="64200">64.2 Kg   (-19% loss)</option><option value="64000">64 Kg   (-20% loss)</option></select>
+                                </div>
+                            </div>
+                            <div id="weightLossRate" class="form-group">
+                                <div class="col-xs-5">
+                                    <p><label for="" class="control-label colorPrimary">How much weight do you want to <span id="perweektxt">lose</span> per week?</label><br>
+                                    <a id="adviceperweek" href="https://www.nutracheck.co.uk/MyProfile/Targets#url" class="colorGray"><strong>Need advice?</strong></a></p>
+                                </div>
+                                <div class="col-xs-6">
+                                    
+                                        
+                                            <div class="radio-inline col-xs-5">
+                                                <label for="c1">
+                                                    <input type="radio" id="c1" name="C1" value="1">
+                                                    <em id="weightloss1" class="colorGray">0.23 kg</em>
+                                                </label>                                  
+                                            </div>
+                                            <div class="radio-inline col-xs-6">
+                                                <label for="c2">
+                                                    <input type="radio" id="c2" name="C1" value="2">
+                                                    <em id="weightloss2" class="colorGray">0.46 kg</em>
+                                                </label>        
+                                            </div>  
+                                            <div class="clrFlt"></div>
+                                            <div id="wtgainPerWeekB">
+                                                <div class="radio-inline col-xs-5">
+                                                    <label for="c3">
+                                                        <input type="radio" id="c3" name="C1" value="3">
+                                                        <em id="weightloss3" class="colorGray">0.69 kg</em>
+                                                    </label>                                  
+                                                </div>
+                                                <div class="radio-inline col-xs-6">
+                                                    <label for="c4">
+                                                        <input type="radio" id="c4" name="C1" value="4" checked="checked">
+                                                        <em id="weightloss4" class="colorGray">0.92 kg</em>
+                                                    </label>        
+                                                </div>                              
+                                            </div>                            
+                                        
+                                        
+                                      
+                                </div>  
+                            </div>            
+                        </div>  
+                        <div class="clrFlt"></div>  
+                    </div>                      
+  
+                    <button class="btn btn-success pull-right" type="submit" role="button">+ Update</button>
+                    <div class="clrFlt"></div>
+                    <input type="hidden" name="min_weight" autocomplete="off" value="64000">
+<input type="hidden" name="max_weight" autocomplete="off" value="63799">
+<input type="hidden" name="continueweightgain" value="0">
+<input type="hidden" name="tweight" value="69000">
+<input type="radio" name="optgoal" id="maintain1" value="2" style="display:none;">
+<input type="hidden" name="medicalBreastEx" id="breastexclusive" value="0">
+<input type="hidden" name="medicalBreastNonEx" id="breastnonexclusive" value="0"> 
+<input type="hidden" name="medicalPregnant" id="medicalPregnant" value="0"> 
+<input type="hidden" id="displayWeight" name="displayWeight" value="1">
+<input type="hidden" id="displayHeight" name="displayHeight" value="1">
+                </form>
+                <input type="hidden" name="ismetric" value="">                
+                
+            </div>    
+        </div>
+        <div class="RightContent">
+            <div class="nut_margin nut_border">
+    <a href="https://www.nutracheck.co.uk/Info/MobileApps"><img src="./Profile_files/barscanningapp4.jpg" alt="" class="img-responsive nut_borderradius"></a>
+</div>
+        </div>
+        <div class="clrFlt"></div>
+    </div>
+</div>  
+      
+<div class="modal fade" id="modalPersonalGoals" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close textSmall colorGrayDark" data-dismiss="modal">
+                    <span aria-hidden="true">close [×]</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title colorPrimary fontPrimaryNormal">Tips for setting a goal</h4>
+            </div>
+            <div class="modal-body">
+                <div id="optGoal1" style="display:block;">
+                    <div id="setSteps">
+                        <h6 class="colorWarning">Set a milestone</h6>
+                        <ul>
+                            <li>Set a first step of 10%  weight loss - check the figure in brackets. Step milestones are more motivating.</li>
+                            <li>Don't be tempted to go for the weight you were in your teens or pre-family. Our bodies change as we get older so be realistic.</li>
+                            <li>If the goal you want isn't showing, it's because the weight loss would be more than 20%. Start with a 10% step first, then come back and reset your goal once you reach it.</li>
+                        </ul>
+                    </div>
+                    
+                        
+                            <div id="setGoal">
+                                <h6 class="colorWarning">What rate of weight loss is right for me?</h6>
+                                <ul>
+                                    <li>Up to 0.92kg per week is the recommended, safe rate of sustainable weight loss.</li>
+                                    <li>You won't be given an unrealistic calorie target, but if you'd prefer a higher allowance, choose 0.23 kg or 0.46 kg per week.</li>
+                                    <li>You can come back at any time and change your rate of weight loss.</li>
+                                </ul> 
+                            </div> 
+                        
+                        
+                       
+                </div>
+                <div id="optGoal2" style="display:none;">
+                    <ul>
+                        <li>Keep weighing in once a week and recording your weight in your online Weight Tracker.</li>
+                        <li>It is quite normal for your weight to fluctuate. However it helps to set an upper weight limit in your mind that you will never allow yourself to exceed - usually 3 to 5lbs above your goal weight.</li>
+                        <li>If you hit your upper weight limit, immediately switch to 'lose weight' until you get back within your comfortable weight range for maintaining.</li>
+                    </ul>  
+                </div>            
+            </div>
+        </div>
+    </div>
+</div>          
+ <div class="modal" id="modalPregnant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-alignment-helper">
+        <div class="modal-dialog modal-vertical-align">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button id="" type="button" class="close textSmall colorGrayDark" data-dismiss="modal">
+                        <span aria-hidden="true">close [×]</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title colorPrimary fontPrimaryNormal">I'm pregnant</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-2 hidden-xs"><img src="./Profile_files/aboutme_icon(1).gif" class="img-responsive"></div>
+                        <div class="col-sm-10">
+                            <div class="checkbox nut_margin">
+                                <label for="confirmPregnant">
+                                    <input type="checkbox" value="1" id="confirmPregnant" name="confirmhealthstatus">
+                                    <span class="colorGray">I have taken medical advice and am proceeding with the knowledge/approval of my Doctor or specialist. </span>
+                                </label>         
+                            </div>                 
+                            <button class="btn btn-primary pull-right" data-dismiss="modal">Proceed</button>
+                            <div class="clrFlt"></div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</div>                
+            
+<div class="modal" id="modalBreastExclusive" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-alignment-helper">
+        <div class="modal-dialog modal-vertical-align">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button id="" type="button" class="close textSmall colorGrayDark" data-dismiss="modal">
+                        <span aria-hidden="true">close [×]</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title colorPrimary fontPrimaryNormal">Breastfeeding exclusively</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-2 hidden-xs"><img src="./Profile_files/aboutme_icon(1).gif" class="img-responsive"></div>
+                        <div class="col-sm-10">
+                            <div class="checkbox nut_margin">
+                                <label for="confirmBreastEx">
+                                    <input type="checkbox" value="1" id="confirmBreastEx" name="confirmhealthstatus">
+                                    <span class="colorGray">I have taken medical advice and am proceeding with the knowledge/approval of my Doctor or specialist.</span>
+                                </label>         
+                            </div>                 
+                            <button class="btn btn-primary pull-right" data-dismiss="modal">Proceed</button>
+                            <div class="clrFlt"></div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</div>        
+                
+<div class="modal" id="modalBreastNonExclusive" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-alignment-helper">
+        <div class="modal-dialog modal-vertical-align">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button id="" type="button" class="close textSmall colorGrayDark" data-dismiss="modal">
+                        <span aria-hidden="true">close [×]</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title colorPrimary fontPrimaryNormal">Breastfeeding, but not exclusively</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-2 hidden-xs"><img src="./Profile_files/aboutme_icon(1).gif" class="img-responsive"></div>
+                        <div class="col-sm-10">
+                            <div class="checkbox nut_margin">
+                                <label for="confirmBreastNonEx">
+                                    <input type="checkbox" value="1" id="confirmBreastNonEx" name="confirmhealthstatus">
+                                    <span class="colorGray">I have taken medical advice and am proceeding with the knowledge/approval of my Doctor or specialist.</span>
+                                </label>         
+                            </div>                 
+                            <button class="btn btn-primary pull-right" data-dismiss="modal">Proceed</button>
+                            <div class="clrFlt"></div>                      
+                        </div>
+                    </div>                
+                </div>
+            </div>
+        </div>
+    </div>    
+</div> 
+    
+<div class="modal fade" id="modalWeightGainAdvice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close textSmall colorGrayDark" data-dismiss="modal">
+                    <span aria-hidden="true">close [×]</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title colorPrimary fontPrimaryNormal">Advice for weight gain</h4>
+            </div>
+            <div class="modal-body">
+                <p>When trying to gain weight, it's important to not only eat high calorie foods, but ones that are nutrient-rich too. Don't just concentrate on foods high in fat, sugar and often empty calories. Gaining weight should be done in the same way as losing it - sensibly and gradually.</p>
+                <p>Eating extra calories can seem daunting if you are used to small portions or your appetite isn't great. So here are some tips</p>
+                <ul class="noListIndent">
+                    <li>Begin by adding in some extra snacks, and then gradually increase the total amount of food you eat over the course of the day.</li>
+                    <li>Start with a healthy and nutritious base, and then wherever you can, enrich the foods with additional ingredients such as yogurt, fruit, nuts and healthy fats.</li>
+                    <li>Continue eating a wide range of foods from all the food groups, increasing portion sizes realistically wherever possible.</li>
+                    <li>Increase the frequency of meal occasions - it's a good way to increase calorie and nutrient intake. </li>
+                    <li>Try to eat 6 times per day (3-4 small meals and at least 2 snacks throughout the day).</li>
+                    <li>Make sure that at least 3 meal occasions during the day include protein, complex carbohydrates, vegetables or salad and a source of fat.</li>
+                    <li>If you're looking to gain muscle mass rather than just gain weight, calorie and protein levels will need to be increased in the diet, but muscle mass will only grow with strength training. High protein foods such as protein bars, protein shakes or low fat milk should be included as a post-training snack to ensure maximum recovery .</li>
+                    <li>Good food choices when you're looking to gain weight: Lean meat, poultry, eggs, nuts, pulses, oily fish, olive oil, avocado, nuts, full fat dairy foods e.g. milk, yogurt, cheese. </li>                    
+                </ul>                
+            </div>
+        </div>
+    </div>
+</div>          
+
+<div class="modal fade" id="modalActivityLevels" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close textSmall colorGrayDark" data-dismiss="modal">
+                    <span aria-hidden="true">close [×]</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title colorPrimary fontPrimaryNormal">Activity Levels</h4>
+            </div>
+            <div class="modal-body">
+                <h6 class="colorWarning">Work / Day Activity Level</h6>
+                <p><strong>Light</strong> - Have a job that involves long periods of sitting (office-based / driving) or are home-based and sitting for much of the day. Typical jobs: office worker, sales rep, bus/taxi/lorry driver.</p>
+                <p><strong>Moderate</strong> - On your feet for much of the day, either standing or occasional slow paced walking. Typical jobs: shop assistant, teacher, chef/cook, bar worker, engineer. </p>
+                <p><strong>Heavy</strong> - Active for much of the day, walking non-stop and carrying objects. Typical jobs: hospital/ward nurse, waitressing in a busy restaurant, cleaner, porter, labourer/construction worker, gardener, farm worker.</p>
+                <h6 class="colorWarning">Leisure Activity Level</h6>
+                <p><strong>Inactive</strong> - Do very little exercise, going for the occasional walk (moderate pace, low intensity). Spend majority of leisure time doing activities such as watching TV, playing computer games, on the internet, reading, cooking, driving, general household chores.</p>
+                <p><strong>Moderately active</strong> -  Do light to moderate intensity exercise 3-4 times a week. E.g. going to the gym / swimming / cycling / horse riding / dance classes / playing golf. Daily dog walking (brisk pace, twice a day).</p>
+                <p><strong>Very active</strong> - You exercise almost every day of the week doing high intensity training such as running, spinning, team or competitive sports. Or regularly undertake activities such as heavy gardening, heavy DIY work.</p>
+            </div>
+        </div>
+    </div>
+</div>                       
+                                 
+      
+<div class="modal fade" id="modalWeightLossAdvice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close textSmall colorGrayDark" data-dismiss="modal">
+                    <span aria-hidden="true">close [×]</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title colorPrimary fontPrimaryNormal">Tips for setting a goal</h4>
+            </div>
+            <div class="modal-body">
+                <div id="setSteps">
+                    <h6 class="colorWarning">Set a milestone</h6>
+                    <ul>
+                        <li>Set a first step of 10%  weight loss - check the figure in brackets. Step milestones are more motivating.</li>
+                        <li>Don't be tempted to go for the weight you were in your teens or pre-family. Our bodies change as we get older so be realistic.</li>
+                        <li>If the goal you want isn't showing, it's because the weight loss would be more than 20%. Start with a 10% step first, then come back and reset your goal once you reach it.</li>
+                    </ul>
+                </div>
+                <div id="setGoal">
+                    <h6 class="colorWarning">What rate of weight loss is right for me?</h6>
+                    <ul>
+                        <li>Up to 0.92kg per week is the recommended, safe rate of sustainable weight loss.</li>
+                        <li>You won't be given an unrealistic calorie target, but if you'd prefer a higher allowance, choose 0.23 kg or 0.46 kg per week.</li>
+                        <li>You can come back at any time and change your rate of weight loss.</li>
+                    </ul> 
+                </div>          
+            </div>
+        </div>
+    </div>
+</div>                   
+     
+<div class="modal fade" id="modalMaintainAdvice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close textSmall colorGrayDark" data-dismiss="modal">
+                    <span aria-hidden="true">close [×]</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title colorPrimary fontPrimaryNormal">Tips for maintaining</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="nut_margin">
+                    <li>Keep weighing in once a week and recording your weight in your online Weight Tracker.</li>
+                    <li>It is quite normal for your weight to fluctuate. However it helps to set an upper weight limit in your mind that you will never allow yourself to exceed - usually 3 to 5lbs above your goal weight.</li>
+                    <li>If you hit your upper weight limit, immediately switch to 'lose weight' until you get back within your comfortable weight range for maintaining.</li>
+                </ul>  
+                <button class="btn btn-primary pull-right" data-dismiss="modal">Proceed</button>
+                <div class="clrFlt"></div>                    
+            </div>
+        </div>
+    </div>
+</div>                      
+   
+    
+<div class="modal fade" id="modalBMIUnder20" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close textSmall colorGrayDark" data-dismiss="modal">
+                    <span aria-hidden="true">close [×]</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title colorPrimary fontPrimaryNormal">Low BMI warning</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-2 hidden-xs"><img src="./Profile_files/personalgoals_icon(1).gif" class="img-responsive"></div>
+                    <div class="col-sm-10">
+                        <p>Your BMI is <strong id="yourBMIUnder20" class="colorPrimary"></strong></p>
+                        <p class="nut_margin">We note that your BMI is quite low and you have selected to gain weight. Gaining weight should be done gradually and through eating a healthy diet especially following a period of illness, so it's important to check with a health professional that there are no medical reasons why this cannot be achieved.</p>
+                        <div class="checkbox nut_margin">
+                            <label for="confirmBMILow">
+                                <input type="checkbox" value="0" name="confirmWeightGainAdvice" id="confirmBMILow">
+                                <span class="colorGray">I confirm that I have read and understand the advice above.</span>
+                            </label>         
+                        </div>  
+                        <button class="btn btn-primary pull-right" data-dismiss="modal">Proceed</button>
+                        <div class="clrFlt"></div>                        
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>   
+                                
+<div class="modal fade" id="modalBMICurrentOver25" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close textSmall colorGrayDark" data-dismiss="modal">
+                    <span aria-hidden="true">close [×]</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title colorPrimary fontPrimaryNormal">High BMI warning</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-2 hidden-xs"><img src="./Profile_files/personalgoals_icon(1).gif" class="img-responsive"></div>
+                    <div class="col-sm-10">
+                        <p>Your BMI is <strong id="yourBMICurrentOver25" class="colorPrimary"></strong></p>
+                        <p class="nut_margin">Generally we wouldn't recommend gaining weight if your BMI is above <strong>25</strong> however we understand that some people may want to build muscle mass. In this case, BMI may not be the most appropriate measurement for you. If you would like specific advice on how to achieve your goals please get in touch:
+                        <a href="mailto:customercare@nutracheck.com">customercare@nutracheck.com</a></p>
+                        <div class="checkbox nut_margin">
+                            <label for="confirmBMIHigh">
+                                <input type="checkbox" id="confirmBMIHigh" value="0" name="confirmWeightGainAdvice">
+                                <span class="colorGray">I confirm that I have read and understand the advice above.</span>
+                            </label>         
+                        </div>  
+                        <button class="btn btn-primary pull-right" data-dismiss="modal">Proceed</button>
+                        <div class="clrFlt"></div>                        
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>                                  
+
+<div class="modal fade" id="modalBMITargetOver25" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close textSmall colorGrayDark" data-dismiss="modal">
+                    <span aria-hidden="true">close [×]</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title colorPrimary fontPrimaryNormal">BMI warning</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-2 hidden-xs"><img src="./Profile_files/personalgoals_icon(1).gif" class="img-responsive"></div>
+                    <div class="col-sm-10">
+                        <p>Your BMI is <strong id="yourBMITargetOver25" class="colorPrimary"></strong></p>
+                        <p class="nut_margin">Your BMI is already within the healthy range and you have selected a goal above this. Generally we wouldn't recommend gaining weight however we understand that some people may want to build muscle mass. In this case, BMI may not be the most appropriate measurement for you. Please get in touch with us if you'd like further advice.</p>
+                        <div class="checkbox nut_margin">
+                            <label for="confirmBMIHealthy">
+                                <input type="checkbox" id="confirmBMIHealthy" value="0" name="confirmWeightGainAdvice">
+                                <span class="colorGray">I confirm that I have read and understand the advice above.</span>
+                            </label>         
+                        </div>  
+                        <button class="btn btn-primary pull-right" data-dismiss="modal">Proceed</button>                        
+                        </div>
+                        <div class="clrFlt"></div>                        
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+ 
+
+
+<div class="modal" id="modalPregnant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-alignment-helper">
+        <div class="modal-dialog modal-vertical-align">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button id="" type="button" class="close textSmall colorGrayDark" data-dismiss="modal">
+                        <span aria-hidden="true">close [×]</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title colorPrimary fontPrimaryNormal">I'm pregnant</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-2 hidden-xs"><img src="./Profile_files/aboutme_icon(1).gif" class="img-responsive"></div>
+                        <div class="col-sm-10">
+                            <div class="checkbox nut_margin">
+                                <label for="confirmPregnant">
+                                    <input type="checkbox" value="1" id="confirmPregnant" name="confirmhealthstatus">
+                                    <span class="colorGray">I have taken medical advice and am proceeding with the knowledge/approval of my Doctor or specialist. </span>
+                                </label>         
+                            </div>                 
+                            <button class="btn btn-primary pull-right" data-dismiss="modal">Proceed</button>
+                            <div class="clrFlt"></div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</div>                           
+    
+
+    
+    
+        
+    
+                                                                          
+
+<div class="modal" id="modalTargetBMI" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-alignment-helper">
+        <div class="modal-dialog modal-vertical-align modal-yesno">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class="textMedium">Our system has calculated that your Body Mass Index is below 18.5. Weight loss isn't recommended so our diet service isn't allowing you to continue with your registration at present. If you are concerned about your weight or would like to gain weight, we suggest you speak to your doctor who will be able to advise on the best dietary approach for you.</p>                   
+                            <a href="https://www.nutracheck.co.uk/MyProfile/Targets#url" class="btn btn-primary pull-right" data-dismiss="modal">OK</a>
+                            <div class="clrFlt"></div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</div>                                                                                    
+      
+ <div class="modal" id="modalCheckWeeklyLoss" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-alignment-helper">
+        <div class="modal-dialog modal-vertical-align modal-yesno">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class="textMedium">Please enter your weekly weight loss!</p>                   
+                            <a href="https://www.nutracheck.co.uk/MyProfile/Targets#url" class="btn btn-primary pull-right" data-dismiss="modal">OK</a>
+                            <div class="clrFlt"></div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</div>  
+                            
+ <div class="modal" id="modalCheckWeeklyGain" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-alignment-helper">
+        <div class="modal-dialog modal-vertical-align modal-yesno">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class="textMedium">Please enter your weekly weight gain!</p>                   
+                            <a href="https://www.nutracheck.co.uk/MyProfile/Targets#url" class="btn btn-primary pull-right" data-dismiss="modal">OK</a>
+                            <div class="clrFlt"></div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</div>                                      
+        
+<script language="javaScript" type="text/javascript">
+
+    jQuery(document).ready(function(){ 
+ 
+        changeTarget();
+      
+        jQuery("#personalGoalsAdvice").on("click",function(){
+            jQuery("#setSteps").show();
+            jQuery("#setGoal").show();
+            jQuery("#modalPersonalGoals").modal("toggle");
+        });        
+      
+    });
+     
+     jQuery('#loadHeight').on ('click',"#selectMeasureHeight .btn",function(){ 
+        if(jQuery(this).attr("class").indexOf("active") === -1){
+
+            var radio = jQuery(this).children(['input[type="radio"]']);
+            url=radio.attr("id");
+
+            var h1 = jQuery('#txtheight1').val();
+            var h2 = jQuery('#txtheight2').val();  
+            radio.checked = true;
+            var measure = jQuery('#txtmeasure').val();    
+            jQuery('#loadHeight').load('/Ajax/'+url+"?height1="+h1+"&height2="+h2);
+
+           jQuery("input[name='displayHeight']").val(radio.val()); 
+        }
+    });
+
+    jQuery('#loadWeight').on ('click',"#selectMeasureWeight .btn",function(){
+        if(jQuery(this).attr("class").indexOf("active") === -1){
+            var radio = jQuery(this).children(['input[type="radio"]']);
+            url=radio.attr("id");
+            var w1 = jQuery('#txtweight1').val();
+            var w2 = jQuery('#txtweight2').val();
+            var measure = jQuery('#txtmeasure').val();    
+
+            radio.checked = true;
+            jQuery('#loadWeight').load('/Ajax/'+url+"?weight1="+w1+"&weight2="+w2+"&measure="+measure, function(){
+                jQuery("input[name='displayWeight']").val(radio.val());
+                if(url === 'WeightMetric'){
+                    jQuery('#weightloss1').html('0.23 kg');
+                    jQuery('#weightloss2').html('0.46 kg');
+                    jQuery('#weightloss3').html('0.69 kg');
+                    jQuery('#weightloss4').html('0.92 kg');
+                } else {
+                    jQuery('#weightloss1').html('1/2 lb');
+                    jQuery('#weightloss2').html('1 lb');
+                    jQuery('#weightloss3').html('1 1/2 lb');
+                    jQuery('#weightloss4').html('2 lb');   
+                }
+                changeTarget();
+            });
+        }
+    });    
+     
+    jQuery("#adviceperweek").on("click",function(){
+        optgoal=jQuery('[name="optgoal"]:checked').val();
+        if(optgoal==="3"){
+            jQuery("#modalWeightGainAdvice").modal("toggle");
+        } else if(optgoal==="2") {
+            jQuery("#modalMaintainAdvice").modal("toggle");
+        } else{
+            jQuery("#modalWeightLossAdvice").modal("toggle");
+            jQuery("#setSteps").hide();
+            jQuery("#setGoal").show();            
+        } 
+    });
+
+    jQuery("#goalWeightAdvice").on("click",function(){
+        optgoal=jQuery('[name="optgoal"]:checked').val();
+        if(optgoal==="3"){
+            jQuery("#modalWeightGainAdvice").modal("toggle");
+        } else if(optgoal==="2") {
+            jQuery("#modalMaintainAdvice").modal("toggle");
+        } else{
+            jQuery("#modalWeightLossAdvice").modal("toggle");
+            jQuery("#setGoal").hide();
+            jQuery("#setSteps").show();
+        }
+        
+    });    
+    
+    jQuery('[name="optgoal"]').on("change",function(){
+        optgoal= jQuery(this).val();
+        if(optgoal==="2"){
+           jQuery("#weightLossRate").hide();
+        } else{
+           jQuery("#weightLossRate").show();
+           if(optgoal==="3"){
+               jQuery("#perweektxt").html("gain");
+           } else {
+               jQuery("#perweektxt").html("gain");
+           }
+        }
+
+        changeTarget();
+
+    });
+
+    jQuery("#personalForm").on("submit",function(){
+
+        var f = document.forms["fsignin"];
+        var continueweightgain = jQuery("input[name='continueweightgain']");
+        
+        if(!checkSex(f)) return false;
+        if(!checkAge(f)) return false;
+        if(!checkHt(f)) return false;    
+        if(!checkWt(f)) return false;
+        if(!checkMedical(f)) return false;
+        if(!checkTarget(f)) return false;
+        if(!checkGoal(f)) return false;
+        if(!checkWeekly(f)) return false;        
+        
+        if(getGoal(f) == 3 && !checkBreastFreeding() && continueweightgain.val() == '0'){ 
+            wtGainAdvice(f); 
+            if(continueweightgain.val()=="1"){
+                return true;
+            }
+            return false;
+        }
+        
+        return true;
+
+    });     
+     
+     
+</script>            
+
+        <div id="modalUpdaterTarget"></div>
+        
+    
+        <script type="text/javascript">
+            function eventTracker(obj){
+               val = jQuery(obj).attr('data-trackevent');
+               if(val){
+                    dataLayer.push({
+                        'event': 'click', 
+                        'eventParameter': val
+                    });
+                } 
+            }   
+        </script>    
+    
+    
+    
+    <script type="text/javascript">
+        jQuery("[data-trackevent]").on("click", function() {
+             var datatrackignore = jQuery(this).attr('data-trackingnore');
+            if(datatrackignore != 1){
+            eventTracker(jQuery(this));
+            }
+        });
+    </script> 
+
+   
+
+        
+    
+
+
+<script type="text/javascript" id="">!function(b,d,f){function e(){var c=d.getElementsByTagName("script")[0],a=d.createElement("script");a.type="text/javascript";a.async=!0;a.src="https://beacon-v2.helpscout.net";c.parentNode.insertBefore(a,c)}if(b.Beacon=f=function(c,a,g){b.Beacon.readyQueue.push({method:c,options:a,data:g})},f.readyQueue=[],"complete"===d.readyState)return e();b.attachEvent?b.attachEvent("onload",e):b.addEventListener("load",e,!1)}(window,document,window.Beacon||function(){});</script>
+<script type="text/javascript" id="">window.Beacon("init","bb075219-a405-4e6e-b6ea-fdbb6a2816ff");</script><div style="display: none; visibility: hidden;">
+<script type="text/javascript" src="./Profile_files/tp.widget.bootstrap.min.js.downloads" async="null"></script>
+</div><div id="beacon-container"><div class="hsds-beacon"><div class="Beacon"><div class="BeaconFabButtonFrame" style="border-radius: 55px; height: 55px; position: fixed; transform: scale(1); width: 138px; z-index: 1049; --pulse-background:#378bb9; --pulse-bottom-offset:-97.5px; --pulse-right-offset:-56px;"><style>.BeaconFabButtonFrame {
+  border: none;
+  bottom: 40px;
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  right: 40px;
+  top: auto;
+  transition: box-shadow 250ms ease, opacity 0.4s ease, scale 1000ms ease-in-out,
+    transform 0.2s ease-in-out;
+}
+
+.BeaconFabButtonFrame:active {
+    box-shadow: none;
+  }
+
+.BeaconFabButtonFrame iframe {
+    border: none;
+    height: 100%;
+    width: 100%;
+    color-scheme: light !important;
+  }
+
+@media (max-height: 740px) {
+
+.BeaconFabButtonFrame {
+    bottom: 10px;
+    right: 20px;
+}
+  }
+
+@supports (--css: variables) {
+  .BeaconFabButtonFrame.has-pulse-animation::before {
+    animation: puff-out-center 2s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+    animation-delay: 0.2s;
+    background-color: var(--pulse-background);
+    border-radius: 250px;
+    bottom: var(--pulse-bottom-offset);
+    content: '';
+    height: 250px;
+    opacity: 1;
+    pointer-events: none;
+    position: absolute;
+    right: var(--pulse-right-offset);
+    width: 250px;
+    will-change: transform;
+    z-index: -1;
+  }
+
+  @keyframes puff-out-center {
+    0% {
+      transform: scale(0.2);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+}
+
+.BeaconFabButtonFrame--left {
+  left: 40px;
+  right: initial;
+}
+
+@media (max-height: 740px) {
+
+.BeaconFabButtonFrame--left {
+    left: 20px;
+    right: initial;
+}
+  }
+</style><iframe id="" data-cy="FrameComponent" aria-label="Toggle Customer Support" src="./Profile_files/saved_resource.html"></iframe></div></div></div></div></body></html>

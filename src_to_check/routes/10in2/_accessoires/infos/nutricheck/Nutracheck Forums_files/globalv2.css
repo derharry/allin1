@@ -1,0 +1,713 @@
+.btn-primary { color: #ffffff; background-color: #45a4c9; border-color: #3798bd; }
+
+@font-face { font-family: primaryLight; src: url("/style/fonts/FOLKS-LIGHT.woff"); }
+@font-face { font-family: primaryNormal; src: url("/style/fonts/FOLKS-NORMAL.woff"); }
+@font-face { font-family: primaryBold; src: url("/style/fonts/FOLKS-BOLD.woff"); }
+h1, h2 { margin-top: 0; }
+
+h3, h4, h5, h6 { color: #303030; font-weight: bold; }
+
+a, nav a:hover { text-decoration: underline; }
+
+a:hover, nav a, a.btn { text-decoration: none; }
+
+.fontPrimaryLight, .fontPrimaryLight * { font-family: primaryLight; font-weight: normal !important; font-style: normal; }
+
+.fontPrimaryNormal, .fontPrimaryNormal * { font-family: primaryNormal; font-weight: normal !important; font-style: normal; }
+
+.fontPrimaryBold, .fontPrimaryBold * { font-family: primaryBold; font-weight: normal !important; font-style: normal; }
+
+.textSmall { font-size: 11px; }
+
+.textDefault { font-size: 12px; }
+
+.textMedium { font-size: 14px; }
+
+.textLarge { font-size: 15px; }
+
+p.textLarge { margin: 18px 0 18px 0; }
+
+.textLarger { font-size: 18px; font-weight: normal; }
+
+.textExtraLarge { font-size: 24px; font-weight: normal; }
+
+.colorNCGreen { color: #14AEA8; }
+
+.noListIndent { padding-left: 1em; }
+
+.listLineMargin li { margin-bottom: 0.3em; }
+
+.listInline { padding-left: 0; }
+
+.listInline li { float: left; padding-left: 2px; margin-left: 35px; margin-bottom: 0; }
+
+ol.decimal { list-style: decimal; }
+
+ol.upperAlpha li { list-style-type: upper-alpha; }
+
+ol.lowerAlpha li { list-style-type: lower-alpha; }
+
+ol.upperRoman li { list-style-type: upper-roman; }
+
+ol.lowerRoman li { list-style-type: lower-roman; }
+
+.hiLite { color: #ec6912; }
+
+.hiLite1 { color: #3098bd; }
+
+.hiLite2 { color: #6eae1a; }
+
+.hiLite3 { color: #ff0000; }
+
+.hiLite4 { color: #8E1C8E; }
+
+.colorGrayLight { color: #b4b4b4; }
+
+.colorGray { color: #8d8d8d; }
+
+.colorGrayDark { color: #737070; }
+
+.bgPrimary { background-color: #378bb9; }
+
+.bgPrimary a { color: #fff; }
+
+.bgAlternate { background-color: #f7f7f7; }
+
+.bgColor1 { background-color: #ebf3f8; }
+
+.shadowTop { -webkit-box-shadow: 0 20px 20px -20px #888 inset; -moz-box-shadow: 0 20px 20px -20px #888 inset; -ms-box-shadow: 0 20px 20px -20px #888 inset; box-shadow: 0 20px 20px -20px #888 inset; }
+
+.shadowBorder { -webkit-box-shadow: 2px 2px 4px 2px #b4b4b4; -moz-box-shadow: 2px 2px 4px 2px #b4b4b4; -ms-box-shadow: 2px 2px 4px 2px #b4b4b4; box-shadow: 2px 2px 4px 2px #b4b4b4; }
+
+html, body { height: 100%; padding: 0; margin: 0; }
+
+body { background: none; }
+
+div#Container { max-width: 1349px; margin: 0 auto 0 auto; width: auto; min-width: 998px; }
+
+div#Wrapper { max-width: 998px; margin: 0 auto 0 auto; box-sizing: border-box; }
+
+#BrandLogo { background: url("//www.nutracheck.co.uk/media/images/parts/navigation/2/brandlogo.gif") no-repeat; width: 135px; height: 92px; }
+
+.navbar { margin-bottom: 0; }
+
+.navbar-default, .navbar-inverse { border: none; }
+
+.navbar-nav > li { margin-bottom: 0; }
+
+#SiteBnr .navbar-default .navbar-nav > li > a { height: 28px; border-radius: 3px 3px 0 0; padding: 7px 10px 1px 10px; font-size: 13px; font-family: primaryBold; text-shadow: none; text-decoration: none; }
+
+.navbar-default .navbar-collapse.in .navbar-nav > li > a { border-radius: 0; text-decoration: none; }
+
+.navDivider { border-right: 1px solid #4598C4; width: 3px; height: 15px; margin: 5px 1px 0 2px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+.dropdown-menu { border: 2px solid #378bb9; border-top: 0; }
+
+.dropdown-menu li:first-child { margin-top: 6px; }
+
+#signOutNav .dropdown-menu > li > a { font-size: 15px; font-family: primaryNormal; color: #378bb9; text-decoration: none; border-bottom: 1px dotted #ccc; padding: 6px 0 5px 0; margin-left: 18px; margin-right: 18px; font-weight: bold; }
+
+#signOutNav .dropdown-menu > li:last-child > a { border-bottom: none; }
+
+#signOutNav .dropdown-menu > li > a:hover { background-color: #fff; color: #f09403; }
+
+#signOutNav .dropdown-menu > li > a:active { background-color: #fff; color: #f09403; }
+
+#signOutNav .dropdown-menu > li > a:focus { background-color: #fff; color: #f09403; }
+
+.dropdown:hover .dropdown-menu { display: block; }
+
+.dropdown-menu .dropSection { margin: 5px 20px 0 20px; border-bottom: 1px dotted #b4b4b4; padding-bottom: 15px; }
+
+.dropdown-menu .dropSection:last-child { border-bottom: none; }
+
+.dropdown-menu .dropSection h3 { font-size: 15px; color: #378bb9; font-family: primaryBold; margin-bottom: 10px; font-weight: normal; }
+
+.dropdown-menu .dropSection ul:before { content: ''; position: absolute; width: 70px; z-index: -1; background-image: url("//www.nutracheck.co.uk/media/images/parts/navigation/2/dropdown_sprites.png"); background-repeat: no-repeat; }
+
+.dropdown-menu .dropSection li { list-style-type: none; padding-left: 70px; margin-bottom: 3px; font-size: 12px; }
+
+.dropdown-menu .dropSection li a { color: #737070; white-space: nowrap; text-decoration: none; border-bottom: 1px dotted #b4b4b4; }
+
+.dropdown-menu .dropSection li a:hover { background-color: #fff; border-bottom: none; }
+
+.dropdown-menu .dropSection li a:active { background-color: #fff; border-bottom: none; }
+
+.dropdown-menu .dropSection li a:focus { background-color: #fff; border-bottom: none; }
+
+.dropdown-menu .dropSection ul#menuMemberOptions, .dropdown-menu .dropSection ul#menuMemberOptions:before { background-position: 0 0; padding-left: 0; }
+
+.dropdown-menu .dropSection ul#menuMemberAccount, .dropdown-menu .dropSection ul#menuMemberAccount:before { min-height: 56px; background-position: 0 -120px; padding-left: 0; }
+
+.dropdown-menu .dropSection ul#menuMemberTargets, .dropdown-menu .dropSection ul#menuMemberTargets:before { min-height: 47px; background-position: 0 -60px; padding-left: 0; }
+
+.dropdown-menu .dropSection ul#menuMemberDetails, .dropdown-menu .dropSection ul#menuMemberDetails:before { min-height: 60px; background-position: 0 -180px; padding-left: 0; }
+
+.dropdown-menu .dropSection ul#menuWeighInActions, .dropdown-menu .dropSection ul#menuWeighInActions:before { min-height: 44px; background-position: 0 -240px; padding-left: 0; }
+
+.dropdown-menu .dropSection ul#menuWeighInSettings, .dropdown-menu .dropSection ul#menuWeighInSettings:before { min-height: 36px; background-position: 0 -300px; padding-left: 0; }
+
+.dropdown-menu .dropSection ul#menuResources, .dropdown-menu .dropSection ul#menuResources:before { min-height: 44px; background-position: 0 -360px; padding-left: 0; }
+
+#WelcomeBack { float: right; padding: 12px 18px 0 18px; height: 64px; max-width: 300px; }
+
+#WelcomeBack h2 { color: #ffffff; margin: 0; padding-bottom: 2px; }
+
+#WelcomeBack #username { float: left; padding-right: 18px; color: #6fcae7; }
+
+#WelcomeBack #signout { float: right; margin-top: 4px; }
+
+#WelcomeBack #signout a { color: #6fcae7; }
+
+#remMe { padding-bottom: 8px; }
+
+#SiteBnr.contentFix { padding: 0 !important; }
+
+@media (min-width: 998px) { #SiteBnr ul.navbar-nav { margin-left: 85px; width: 750px; }
+  #SiteBnr ul#signOutNav.navbar-nav { margin-left: 30px; width: 800px; }
+  .navbar-nav > li.navRightLinks { float: right; } }
+@media (max-width: 830px) { #brandstrapline { display: none; }
+  .nav > li.navDivider { display: none; }
+  #BrandLogo { background: url("//www.nutracheck.co.uk/media/images/parts/navigation/2/brandlogo_sml.gif") no-repeat; width: 74px; height: 50px; } }
+.newBadge { background: url("/media/images/parts/new_badge.png") no-repeat left; padding: 30px 0 30px 115px; }
+
+.contentStretch { max-width: 1349px; margin: 0 auto 0 auto; }
+
+.contentFix { max-width: 998px; margin: 0 auto 0 auto; padding: 0 18px 0 18px; }
+
+.contentCenterAlign { display: table; margin: 0 auto 0 auto; }
+
+.LSN li { list-style: none; }
+
+.contentBar { padding: 8px 0 8px 0; height: 44px; }
+
+.clrFlt { clear: both; }
+
+#followUs h3 { margin-bottom: 20px; margin-top: 0; }
+
+#followUs img { margin: 0 5px 0 5px; }
+
+#footerLinks { margin-top: 7px; margin-bottom: 0; }
+
+#footerLinks li { font-size: 12px; line-height: normal; }
+
+.button { cursor: pointer; }
+
+.imgFloatLeft { float: left; margin: 0 10px 5px 0; }
+
+.imgFloatRight { float: right; margin: 0 0 5px 10px; }
+
+.sidePanelHolder { margin-bottom: 18px; }
+
+.nut_iconList { list-style: none; }
+
+.nut_iconList li { background: no-repeat; background-position: left center; padding-left: 30px; }
+
+.nut_iconList.large li { padding: 2px 0 2px 40px; margin-bottom: 18px; }
+
+.nut_listLast { margin: 0 !important; }
+
+.nut_arrowLink { background: url(//d2lhwe7okuon6r.cloudfront.net/media/images/parts/arrowlink_right.gif) no-repeat right; padding: 6px 8px 6px 0; display: block; }
+
+.nut_arrowLink.last { border-bottom: none; }
+
+.nut_arrowLink:hover { text-decoration: underline; }
+
+.nut_blockLink { display: block; border-bottom: 1px solid #e5e5e5; text-decoration: none; }
+
+.nut_blockLink:hover { text-decoration: underline; }
+
+.nut_inlineLinks li { display: inline; margin-right: 2px; }
+
+.nut_textSearch { height: 23px; }
+
+.nut_textSearch input { float: left; margin: 0; height: 23px; }
+
+.nut_searchInput { border: 0; padding: 0 0 0 20px; background: url(//d2lhwe7okuon6r.cloudfront.net/media/images/icons/search_sml.gif) no-repeat 4px 6px; color: #606060; background-color: #ffffff; border-radius: 4px; font-size: 12px; height: 23px; }
+
+.sidePanel .nut_searchInput { width: 113px; }
+
+.nut_submit { cursor: pointer; color: #ffffff; font-weight: bold; width: 29px; line-height: 23px; border: 0; padding-bottom: 2px; background-color: #9AC843; border-radius: 4px; }
+
+.nut_textSearch .nut_submit { border-radius: 0 4px 4px 0; padding: 0 0 2px 0; }
+
+.nut_textInputHolder, .nut_textSearchHolder { background-color: #F0F0F0; padding: 6px; }
+
+.nut_textSearchHolder .nut_searchInput { border-radius: 4px 0 0 4px; }
+
+.sidePanel .nut_textSearchHolder { background-color: #F0F0F0; padding: 6px 0 6px 6px; margin: 0 1px 2px 1px; }
+
+.nut_stndInput { border: 0; color: #606060; background-color: #ffffff; border-radius: 4px; font-size: 12px; height: 23px; }
+
+.nut_flash { background-color: #DC091D; color: #ffffff; padding: 2px 6px 2px 6px; border-radius: 6px; margin-left: 6px; text-align: center; text-decoration: none; display: inline-block; min-width: 32px; line-height: 15px; }
+
+.nut_flash.marginright { margin-left: 0; margin-right: 6px; }
+
+.nut_border { border: 1px solid #cccccc; border-radius: 6px; }
+
+.nut_panel { margin-bottom: 18px; padding: 18px; border-radius: 6px; background-color: #ffffff; border: 1px solid #cccccc; position: relative; }
+
+.nut_sidepanel { margin-bottom: 18px; border-radius: 6px; background-color: #ffffff; border: 1px solid #cccccc; }
+
+.nut_sidepanel h2 { font-size: 20px; margin-bottom: 18px; }
+
+.nut_sidepanel h3 { margin-bottom: 6px; }
+
+.nut_panelcolorTop { border-top: none; }
+
+.nut_panelcolorTop h2 { text-align: center; border-radius: 6px 6px 0 0; padding: 2px 0 2px 0; margin-bottom: 0; margin-left: -1px; width: 100%; padding-right: 2px; }
+
+.nut_sidecontentpadding { padding: 7px 12px 5px 12px; }
+
+.nut_panelBlue { background-color: #ebfbff; margin-bottom: 18px; padding: 18px; border-radius: 6px; position: relative; }
+
+.nut_sidecontentpadding .nut_panelBlue { padding: 10px 5px 10px 10px; }
+
+.nut_visIcon { margin: 0 2px; float: left; height: 15px; width: 15px; background-position: 0 15px; }
+
+.nut_visIcon:hover { background-position: 0 30px; }
+
+.nut_visIcon.selected { background-position: 0 0; }
+
+.nut_visIcon a { height: 15px; width: 15px; display: block; }
+
+.nut_visIcon.nut_picIcon { background-image: url("//d2lhwe7okuon6r.cloudfront.net/media/images/parts/vis_pics.gif"); }
+
+.nut_visIcon.nut_thumbIcon { background-image: url("//d2lhwe7okuon6r.cloudfront.net/media/images/parts/vis_thumbs.gif"); }
+
+.nut_visIcon.nut_listIcon { background-image: url("//d2lhwe7okuon6r.cloudfront.net/media/images/parts/vis_text.gif"); }
+
+.nut_tagTip { background: #fff; border: 1px solid #c7c7c7; color: #505050; padding: 2px; width: 135px; text-align: center; z-index: 999; position: relative; }
+
+.nut_tagTip #point { width: 19px; height: 10px; background: url(//d2lhwe7okuon6r.cloudfront.net/media/images/parts/tagtip_point.gif) no-repeat; position: absolute; top: -10px; left: 50px; }
+
+.nut_tagTip .content { padding: 2px 2px 0px 2px; }
+
+.nut_tagTip .title { padding: 2px; background: #e6e6e6; }
+
+#Searching_Modal .modal-sm { margin: 20% 42% 0 42%; text-align: center; width: auto; }
+
+#Searching_Modal .modal-sm img { width: 100%; max-width: 60px; }
+
+#Searching_Modal .modal-content { box-shadow: none; }
+
+.modal-content p, .modal-content a { color: #737070; }
+
+@media (min-width: 330px) { .modal-sm { width: 270px; margin-left: auto; margin-right: auto; } }
+.modal-header.empty-header { border-bottom: none; padding-bottom: 0; }
+
+.btn { border-radius: 60px; font-size: 18px; padding: 5px 14px 5px 14px; font-style: normal; font-weight: bold; font-family: primaryLight; }
+
+.btn.btn-lg { font-size: 30px; padding: 17px 20px 17px 20px; font-weight: normal; }
+
+.btn.btn-sm, .btn-group-sm > .btn { font-size: 15px; padding: 3px 12px 3px 12px; }
+
+.btn.btn-xs, .btn-group-xs > .btn { font-size: 10px; padding: 1px 7px 1px 3px; }
+
+.btn-default:hover, .btn-default:focus, .btn-default.focus, .btn-default:active, .btn-default.active, .open > .dropdown-toggle.btn-default { background-color: #8d8d8d !important; }
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary { background-color: #378bb9 !important; }
+
+.btn-success:hover, .btn-success:focus, .btn-success.focus, .btn-success:active, .btn-success.active, .open > .dropdown-toggle.btn-success { background-color: #73b001 !important; }
+
+.btn-warning:hover, .btn-warning:focus, .btn-warning.focus, .btn-warning:active, .btn-warning.active, .open > .dropdown-toggle.btn-warning { background-color: #e47000 !important; }
+
+.btn-info:hover, .btn-info:focus, .btn-info.focus, .btn-info:active, .btn-info.active, .open > .dropdown-toggle.btn-info { background-color: #d0ecfb; }
+
+.btn-danger:hover, .btn-danger:focus, .btn-danger.focus, .btn-danger:active, .btn-danger.active, .open > .dropdown-toggle.btn-danger { background-color: #cb070c; }
+
+.btn-group .btn { border-radius: 3px; font-size: 12px; font-family: Arial,Helvetica,sans-serif; }
+
+.close { opacity: 1; }
+
+input[type="radio"], input[type="checkbox"] { line-height: normal; margin: 0; }
+
+.navbar-toggle { display: none; }
+
+.navbar-nav > li { float: left; }
+
+.navbar-header { float: left; }
+
+.navbar-collapse { display: block; border: none; box-shadow: none !important; }
+
+.collapse { visibility: visible !important; }
+
+#BrandLogo { background: url("//www.nutracheck.co.uk/media/images/parts/navigation/2/brandlogo.gif") no-repeat; width: 135px; height: 91px !important; }
+
+#SiteBnr ul.navbar-nav { margin: 0 0 0 85px; float: left; width: 750px; }
+
+#SiteBnr ul#signOutNav.navbar-nav { margin: 0 0 0 30px; float: left; width: 800px; }
+
+#sitehdr { min-width: 998px; max-width: 1349px; margin: 0 auto 0 auto; background-color: #378BB9; }
+
+#SiteBnr { width: 998px; margin: 0 auto 0 auto; }
+
+#Container { min-width: 998px; }
+
+#infoSplash { min-width: 998px; }
+
+#brandstrapline { display: inline; }
+
+.navbar-nav > li.navRightLinks { float: right; }
+
+.nav > li.navDivider { display: block !important; }
+
+#SiteBnr .navbar-default .navbar-nav > li > a.minorNavLink { border-bottom: 1px dotted #fff; color: #fff; font-family: Arial,Helvetica,sans-serif; font-size: 12px; height: auto; padding-bottom: 0; padding-left: 0; padding-right: 0; width: auto; }
+
+#SiteBnr .navbar-default .navbar-nav > li > a .menu_text_md { padding: 0; font-size: 14px; background-color: transparent; text-align: center; height: auto; margin-bottom: 15px; font-family: primaryNormal; color: #303030; font-weight: normal; }
+
+#SiteBnr .navbar-default .navbar-nav > li > a:hover .menu_text_md { color: #378bb9; }
+
+#MainContentForums, #MainContentForums *, #MainContentForums *:before, #MainContentForums *:after { -webkit-box-sizing: content-box !important; -moz-box-sizing: content-box !important; box-sizing: content-box !important; }
+
+#MainContentForums { margin: 0 auto 0 auto; width: 998px; }
+
+body { line-height: 1.25; }
+
+.errorpages { padding: 40px 0 0 18px; }
+
+html, body { height: 100%; }
+
+* { font-family: Arial,Helvetica,sans-serif; }
+
+.btn-success, .btn-warning, .btn-danger, .btn-primary { color: #fff !important; }
+
+.btn.disabled { pointer-events: none; cursor: default; }
+
+img, a img { border: 0; }
+
+div.clrFlt { clear: both; }
+
+input.text, select, textarea, input.txt { border: 1px solid #cccccc; font-size: 12px; height: 18px; color: #303030; }
+
+input.colouredInput, textarea.colouredInput { color: #a5a6a6; }
+
+ul.arrowList { padding: 8px 0 0 2px; margin: 0; }
+
+ul.arrowList li { list-style: none; background: url(/media/images/parts/arrow_gry_right.gif) no-repeat 0 4px; padding: 0 0 6px 8px; }
+
+ul.LSN li, ul.iconList li, ul.blockLinks li { list-style: none; }
+
+ul.iconList li { background: no-repeat; background-position: left center; padding-left: 30px; }
+
+ul.iconList li a, ul.blockLinks li a { display: block; border-bottom: 1px solid #e5e5e5; text-decoration: none; }
+
+ul.iconList li a:hover, ul.blockLinks li a:hover { text-decoration: underline; }
+
+ul.iconList li a.noborder, ul.blockLinks li a.noborder, ul.iconList li:last-child a, ul.iconList li:last-child span { border-bottom: none !important; }
+
+ul.blockLinks li span.right { float: right; padding-right: 20px; }
+
+a.arrowLink { background: url(/media/images/parts/arrow_right.gif) no-repeat right; padding: 6px 0 6px 0; display: block; }
+
+div.arrowlbl { background: url(/media/images/parts/arrow_blank_rt.gif) no-repeat 0 7px; margin-top: 6px; padding: 3px 0 2px 8px; }
+
+hr { height: 1px; background-color: #cfcfcf; border: 0; padding: 0; margin: 0; clear: both; }
+
+a { text-decoration: underline; }
+
+a.btn { text-decoration: none; color: #fff; }
+
+a:hover { text-decoration: none; }
+
+#SubNav { height: 40px; padding-top: 10px; }
+
+/* Bootstrap amend */
+#subMain ul { margin: 3px 0 0 216px; padding: 0; }
+
+#SubNav p { margin: 0; padding: 0; font-size: 11px; float: left; width: 100%; text-align: center; color: #595959; }
+
+#SubNav p a { color: #595959; }
+
+#SubNav ul li { width: auto; margin: 0; padding: 0 8px 0 0; list-style: none; float: left; display: block; color: #595959; font-size: 11px; }
+
+#SubNav ul li a:hover { text-decoration: none; border-bottom: 1px dotted #ffffff; _border-bottom: none; _text-decoration: underline; }
+
+#SubNav ul li a { color: #595959; text-decoration: none; border-bottom: 1px dotted #595959; _border-bottom: none; }
+
+#SubNav ul li div { position: relative; z-index: 998; }
+
+#SubNav li ul { width: auto; display: none; padding: 0; position: absolute; width: 210px; z-index: 999; margin: 0; }
+
+#SubNav li:hover ul { display: block; background-color: #F2F2F2; width: auto; border: 1px solid #cccccc; border-top: 0; margin-left: -7px; }
+
+#SubNav li:hover ul li { font-size: 11px; background-color: #F2F2F2; font-weight: normal; padding-left: 7px; width: 160px; float: none; }
+
+#SubNav .active { font-weight: bold; }
+
+#SubNav ul li a.hiLite2 { color: #6eae1a; border-bottom: 1px solid #ffffff; }
+
+#SubNav li, #HdrSubNav a, #HdrSubNav p { color: #F79939; }
+
+#SubNav #subLeft { float: left; }
+
+#SubNav #subRight { float: right; }
+
+#SubNav #subRight a { border-bottom: 1px dotted #595959; text-decoration: none; float: left; margin-left: 4px; _margin-left: 2px; }
+
+#SubNav #subRight a.img { border-bottom: 1px dotted #ffffff; }
+
+#SubNav #subRight li { float: right; height: 20px; font-size: 11px; padding-left: 6px; }
+
+#SubNav #subRight a:hover { border-bottom: 1px dotted #ffffff; }
+
+/* overwrites main panel to get rid of graphics where generic nut_border is used */
+div.mainPanel.nut_border, div.mainPanel.nut_border .mainPanelContent, div.mainPanel.nut_border .mainPanelTop { background: none !important; }
+
+div.mainPanel.nut_border, div.mainPanel.nut_border .mainPanelTop { width: 568px !important; }
+
+/* maintain styles where main div not used */
+.nut_panel #createButton { float: right; text-align: right; padding-bottom: 8px; margin: 0; }
+
+.nut_panel #mainBox .spanContent .profileMain { margin: 18px 0 18px 0; }
+
+#SubNav { height: 30px; }
+
+#SubNav #subMain { padding-left: 20px; }
+
+.hiLiteyellow { color: #efa415; }
+
+.hiLite { color: #efa415; }
+
+.hiLitepink { color: #d44c60; }
+
+.pink .hiLite { color: #d44c60; }
+
+.hiLitered { color: #DC091D; }
+
+.hiLitegreen { color: #9ac843; }
+
+.green .hiLite { color: #9ac843; }
+
+.hiLiteblue { color: #4189b0; }
+
+.blue .hiLite { color: #4189b0; }
+
+.hiLite5 { color: #858585; }
+
+#f_createmyprofile { text-align: center; font-size: 11px; padding: 6px 0 8px 0; }
+
+#f_createmyprofile img { width: 100px; }
+
+.nutf_avatarimg { object-fit: cover; border-radius: 50%; }
+
+.nut_iconList { padding: 0; margin: 0; }
+
+.nut_iconList a.nut_arrowLink:hover { color: #285e7e; }
+
+.forumIcons.nut_iconList li { background-image: url("//d2lhwe7okuon6r.cloudfront.net/media/forum/images/sprites/forum_iconsv5.png"); background-repeat: no-repeat; background-size: 23px 698px; margin: 0; font-size: 12px; }
+
+.nut_iconList #myposts { background-position: 0 0; }
+
+.nut_iconList #allforums { background-position: 0 -30px; }
+
+.nut_iconList #boots { background-image: url(//d2lhwe7okuon6r.cloudfront.net/media/forum/images/icons/bootsdiets_sml.png); }
+
+.nut_iconList #newjoins { background-position: 0 -60px; }
+
+.nut_iconList #generalchat { background-position: 0 -92px; }
+
+.nut_iconList #humour { background-position: 0 -122px; }
+
+.nut_iconList #longterm { background-position: 0 -152px; }
+
+.nut_iconList #maintainers { background-position: 0 -184px; }
+
+.nut_iconList #weighinsandprogress { background-position: 0 -216px; }
+
+.nut_iconList #success { background-position: 0 -246px; }
+
+.nut_iconList #challenges { background-position: 0 -276px; }
+
+.nut_iconList #exercise { background-position: 0 -306px; }
+
+.nut_iconList #recipes { background-position: 0 -336px; }
+
+.nut_iconList #buddy { background-position: 0 -370px; }
+
+.nut_iconList #bestbuys { background-position: 0 -401px; }
+
+.nut_iconList #fitnessexpert { background-position: 0 -432px; }
+
+.nut_iconList #nutritionexpert { background-position: 0 -462px; }
+
+.nut_iconList #styleexpert { background-position: 0 -492px; }
+
+.nut_iconList #inbox { background-position: 0 -525px; }
+
+.nut_iconList #create { background-position: 0 -557px; }
+
+.nut_iconList #sent { background-position: 0 -587px; }
+
+.nut_iconList #friends { background-position: 0 -617px; }
+
+.nut_iconList #groups { background-position: 0 -647px; }
+
+.nut_iconList #pinned { background-position: 0 -675px; }
+
+.dropdown-menu .dropSection ul:before { content: normal; background-image: none; }
+
+.bgPrimaryLight { background-color: #ebf3f8 !important; }
+
+#BrandLogo { width: 103px; margin: 15px 0 0 50px; float: left; background-image: none !important; }
+
+#WelcomeBack { float: right; width: 210px; height: 90px; padding: 14px 35px 0 10px; display: block !important; }
+
+#WelcomeBack h6 { margin: 0; padding: 0; }
+
+#WelcomeBack div { margin: 5px 0 5px 0; }
+
+#WelcomeBack a { color: #14AEA8; text-decoration: none; }
+
+#WelcomeBack a:hover { color: #303030; text-decoration: none; }
+
+#SiteBnr { height: 90px; background-color: #ebf3f8; width: auto; margin: 0; }
+
+#SiteBnr ul.nav.navbar-nav { margin: 14px auto 0 auto; display: table; float: none; width: auto; }
+
+#SiteBnr .navbar-default .navbar-nav > li { padding-left: 15px; padding-right: 15px; border-bottom: none; }
+
+#SiteBnr .navbar-default .navbar-nav > li:first-child { margin-left: 30px; }
+
+#SiteBnr .navbar-default .navbar-nav > li > a { padding: 0; font-size: 14px; background-color: transparent; text-align: center; height: auto; margin-bottom: 15px; font-family: primaryNormal; color: #303030; }
+
+#SiteBnr .navbar-default .navbar-nav > li > a:hover { color: #378bb9; }
+
+#SiteBnr li.active a { color: #378bb9 !important; background-color: transparent; }
+
+#signInBtns { display: block; float: right; margin: 25px 35px 0 0; }
+
+#signInBtns .btn { border: 3px solid #ef9302; }
+
+#signInBtns .btn.btn-warning:hover { border-color: #d78403; color: #fff; background-color: #d78403; }
+
+#signInBtns .btn.btn-info { margin-left: 10px; background-color: transparent; }
+
+#signInBtns .btn.btn-info:hover { margin-left: 10px; color: #fff !important; background-color: #f09403; }
+
+#BrandLogo { width: 103px; margin: 15px 0 0 50px; }
+
+.navbar-nav .dropdown-menu { position: absolute; }
+
+.dropdown-menu { border: 0; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); }
+
+.dropdown-menu .dropSection { margin: 5px 20px 0 20px; border-bottom: 1px dotted #b4b4b4; padding-bottom: 15px; }
+
+.dropdown-menu .dropSection:last-child { border-bottom: none; }
+
+.dropdown-menu .dropSection h3 { font-size: 15px; color: #378bb9; font-family: primaryBold; margin-bottom: 10px; font-weight: normal; margin-top: 15px; }
+
+.dropdown-menu .dropSection ul { padding-left: 0; }
+
+.dropdown-menu .dropSection li { list-style-type: none; padding-left: 0; margin-bottom: 3px; }
+
+.dropdown-menu .dropSection li a { color: #737070; white-space: nowrap; text-decoration: none; border-bottom: 1px dotted #b4b4b4; }
+
+.dropdown-menu .dropSection li a:hover { background-color: #fff; border-bottom: none; }
+
+.dropdown-menu .dropSection li a:active { background-color: #fff; border-bottom: none; }
+
+.dropdown-menu .dropSection li a:focus { background-color: #fff; border-bottom: none; }
+
+.menuIcon { background-image: url("//d2lhwe7okuon6r.cloudfront.net/media/images/sprites/navbar_icons5.png"); background-repeat: no-repeat; background-size: 96px 679px; height: 43px; width: 43px; margin: 0 auto 1px auto; display: block; }
+
+#menuIconBenefits { background-position: 0 0; }
+
+#SiteBnr a:hover #menuIconBenefits, #SiteBnr a:focus #menuIconBenefits, #SiteBnr a:active #menuIconBenefits, #SiteBnr li.active #menuIconBenefits { background-position: -53px 0; }
+
+#menuIconPrices { background-position: 0 -53px; }
+
+#SiteBnr a:hover #menuIconPrices, #SiteBnr a:focus #menuIconPrices, #SiteBnr a:active #menuIconPrices, #SiteBnr li.active #menuIconPrices { background-position: -53px -53px; }
+
+#menuIconDevices { background-position: 0 -106px; }
+
+#SiteBnr a:hover #menuIconDevices, #SiteBnr a:focus #menuIconDevices, #SiteBnr a:active #menuIconDevices, #SiteBnr li.active #menuIconDevices { background-position: -53px -106px; }
+
+#menuIconSuccesses { background-position: 0 -159px; }
+
+#SiteBnr a:hover #menuIconSuccesses, #SiteBnr a:focus #menuIconSuccesses, #SiteBnr a:active #menuIconSuccesses, #SiteBnr li.active #menuIconSuccesses { background-position: -53px -159px; }
+
+#menuIconAbout { background-position: 0 -212px; }
+
+#SiteBnr a:hover #menuIconAbout, #SiteBnr a:focus #menuIconAbout, #SiteBnr a:active #menuIconAbout, #SiteBnr li.active #menuIconAbout { background-position: -53px -212px; }
+
+#menuIconDiary { background-position: 0 -265px; }
+
+#SiteBnr a:hover #menuIconDiary, #SiteBnr a:focus #menuIconDiary, #SiteBnr a:active #menuIconDiary, #SiteBnr li.active #menuIconDiary { background-position: -53px -265px; }
+
+#menuIconProfile { background-position: 0 -318px; }
+
+#SiteBnr a:hover #menuIconProfile, #SiteBnr a:focus #menuIconProfile, #SiteBnr a:active #menuIconProfile, #SiteBnr li.active #menuIconProfile { background-position: -53px -318px; }
+
+#menuIconRecipes { background-position: 0 -372px; }
+
+#SiteBnr a:hover #menuIconRecipes, #SiteBnr a:focus #menuIconRecipes, #SiteBnr a:active #menuIconRecipes, #SiteBnr li.active #menuIconRecipes { background-position: -53px -372px; }
+
+#menuIconWeighIn { background-position: 0 -425px; }
+
+#SiteBnr a:hover #menuIconWeighIn, #SiteBnr a:focus #menuIconWeighIn, #SiteBnr a:active #menuIconWeighIn, #SiteBnr li.active #menuIconWeighIn { background-position: -53px -425px; }
+
+#menuIconForums { background-position: 0 -478px; }
+
+#SiteBnr a:hover #menuIconForums, #SiteBnr a:focus #menuIconForums, #SiteBnr a:active #menuIconForums, #SiteBnr li.active #menuIconForums { background-position: -53px -478px; }
+
+#menuIconResources { background-position: 0 -531px; }
+
+#SiteBnr a:hover #menuIconResources, #SiteBnr a:focus #menuIconResources, #SiteBnr a:active #menuIconResources, #SiteBnr li.active #menuIconResources { background-position: -53px -531px; }
+
+#menuIconSupport { background-position: 0 -585px; }
+
+#SiteBnr a:hover #menuIconSupport, #SiteBnr a:focus #menuIconSupport, #SiteBnr a:active #menuIconSupport, #SiteBnr li.active #menuIconSupport { background-position: -53px -585px; }
+
+#signOutNav .dropdown-menu > li > a { font-size: 15px; padding: 0; }
+
+.menuIcon { height: 43px; width: 43px; margin: 0 auto 4px auto; float: none; }
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus { color: #378bb9 !important; }
+
+.stickybanner { min-width: 998px; font-size: 26px; padding-top: 16px; }
+
+.stickybanner .btn { margin-top: 0; }
+
+.navbar-default { background-color: transparent; }
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus { background-color: transparent; }
+
+.dropdown:hover .dropdown-menu { display: block; }
+
+.dropdown-menu li:first-child { margin-top: 6px; }
+
+.sbnrDropContent { height: 90px; margin-bottom: 40px; }
+
+.sbnrDropContent #stickySiteBnr #SiteBnr { background-color: #ebf3f8; }
+
+@media (min-width: 1200px) { #SiteBnr .navbar-default .navbar-nav > li:first-child { margin-left: 0px; } }
+.nut_nav .navbar { padding: 0; }
+
+.nut_nav #BrandLogo { width: 103px; background: none !important; margin: 0 0 0 49px; float: none; display: block; height: auto !important; padding-top: 8px; }
+
+.nut_nav .navbar-expand-sm { padding-top: 14px; }
+
+#SiteBnr.nut_nav ul.nav.navbar-nav { margin: 0 auto 0 auto; display: table; float: none; width: auto; }
+
+.nut_nav #WelcomeBack { float: none; width: 210px; height: auto; padding: 3px 35px 0 10px; display: block !important; }
+
+.nut_nav #WelcomeBack h6 { font-size: 24px; }
+
+.nut_nav #WelcomeBack div { margin-top: 2px; }
+
+#WelcomeBack h6 { color: #14AEA8; }
+
+#SiteBnr .navbar-default .navbar-nav > li > a { display: block; padding: 0; font-size: 14.5px; background-color: transparent; text-align: center; height: auto; margin-bottom: 0; font-family: primaryNormal; color: #303030; }
+
+.nut_nav .menuIcon { height: 43px; width: 43px; margin: 0 auto 1px auto; float: none; }
+
+.nut_textSearch input.nut_submit { font-size: 12px; }
+
+.navbar-header { padding-top: 4px; padding-left: 1px; }
+
+.form-control::-webkit-input-placeholder { /* Edge */ color: #bbb; }
+
+.form-control:-ms-input-placeholder { /* Internet Explorer */ color: #bbb; }
+
+.form-control::placeholder { color: #bbb; }

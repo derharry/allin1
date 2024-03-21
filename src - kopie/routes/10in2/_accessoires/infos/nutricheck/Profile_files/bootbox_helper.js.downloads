@@ -1,0 +1,107 @@
+function basicAlert(msg,size,css){
+    if((size==undefined || size=='' || size==null)){
+        size ="small";
+    }   
+
+    if((css==undefined || css=='' || css==null)){
+        css ="basicAlert";
+    }     
+    
+    var dialog = bootbox.alert({
+        size:size,
+        message:msg,
+        title:false,
+        closeButton:false,
+        animate:false,
+        show:false,
+        centerVertical:true,
+        className:css
+    });
+    dialog.on('shown.bs.modal',function(){
+      jQuery(".bootbox-accept").blur();
+    });     
+    dialog.modal('show');    
+}  
+function basicConfirmAction(msg,bbcss,funcSuccess){
+
+    css="basicConfirmAction";
+    if(!(bbcss==undefined || bbcss=='' || bbcss==null)){
+        css="basicConfirmAction " +bbcss
+    }
+
+    var dialog = bootbox.confirm({
+        size:"small",
+        message: msg,
+        title:false,
+        closeButton:false,
+        animate:false,
+        show:false,
+        centerVertical:true,
+        className:css,       
+        buttons: {
+            confirm: {
+                label: 'Confirm',
+                className: 'btn btn-sm btn-success'
+            },
+            cancel: {
+                label: 'Cancel',
+                className: 'btn btn-sm btn-default'
+            }
+        },      
+        callback:function(result){
+            if(result){
+                funcSuccess();
+            }
+        }
+    }); 
+    dialog.on('shown.bs.modal',function(){
+      jQuery(".bootbox-accept").blur();
+    });    
+    
+    dialog.modal('show');            
+}
+
+function customConfirmAction(msg,header,btnconfirmtxt,btnconfirmclass,btncancelclass,funcSuccess){
+    if(btnconfirmtxt==''){
+        btnconfirmtxt="Confirm";
+    }
+
+    if(btnconfirmclass==''){
+        btnconfirmclass="btn-success";
+    }
+
+    if(btncancelclass==''){
+        btncancelclass="btn-default";
+    }
+
+    var dialog = bootbox.dialog({
+        title:header,
+        message: msg,
+        closeButton:true,
+        animate:false,
+        show:false,
+        centerVertical:true,  
+        className:"customConfirmAction",
+        buttons: {
+            myconfirm: {
+                label: btnconfirmtxt,
+                className: 'btn btn-sm '+btnconfirmclass,
+                callback: function(){
+                    funcSuccess();        
+                }
+            },
+            mycancel: {
+                label: 'Cancel',
+                className: 'btn btn-sm '+btncancelclass,
+                callback: function(){
+                    dialog.modal('hide');         
+                }
+            }    
+        }     
+    });    
+    dialog.on('shown.bs.modal',function(){
+      jQuery(".customConfirmAction .btn-primary").blur();
+    });       
+    
+    dialog.modal('show');            
+}
