@@ -1,0 +1,92 @@
+/* 
+    Created on : 09.06.2015, 23:04:05
+    Author     : harry
+*/
+
+
+/*---------------------------------
+	IMPORTS
+-----------------------------------*/
+
+@import url(https://fonts.googleapis.com/css?family=Arimo:400,700);
+
+/*---------------------------------
+	OVERRIDES
+-----------------------------------*/
+
+* {
+    font-family: arial;
+    font-size: 10pt;
+}
+
+
+/*---------------------------------
+	LAYOUT
+-----------------------------------*/
+
+BODY {
+    margin: 0;
+    padding: 0 0 0 0;
+    color: #000;
+    background: #efefef url(css/img/gray_jean.png);
+    font: normal 0.9em/150% 'Arimo', arial, verdana, sans-serif;
+    text-shadow: 0 0 1px transparent;
+    /* google font pixelation fix */
+}
+
+MAIN {
+    position: fixed;
+    border: 0px black solid;
+    left: 15px;
+    top: 30px;
+    right: 10px;
+    bottom: 50px;
+    padding: 5px;
+}
+
+MAIN FIELDSET {
+    //top: -15px;
+}
+
+FOOTER {
+    background-color: white;
+    position: fixed;
+    bottom: 0px;
+    height: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    border: 0px black solid;
+    z-index: 5;
+}
+
+FOOTER * {
+    font-size: 7pt;
+}
+
+FOOTER HR {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+ASIDE {
+    position: fixed;
+    visibility: show;
+    bottom: 0;
+    right: 0;
+    border: 1px red solid;
+    max-width: 300px;
+    max-height: 50%;
+    overflow: scroll;
+    z-index: 10;
+}
+
+HEADER {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 5;
+}
+
+button {}
