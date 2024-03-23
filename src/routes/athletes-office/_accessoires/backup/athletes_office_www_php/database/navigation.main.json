@@ -1,7 +1,0 @@
-[
-	{"name":"Info",      "page":"info",      "icon":"fa fa-info",       "submenu":""},
-	{"name":"Settings",  "page":"settings",  "icon":"fa fa-cog",        "submenu":""},
-	{"name":"Locations", "page":"locations", "icon":"fa fa-twitter",    "submenu":""},
-	{"name":"Errors",    "page":"errors",    "icon":"fa fa-inbox",      "submenu":""},
-	{"name":"Execute",   "page":"exec_capture", "icon":"fa fa-cutlery", "submenu":""}
-]
