@@ -5,8 +5,8 @@
         <li><a href="/">home </a></li>
         <li><a href="/myhp">MyHP</a></li>
         <li><a href="/10in2">10in2</a></li>
-        <li><a href="/office-event">Athletes-Office</a></li>
-        <li><a href="/office-surf">Surf-Office</a></li>
+        <li><a href="/athletes-office">Athletes-Office</a></li>
+        <li><a href="/surf-office">Surf-Office</a></li>
         <li><a href="/singleplanets">SinglePlanets</a></li>
         <!--
         <li><a href="/svelteshowcase">Showcase</a></li>
