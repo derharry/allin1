@@ -1,3 +1,0 @@
-DROP user `ao_user`@`%`;
-CREATE USER `aouser`@`%` IDENTIFIED BY 'notsure';
-GRANT ALL ON athletesoffice.* TO `aouser`@`%` IDENTIFIED BY 'notsure';
