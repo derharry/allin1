@@ -7,6 +7,7 @@
         <li><a href="/10in2">10in2</a></li>
         <li><a href="/surf-office">Surf-Office</a></li>
         <li><a href="/singleplanets">SinglePlanets</a></li>
+        <li><a href="/mycommunity">MyCommunity</a></li>
         <!--
         <li><a href="/svelteshowcase">Showcase</a></li>
         <li><a href="/software">software</a></li>
