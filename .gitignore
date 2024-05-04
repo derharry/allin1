@@ -1,5 +1,4 @@
 .DS_Store
-bun.lockb
 node_modules
 /build
 /.svelte-kit
@@ -10,5 +9,6 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-#added by hvz
-bun.lockdb
+#added by hvz 
+bun.lockb
+*.lock*
