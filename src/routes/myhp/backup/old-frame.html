@@ -1,0 +1,79 @@
+
+<table class="mainframe" align="center">
+    <tr>
+        <td class="leftframe">
+            <table>
+                <tr>
+                    <td class="navigation">
+                        <nav>
+                        </nav>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="main">
+                        <slot>
+                        </slot>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td class="rightframe">
+            <table>
+                <tr>
+                    <td class="navpicture">
+                        <img />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        SUBNAV
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<style>
+
+    .mainframe {
+        background-image: linear-gradient(blue, black);
+        width:     600px;
+        max-width: 600px;
+        height:    350px;
+        border-radius: 25px;
+    }
+
+    .leftframe, .leftframe table TD {
+        width: 100%;
+        height: 100%;
+        vertical-align:top
+    }
+
+    .rightframe, .rightframe table TD {
+        width: 125px;
+        height: 100%;
+        vertical-align:top
+    }
+
+    .navpicture {
+
+    }
+
+    img {
+        width: 125px;
+        height: 125px;
+    }
+
+    NAV {
+        height: 100px;
+    }
+
+    .main {
+        width: 100%;
+        height: 100%;
+        vertical-align:top
+    }
+
+
+</style>

@@ -1,80 +1,41 @@
-<h1>MyHP</h1>
+<script>
 
-<table class="mainframe" align="center">
-    <tr>
-        <td class="leftframe">
-            <table>
-                <tr>
-                    <td class="navigation">
-                        <nav>
-                        </nav>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="main">
-                        <slot>
-                        </slot>
-                    </td>
-                </tr>
-            </table>
-        </td>
-        <td class="rightframe">
-            <table>
-                <tr>
-                    <td class="navpicture">
-                        <img />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        SUBNAV
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+    import NavMenu from '$zeelte/components/Navigation/NavMenu.svelte';
+    import Footer from '$zeelte/components/Footer/Footer.svelte';
+    import { nav_menu } from './data.js'
 
-<style>
-
-    .mainframe {
-        background-image: linear-gradient(blue, black);
-        width:     600px;
-        max-width: 600px;
-        height:    350px;
-        border-radius: 25px;
-    }
-
-    .leftframe, .leftframe table TD {
-        width: 100%;
-        height: 100%;
-        vertical-align:top
-    }
-
-    .rightframe, .rightframe table TD {
-        width: 125px;
-        height: 100%;
-        vertical-align:top
-    }
-
-    .navpicture {
-
-    }
-
-    img {
-        width: 125px;
-        height: 125px;
-    }
-
-    NAV {
-        height: 100px;
-    }
-
-    .main {
-        width: 100%;
-        height: 100%;
-        vertical-align:top
-    }
+</script>
 
 
-</style>
+<header>
+    <h1>ZeeTech  MyHP  TransApp</h1>
+    <NavMenu {nav_menu} />
+</header>
+
+<main>
+    <slot />
+</main>
+
+<aside>
+</aside>
+
+<Footer>
+    
+    <div slot="left">
+        <ul>
+            <li>ZeeTech</li>
+            <li>Harald van Zee</li>
+            <li><a href="contact/">Contact</a></li>
+            <li><a href="impressum/">Impressum</li>
+        </ul>
+    </div>
+
+    <div slot="right">                    
+        <ul>
+            <li>Sport Journalist</li>
+            <li>Media Services</li>
+            <li>Event Consulting</li>
+        </ul>
+    </div>
+
+</Footer>

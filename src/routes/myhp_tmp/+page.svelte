@@ -2,7 +2,8 @@
 
     import D from '$zeelte/components/D.svelte'
 
-</script>
+/*
+
 
 
 
@@ -31,3 +32,6 @@ Do you have many Excel/Google Sheet you are working with and are struggling with
 <p>What do i what do  Idocument</p>
 
 
+*/
+
+</script>
