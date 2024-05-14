@@ -7,35 +7,46 @@
 </script>
 
 
-<header>
-    <h1>ZeeTech  MyHP  TransApp</h1>
-    <NavMenu {nav_menu} />
-</header>
+
 
 <main>
+    <header>
+        <NavMenu {nav_menu} logo_text="ZeeTech" logo_href="/myhp" />
+    </header>
+
     <slot />
+
+    <aside>
+        aside
+    </aside>
+    
+    <Footer>
+        
+        <div slot="left">
+            <ul>
+                <li>ZeeTech</li>
+                <li>Harald van Zee</li>
+                <li><a href="contact/">Contact</a></li>
+                <li><a href="impressum/">Impressum</li>
+            </ul>
+        </div>
+    
+        <div slot="right">                    
+            <ul>
+                <li>Sport Journalist</li>
+                <li>Media Services</li>
+                <li>Event Consulting</li>
+            </ul>
+        </div>
+    
+    </Footer>
+    
 </main>
 
-<aside>
-</aside>
 
-<Footer>
-    
-    <div slot="left">
-        <ul>
-            <li>ZeeTech</li>
-            <li>Harald van Zee</li>
-            <li><a href="contact/">Contact</a></li>
-            <li><a href="impressum/">Impressum</li>
-        </ul>
-    </div>
 
-    <div slot="right">                    
-        <ul>
-            <li>Sport Journalist</li>
-            <li>Media Services</li>
-            <li>Event Consulting</li>
-        </ul>
-    </div>
-
-</Footer>
+<style>
+    main {
+        width: 800px
+    }
+</style>

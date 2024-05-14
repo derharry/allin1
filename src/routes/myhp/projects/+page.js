@@ -1,4 +1,4 @@
-/** @type {import('./$types').PageLoad} */
+/** @type {import('../projects-archived/$types').PageLoad} */
 export function load({ params, url }) {
     url.pathname; // retrigger page reload
 	if (url.searchParams) {
