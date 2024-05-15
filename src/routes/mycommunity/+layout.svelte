@@ -1,3 +1,6 @@
+<!--
+    Main Layout of Golden Pages
+-->
 <script>
 
     import NavMenu from '$zeelte/components/Navigation/NavMenu.svelte';
@@ -9,9 +12,13 @@
 
 <main>
 
-    <NavMenu {nav_menu} logo_text="MyCommunity/NLV-Wenen" logo_href="/mycommunity" />
+    <header>
+        <NavMenu {nav_menu} logo_text="MyCommunity/NLV-Wenen" logo_href="/mycommunity" />
+    </header>
 
-    <slot />
+    <article>
+        <slot />
+    </article>
 
 </main>
 
