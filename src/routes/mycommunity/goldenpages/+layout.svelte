@@ -1,41 +1,44 @@
 <script>
+
+    import GPheader from './lib/components/GPheader.svelte'
+    import GPfooter from './lib/components/GPfooter.svelte'
+
 </script>
 
 
-<main>
 
-    <h2>Vind Nederlandse bedrijven in Oostenrijk
-        <br>of bedrijven waar Nederlanders werken.
-        <br><small>met adres, contactgegevens, locatie en meer</small>
-    </h2>
-    
+<table>
 
-    <div class="header">
-        <p>Wat zoek je? <input name="search" placeholder="search" /></p>
-    </div>
+    <tr>
+        <td><GPheader /></td>
+    </tr>
 
+    <tr>
+        <td class="main"><slot /></td>
+    </tr>
 
-    <div class="main">
+    <tr>
+        <td><GPfooter /></td>
+    </tr>
 
-        <slot />
-        
-    </div>
-
-
-    <div class="footer">
-
-    </div>
-        
-
-</main>
+</table>
 
 
 
 
 <style>
+    
+    table {
+        width: 100%;
+    }
+    
     div {
         display: table;
     }
+
+    .main {
+        padding: 5px
+    } 
 
     .header {
         margin: 10px;

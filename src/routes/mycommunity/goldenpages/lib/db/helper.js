@@ -1,4 +1,4 @@
-
+const { writeFile } = require('fs')
 
 // import the database
 import database from './database.json'
@@ -71,3 +71,7 @@ export const get_company_info = (uuid) => {
 }
 
 
+
+export const insert_company_info = (dataset) => {
+    //database.push(dataset)
+}

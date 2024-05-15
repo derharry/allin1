@@ -12,61 +12,75 @@
 </script>
 
 
+<table>
+    <tr>
+        <td>
+            <h2>
+                Vind Nederlandse bedrijven in Oostenrijk
+                <br>of bedrijven waar Nederlanders werken.
+                <br><small>met adres, contactgegevens, locatie en meer</small>
+            </h2>
+            <!--
+                List categories with sub-categories
+            -->
+            {#each Object.keys(category_list) as category }
 
+                <div class="box_category">
 
-<!--
-    List categories with sub-categories
--->
-{#each Object.keys(category_list) as category }
+                    <h3>{category}</h3>
+                    <p><img src="../lib/images/{category}.jpg" alt="{category}"></p>
 
-    <div class="box_category">
+                    <ul>
+                        {#each category_list[category] as subcategory}
+                            <li>&gt; <a href="goldenpages/c{subcategory}/">{subcategory}</a></li>
+                        {/each}
+                    </ul>
 
-        <h3>{category}</h3>
+                </div>
 
-        <ul>
-            {#each category_list[category] as subcategory}
+            {:else}
 
-                <li>
-                    <a href="goldenpages/{subcategory}">{subcategory}</a>
-                </li>
-
+                <p>Geen data</p>
+                
             {/each}
-        </ul>
-
-    </div>
-
-{:else}
-
-    <p>Geen data</p>
-    
-{/each}
-
+        </td>
+    </tr>
+</table>
 
 
 
 <style>
 
-.box_category {
-    display: block;
-    margin: 10px;
-    border-radius: 10px;
-    background-color: #FFD580;
-    float: left;
-}
+    table {
+        width: 100%;
+    }
 
-h3 {
-    text-align: center;
-    font-size: 14pt;
-}
+    h2 {
+        text-align: left;
+        font-size: 14pt;
+    }
 
-ul {
-    list-style: none
+    .box_category {
+        display: block;
+        float: left;
+        margin: 10px;
+        padding: 10px 25px;
+        border-radius: 10px;
+        border: 1px orange solid;
+        background-color: #FFE5B4;
+    }
 
-}
+    .box_category h3 {
+        text-align: center;
+    }
 
-li {
+    .box_category ul {
+        padding: 0px;
+    }
 
-}
+    .box_category ul li {
+        display: block
+    }
 
 
 </style>

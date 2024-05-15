@@ -1,4 +1,4 @@
-import { get_category_list, get_category_list2 } from './db/helper';
+import { get_category_list, get_category_list2 } from './lib/db/helper';
 
 
 /**

@@ -13,7 +13,7 @@
 <main>
 
     <header>
-        <NavMenu {nav_menu} logo_text="MyCommunity/NLV-Wenen" logo_href="/mycommunity" />
+        <NavMenu {nav_menu} logo_text="MyCommunity/NLV-Wenen" logo_href="/mycommunity/" />
     </header>
 
     <article>
@@ -27,6 +27,6 @@
 
 <style>
     main {
-        width: 500px
+        width: 550px
     }
 </style>

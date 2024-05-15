@@ -1,5 +1,16 @@
 <script>
 
+    /*
+    import { onMount } from 'svelte';
+    onMount(() => {    
+        frmCompanyInfo.addEventListener('change', function() {
+           // alert('Hi!');
+        });
+	});
+    */
+
+    import CompanyInfo from '../lib/components/CompanyInfo.svelte'
+
     /** @type {import('./$types').PageData} */
 	export let data;
 
@@ -8,6 +19,17 @@
 
     //$: console.log(data)
     //$: console.log(form)
+
+    let frmCompanyInfo;
+    let company_info = {}
+
+    function collectFormData() {
+        //company_info = frmCompanyInfo.serializeArray()
+        company_info = Object.fromEntries(new FormData(frmCompanyInfo));
+        console.log(company_info)
+    }
+
+    //$: console.log(company_info)
 
 </script>
 
@@ -21,9 +43,14 @@
 
 <p>* zijn plichtvelden<br>&nbsp;</p>
 
-<form method="POST" action="?/register">
+
+<form method="POST" action="?/register" bind:this={frmCompanyInfo} on:keyup={collectFormData}>
 <table width="100%">
 
+    <tr>
+        <td width="1"></td>
+        <td></td>
+    </tr>
     <tr>
         <td>Naam *</td>
         <td><input name="name" type="text" value="{form?.name || ''}"></td>
@@ -50,7 +77,11 @@
     </tr>
     <tr>
         <td>PLZ</td>
-        <td><input name="postcode" type="text"  value="{form?.postcode || ''}"></td>
+        <td><input name="postalcode" type="text"  value="{form?.postalcode || ''}"></td>
+    </tr>
+    <tr>
+        <td>Plaats</td>
+        <td><input name="city" type="text"  value="{form?.city || ''}"></td>
     </tr>
     <tr>
         <td>Regio *</td>
@@ -67,10 +98,6 @@
     <tr>
         <td>Telefoon</td>
         <td><input name="phone" type="text"  value="{form?.phone || ''}"></td>
-    </tr>
-    <tr>
-        <td>Fax</td>
-        <td><input name="fax" type="text"  value="{form?.fax || ''}"></td>
     </tr>
     <tr>
         <td>Mobile</td>
@@ -97,30 +124,47 @@
         <td></td>
     </tr>
     <tr>
-        <td>Infotext kort</td>
-        <td><textarea name="infotextshort"></textarea></td>
+        <td>Infotext</td>
+        <td><textarea name="intotext" rows="5">{form?.infotext || ''}</textarea></td>
     </tr>
+    
     <tr>
-        <td>Infotext lang</td>
-        <td><textarea name="infotextlong"></textarea></td>
+        <td>Logo</td>
+        <td><input name="logo" type="text"  value="{form?.logo || ''}"></td>
     </tr>
     <tr>
         <td>Tags</td>
-        <td><input name="tags" type="text" ></td>
+        <td><input name="tags" type="text"  value="{form?.tags || ''}"></td>
     </tr>
     <tr>
         <td>&nbsp;</td>
         <td></td>
     </tr>
     <tr>
-        <td colspan="2">
+        <td colspan="2" align="center">
             <button type="submit">Bedrijf regestratie voltooien</button>
+            <!--
+                <button type="button" on:click={collectFormData}>Preview genereren</button>
+            -->
         </td>
     </tr>
         
 </table>
 </form>
 
+<h2>Voorbeeld in de resultaten:</h2>
+
+<CompanyInfo {company_info} />
+
 
 <style>
+
+    input, textarea {
+        width: 100%;
+    }
+
+    td {
+        white-space: nowrap;
+    }
+
 </style>
