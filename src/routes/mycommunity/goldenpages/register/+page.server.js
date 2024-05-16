@@ -17,7 +17,14 @@ export const actions = {
 
 		// if validated
 		if (true) {
-			insert_company_info(data)
+			if (insert_company_info(data)) {
+				return {
+					company_is_saved: true
+				}
+			}
+			else {
+				console.log('nope')
+			}
 		} 
 		
 		return data

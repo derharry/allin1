@@ -125,11 +125,12 @@ export async function get_company_info (uuid) {
 
 
 
-export function insert_company_info (dataset) {
+export async function insert_company_info (dataset) {
     try {
-        let database = read_json('./database.json')
+        let database = await read_json(db_file_path)
         database.push(dataset)
-        console.log('insert_company_info()', dataset)
+        //console.log('insert_company_info()', database)
+        await write_json(db_file_path, database)
     } catch (ex) {
         console.log(ex)
     }
