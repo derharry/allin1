@@ -1,4 +1,4 @@
-
+import { insert_company_info } from '../lib/db/db.helper';
 
 
 /** @type {import('./$types').Actions} */
@@ -12,12 +12,12 @@ export const actions = {
 		formData.forEach((value, key) => { data[key] = value});
 
 		//validate formData
-		console.log('formData', formData)
-		console.log('data', data)
+		//console.log('formData', formData)
+		//console.log('data', data)
 
 		// if validated
 		if (true) {
-			//writeFile('../')
+			insert_company_info(data)
 		} 
 		
 		return data

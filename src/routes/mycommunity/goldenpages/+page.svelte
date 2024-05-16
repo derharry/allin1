@@ -28,7 +28,7 @@
                 <div class="box_category">
 
                     <h3>{category}</h3>
-                    <p><img src="../lib/images/{category}.jpg" alt="{category}"></p>
+                    <!--<p><img src="../lib/images/{category}.jpg" alt="{category}"></p>-->
 
                     <ul>
                         {#each category_list[category] as subcategory}

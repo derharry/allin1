@@ -1,11 +1,15 @@
+<script>
 
+    import logo from '../images/logo.jpeg'
+    
+</script>
 
 
 
 <table>
     <tr>
         <td>
-            <a href="/mycommunity/goldenpages/"><img src="../images/logo.jpeg" alt="logo"></a>
+            <a href="/mycommunity/goldenpages/"><img src="{logo}" alt="logo"></a>
         </td>
         <td class="">
             <input name="search" placeholder="Wat zoek je? " />
@@ -30,7 +34,8 @@
     }
 
     img {
-        padding-right: 20px
+        padding-right: 20px;
+        max-width: 60px;
     }
 
     input {
