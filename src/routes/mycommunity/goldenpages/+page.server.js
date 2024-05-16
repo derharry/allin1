@@ -1,5 +1,4 @@
-import { get_category_list } from './lib/db/db.helper';
-import fs from 'node:fs'
+import { get_category_list, get_statistic } from './lib/db/db.helper';
 
 
 const db_file_path = 'src/routes/mycommunity/goldenpages/lib/db/database.json'
@@ -10,11 +9,12 @@ const db_file_path = 'src/routes/mycommunity/goldenpages/lib/db/database.json'
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
 	try {
-		let category_list = []
-		category_list = await get_category_list()
+		let category_list = await get_category_list()
+		let statistic     = await get_statistic()
 		//console.log(category_list)
 		return {
-			category_list
+			category_list,
+			statistic
 		}
 	} catch (ex) {
 		console.log('exp', ex)

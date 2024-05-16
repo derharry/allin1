@@ -1,7 +1,12 @@
 <script>
+    
+    // for admin mode
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
+
 
     export let company_info = { name: 'no info' }
-    export let mode = 'short'
+    export let mode = 'normal' || 'admin'
 
     let item;
     let adres;
@@ -28,7 +33,16 @@
 <table class="itemBoxMain">
     <tr>
         <td colspan="2" class="itemName">
+
             {item.name}
+
+            {#if mode == 'admin'}
+                <span style="float:right">
+                    <button on:click="{ () => dispatch('edit',   item.uuid) }">E</button>
+                    <button on:click="{ () => dispatch('delete', item.uuid) }">D</button>
+                    &nbsp;
+                </span>
+            {/if}
         </td>
     </tr>
     <tr>
@@ -107,6 +121,41 @@
             </table>
         </td>
     </tr>
+    
+
+    {#if mode == 'admin'}
+    <tr>
+        <td colspan="2">
+            <table width="100%">
+                <tr>
+                    <td width="20%"></td>
+                    <td width="30%"></td>
+                    <td width="20%"></td>
+                    <td width="30%"></td>
+                </tr>
+                <tr>
+                    <td>Category:</td>
+                    <td>{item.category || '-'}</td>
+                    <td>Is Public</td>
+                    <td>{item._is_public || 'no'}</td>
+                </tr>
+                <tr>
+                    <td>Tags:</td>
+                    <td>{item.tags || '-'}</td>
+                    <td>Is Public By</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Register date</td>
+                    <td></td>
+                </tr>
+            </table>
+        </td>
+    
+    {/if}
+
 </table>
 
 

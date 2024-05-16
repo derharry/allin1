@@ -1,13 +1,17 @@
 <script>
 
+
     /** @type {import('./$types').PageData} */
 	export let data;
 
     // get the category_list or set empty
     let category_list = data.category_list || []
+    let statistic     = data.statistic || {}
 
     //debugging
     //$: console.log(category_list)
+    $: console.log(statistic)
+
 
 </script>
 
@@ -40,9 +44,14 @@
 
             {:else}
 
-                <p>Geen data</p>
+                <p>Er zijn nog geen bedrijven vrijgeschakelt.</p>
                 
             {/each}
+
+            &nbsp;
+            <hr>
+            Er zijn {statistic.total_companies} waarvan {statistic.total_companies_unpublic} wachten op vrijschakeling
+
         </td>
     </tr>
 </table>

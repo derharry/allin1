@@ -12,7 +12,6 @@ export const actions = {
 		formData.forEach((value, key) => { data[key] = value});
 
 		//validate formData
-		//console.log('formData', formData)
 		//console.log('data', data)
 
 		// if validated
