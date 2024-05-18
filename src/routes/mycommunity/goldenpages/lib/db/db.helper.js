@@ -40,11 +40,11 @@ export async function get_treeview_of_categories () {
                 treeview[row.uuid].subs = {}
             } else {
                 //if (treeview[row.parent_uuid]) // just prevent breaks if data is screwed up
-                    treeview[row.parent_uuid].subs[row.uuid] = row.name
+                    treeview[row.parent_uuid].subs[row.uuid] = { name: row.name, subs = {} }
                 //dataset[row.parent_uuid].subs[]
             }
         }
-        //console.log(treeview)
+        console.log(treeview)
         return treeview
 
     } catch (ex) {

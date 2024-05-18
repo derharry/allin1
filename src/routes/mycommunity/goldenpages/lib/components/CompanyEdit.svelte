@@ -13,9 +13,13 @@
     //$: console.log('selected_category_uuid', selected_category_uuid)
 
     // dom value bindings
+    let selected_category_
     let selected_category_uuid = 0;
 
     
+    /**
+     * transform the treeview back to a normal list for select-options
+    */
     function get_list_of_categories (cat_list, parent_id = null) {
         try {
             let list = []
@@ -80,7 +84,7 @@
         <td></td>
     </tr>
     <tr>
-        <td>Categorie</td>
+        <td>Kategorie</td>
         <td>
             <!-- no name because we don't need this categorie into the db -->
             <select bind:value={selected_category_uuid}>
@@ -91,7 +95,7 @@
         </td>
     </tr>
     <tr>
-        <td>Subcategorie</td>
+        <td>Onder kategorie</td>
         <td>
             <select name="category_id">
                 {#each list_subcategories as [key, value] }
