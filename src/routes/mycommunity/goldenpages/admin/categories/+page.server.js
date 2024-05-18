@@ -1,10 +1,10 @@
-import { get_category_list_new, admin_category_insert, admin_category_update, admin_category_delete } from '../../lib/db/db.helper'
+import { admin_category_insert, admin_category_update, admin_category_delete, get_treeview_of_categories } from '../../lib/db/db.helper'
 import { db } from '$lib/db.server'  // import the centralized connection
 
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
-    let categories = await get_category_list_new()
+    let categories = await get_treeview_of_categories()
 	return {
 		categories
 	}

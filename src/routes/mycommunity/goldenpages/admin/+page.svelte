@@ -5,7 +5,7 @@
 
     let stats = data.statistic || {}
 
-    $: console.log(stats)
+    //$: console.log(stats)
     
 </script>
 
@@ -17,14 +17,14 @@
     </tr>
     <tr>
         <td>Total:</td>
-        <td>{stats.entries_total}</td>
+        <td>{stats.companies_total}</td>
     </tr>
     <tr>
         <td>Public:</td>
-        <td>{stats.entries_public}</td>
+        <td>{stats.companies_public}</td>
     </tr>
     <tr>
         <td><a href="">Hidden:</a></td>
-        <td>{stats.entries_unpublic}</td>
+        <td>{stats.companies_unpublic}</td>
     </tr>
 </table>

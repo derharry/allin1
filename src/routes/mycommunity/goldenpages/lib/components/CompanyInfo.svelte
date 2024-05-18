@@ -34,12 +34,13 @@
     <tr>
         <td colspan="2" class="itemName">
 
-            {item.name}
+            {item.name || ''}
 
             {#if mode == 'admin'}
                 <span style="float:right">
-                    <button on:click="{ () => dispatch('edit',   item.uuid) }">E</button>
-                    <button on:click="{ () => dispatch('delete', item.uuid) }">D</button>
+                    <button on:click="{ () => dispatch('edit',          item.uuid)  }"><i class='fa fa-edit'></i></button>
+                    <button on:click="{ () => dispatch('toggle_public', item.uuid)  }"><i class='fa fa-globe'></i></button>
+                    <button on:click="{ () => dispatch('delete',        item.uuid)  }"><i class="fa fa-trash-o"></i></button>
                     &nbsp;
                 </span>
             {/if}
@@ -57,8 +58,8 @@
             <table>
 
                 <tr>
-                    <td>
-                        {item.subcategory}
+                    <td class="categoryPath">
+                        {item.category || ''} / {item.subcategory || ''}
                     </td>
                 </tr>
 
@@ -126,29 +127,33 @@
     {#if mode == 'admin'}
     <tr>
         <td colspan="2">
-            <table width="100%">
+            <hr>
+            <table width="100%" class="admin_hidden">
                 <tr>
-                    <td width="20%"></td>
-                    <td width="30%"></td>
-                    <td width="20%"></td>
-                    <td width="30%"></td>
+                    <td width="25%"></td>
+                    <td width="25%"></td>
+                    <td width="25%"></td>
+                    <td width="25%"></td>
                 </tr>
                 <tr>
-                    <td>Category:</td>
-                    <td>{item.category || '-'}</td>
-                    <td>Is Public</td>
-                    <td>{item._is_public || 'no'}</td>
+                    <td rowspan="3" colspan="2" valign="top">Tags:<br>{item.tags || '-'}</td>
+                    <td style="text-wrap: nowrap;">Is Public</td>
+                    <td>{item.is_public || 'no'}</td>
                 </tr>
                 <tr>
-                    <td>Tags:</td>
-                    <td>{item.tags || '-'}</td>
-                    <td>Is Public By</td>
+                    <!--
+                    <td></td>
+                    <td></td>
+                    -->
+                    <td style="text-wrap: nowrap;">Is Public By</td>
                     <td></td>
                 </tr>
                 <tr>
+                    <!--
                     <td></td>
                     <td></td>
-                    <td>Register date</td>
+                    -->
+                    <td style="text-wrap: nowrap;">Register date</td>
                     <td></td>
                 </tr>
             </table>
@@ -169,10 +174,13 @@
         border-radius: 15px;
         margin-bottom: 20px;
         padding: 8px;
+
+        font-family: Verdana, Arial;
+        font-size: 10pt;
     }
 
     .itemName {
-        font-size: 13pt;
+        font-size: 1.1em;
         font-weight: bolder;
     }
 
@@ -190,14 +198,22 @@
         max-height: 100px;
     }
 
+    .categoryPath {
+        font-size: 0.9em;
+    }
+
     .contactdetail {
         display: table;
         float: left;
         padding: 5px 10px;
         border-radius: 15px;
         background-color: orange;
-        font-size: 10pt;
+        font-size: 0.8em;
     }
 
+
+    .admin_hidden {
+        font-size: 0.8em;
+    }
 
 </style>

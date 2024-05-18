@@ -1,66 +1,102 @@
 <script>
 
+    // import components that are used at admin and public
     import CompanyEdit from '../../lib/components/CompanyEdit.svelte'
     import CompanyInfo from '../../lib/components/CompanyInfo.svelte'
 
-    /** @type {import('./$types').PageData} */
-    export let data;
 
-    export let form;
+    export let data; // load
+    export let form; // actions
 
+    //$: console.log({data})
+    //$: console.log({form})
+
+
+    // grep the loaded data
     let list = data.list || {}
 
+    // state edit mode needed for company edit
     $: edit_mode = false
+
+
+    /**
+     * hidden HTLM Form Element to delete any category by using Svelte-actions
+    */  
+    let frm_actions
 
 
     function company_edit(event) {
         //console.log('fire in the hole! ', event.detail, {event})
         const uuid = event.detail
-        let found = false
-        console.log(list)
-        for (let item in list) {
-            if (!found) {
-                console.log(item)
-                if (item.uuid == uuid) {
-                    console.log(item.uuid)
-                    found = true
-                    form = item
-                }
+        for (let company of list) {
+            if (company.uuid == uuid) {
+                //console.log(company.uuid)
+                form = company
+                edit_mode = true
+                break
             }
-        }
-        if (found) {
-            edit_mode = true
         }
     }
 
     function company_delete(event) {
         console.log(`Notify fired! delete: `, {event});
-        //console.log('fire in the hole! ', event.detail, {event})
+        frm_actions.children.uuid.value = event.detail
+        frm_actions.action = '?/delete_company'
+        frm_actions.submit()
+    }
+
+    function company_toggle_public(event) {
+        console.log(`Notify fired! toggle public: `, {event});
+        frm_actions.children.uuid.value = event.detail
+        frm_actions.action = '?/toggle_public'
+        frm_actions.submit()
     }
     
 
 </script>
 
 
-{#if ! edit_mode}
 
-    <ul>
-        <li>All</li>
-        <li>Unpublic</li>
-        <li>Public</li>
-        <li><input type="" name="filter"></li>
-    </ul>
+<!--
+    Either 
+        edit an entry when edit_mode is true
+    OR
+        list all entries
+-->
 
-
-    {#each list as company_info}
-        <CompanyInfo {company_info} mode="admin" on:edit={company_edit} on:delete={company_delete} />
-    {/each}
-
-
-{:else}
+{#if edit_mode}
 
     <button on:click="{ () => edit_mode = false }">Terug</button>
-    <CompanyEdit {form} />
+    <form action="?/update_company" method="POST">
+        <CompanyEdit company_info={form} />
+    </form>
+    
+{:else}
+
+    <!-- 
+        show filters for list
+    -->
+    <div>
+        <a href="">All</a>
+        <a href="">Unpublic</a>
+        <a href="">Public</a>
+        <a href=""><input type="" name="filter"></a>
+    </div>
+    <hr>
+
+    <!--
+        list all entries
+    -->
+    {#each list as company_info}
+        <CompanyInfo {company_info} mode="admin" on:edit={company_edit} on:delete={company_delete} on:toggle_public={company_toggle_public} />
+    {/each}
+
+    <!--
+        hidden form to perform the dispatched actions
+    -->
+    <form action="" method="POST" bind:this={frm_actions}>
+        <input type="hidden" name="uuid" value="">
+    </form>
 
 {/if}
 

@@ -8,25 +8,42 @@ datasource db {
 }
 
 model gp_categories {
-  id                  Int             @id @default(autoincrement())
-  uuid                String          @unique(map: "uuid") @db.VarChar(36)
-  name                String          @db.VarChar(25)
-  parent_id           Int?
-  parent_uuid         String?         @db.VarChar(36)
-  time_inserted       DateTime        @default(now()) @db.DateTime(0)
-  time_updated        DateTime        @default(now()) @db.DateTime(0)
-  gp_categories       gp_categories?  @relation("gp_categoriesTogp_categories", fields: [parent_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_parent_node")
-  other_gp_categories gp_categories[] @relation("gp_categoriesTogp_categories")
+  id                                                   Int             @id @default(autoincrement())
+  uuid                                                 String          @unique(map: "uuid") @db.VarChar(36)
+  name                                                 String          @db.VarChar(25)
+  parent_id                                            Int?
+  parent_uuid                                          String?         @db.VarChar(36)
+  date_created                                         DateTime        @default(now()) @db.DateTime(0)
+  date_updated                                         DateTime        @default(now()) @db.DateTime(0)
+  gp_categories                                        gp_categories?  @relation("gp_categoriesTogp_categories", fields: [parent_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_parent_node")
+  other_gp_categories                                  gp_categories[] @relation("gp_categoriesTogp_categories")
+  gp_companies_gp_companies_category_idTogp_categories gp_companies[]  @relation("gp_companies_category_idTogp_categories")
 
+  @@unique([name, parent_id, parent_uuid], map: "name")
   @@index([parent_id], map: "fk_parent_node")
 }
 
-model gp_entries {
-  id           Int       @id @default(autoincrement())
-  uuid         String    @db.VarChar(36)
-  category_id  Int
-  name         String    @db.VarChar(50)
-  is_public    Boolean
-  date_created DateTime  @default(now()) @db.DateTime(0)
-  date_updated DateTime? @db.DateTime(0)
+model gp_companies {
+  id                                                    Int           @id @default(autoincrement())
+  uuid                                                  String        @unique(map: "uuid") @db.VarChar(36)
+  name                                                  String        @db.VarChar(50)
+  logo                                                  String?       @db.VarChar(300)
+  urlwww                                                String?       @db.VarChar(300)
+  urlgoogle                                             String?       @db.VarChar(300)
+  phone                                                 String?       @db.VarChar(20)
+  mobile                                                String?       @db.VarChar(20)
+  email                                                 String?       @db.VarChar(50)
+  street                                                String?       @db.VarChar(50)
+  postalcode                                            String?       @db.VarChar(10)
+  city                                                  String?       @db.VarChar(25)
+  country_id                                            String?       @db.VarChar(30)
+  tags                                                  String?       @db.VarChar(200)
+  infotext                                              String?       @db.Text
+  category_id                                           Int
+  is_public                                             Boolean       @default(false)
+  date_created                                          DateTime      @default(now()) @db.DateTime(0)
+  date_updated                                          DateTime?     @db.DateTime(0)
+  gp_categories_gp_companies_category_idTogp_categories gp_categories @relation("gp_companies_category_idTogp_categories", fields: [category_id], references: [id], onUpdate: Restrict, map: "gp_companies_ibfk_1")
+
+  @@index([category_id], map: "category_id")
 }

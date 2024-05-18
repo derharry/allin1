@@ -39,5 +39,8 @@
   "type": "module",
   "dependencies": {
     "rollup": "^4.17.2"
-  }
+  },
+  "trustedDependencies": [
+    "svelte-preprocess"
+  ]
 }

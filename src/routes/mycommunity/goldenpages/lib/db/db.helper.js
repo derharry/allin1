@@ -12,14 +12,14 @@ try {
  * @returns 
  */
 export async function get_category_list () {
-    return get_category_list_new()
+    return get_treeview_of_categories()
 }
 
 /**
  * return the category list in a 2 class treeview style
  * @returns object category / subcategories
  */
-export async function get_category_list_new () {
+export async function get_treeview_of_categories () {
     try {
         // select all categories
         // SELECT * FROM gp_categories ORDER BY parent_id ASC, name ASC
@@ -29,7 +29,7 @@ export async function get_category_list_new () {
                 { name: 'asc' }
             ]
         })
-        console.log(dataset)
+        //console.log(dataset)
 
         // create a tree view
         let treeview = {}
@@ -44,13 +44,57 @@ export async function get_category_list_new () {
                 //dataset[row.parent_uuid].subs[]
             }
         }
-        console.log(treeview)
+        //console.log(treeview)
         return treeview
 
     } catch (ex) {
         console.log(ex)
     }
 }
+
+
+export async function get_list_of_categories () {
+    try {
+        // SELECT uuid, name FROM gp_categories WHERE parent_id = null ORDER BY parent_id ASC, name ASC
+        let dataset = await db.gp_categories.findMany({
+            where: {
+                parent_id: null
+            },
+            orderBy: [
+                { parent_id: 'asc' },
+                { name: 'asc' }
+            ]
+        })
+        console.log(dataset)
+    } catch (ex) {
+        console.log(ex)
+    }
+}
+
+
+export async function get_list_of_companies (category) {
+    try {
+        let list = []
+
+        // get all companies or just by category
+        
+        if (category == '*')  {
+            // SELECT * FROM gp_companies WHERE category
+            list = db.gp_companies.findMany()  
+        } 
+        else {
+            // SELECT * FROM gp_companies WHERE category = category
+            list = await db.gp_companies.findMany({ where: { category } })  
+        }
+
+        //console.log(list)
+
+        return list
+    } catch (ex) {
+        console.log(ex)
+    }
+}
+
 
 
 /**
@@ -64,16 +108,35 @@ export async function get_statistic () {
         // SELECT count(*) FROM gp_companies
         // SELECT * FROM gp_companies WHERE is_public = true
         // SELECT * FROM gp_companies WHERE is_public = false
-        statistic.entries_total    = await db.gp_entries.count()
-        statistic.entries_public   = await (await db.gp_entries.findMany({ where: { is_public: true } })).entries.length
-        statistic.entries_unpublic = (await db.gp_entries.findMany({ where: { is_public: false } })).entries.length
+        statistic.companies_total    = await db.gp_companies.count()
+        statistic.companies_public   = await db.gp_companies.count({ where: { is_public: true } })
+        statistic.companies_unpublic = await db.gp_companies.count({ where: { is_public: false } })
 
         return statistic
     } catch (ex) {
         console.log(ex)
-    }    
+    }
 }
 
+
+export async function register_company (data) {
+    try {
+        console.log('register company', data)
+        // check if company name already exists
+
+        data.uuid      = generateUID()
+        data.is_public = false // its a default value in dbs, but lets be sure
+
+        let ds = await db.gp_companies.create({  data  })
+
+        console.log(uuid, ds)
+
+        return return_server_response(300)
+    } catch (ex) {
+        console.log(ex)
+        return return_server_response(500, ex.name +' '+ex.message, data, 'admin_category_insert' )
+    }  
+}
 
 
 //#region ADMIN
@@ -98,7 +161,7 @@ export async function admin_category_insert(name, parent_uuid = null) {
         if (parent_uuid == null) {
             // TODO where clause
             // SELET * FROM gp_categories WHERE name = name AND parent_id = null
-            let x = await db.gp_categories.findFirst({ where: { name: name } })
+            let x = await db.gp_categories.findFirst({ where: {  AND: [  { name: name }, { parent_id: null } ]  } })  // { where: name: name } just checks name
             if (x?.name == name) throw new Error(`Categorie ${name} already exists`)
         } else {
             // SELET * FROM gp_categories WHERE uuid = parent_uuid
@@ -137,14 +200,8 @@ export async function admin_category_insert(name, parent_uuid = null) {
 export async function admin_category_update (uuid, name, parent_uuid = null) {
     try {
         // UPDATE name = name FROM gp_categoreis WHERE uuid = uuid
-        let res = await db.gp_categories.update({
-            data: {   
-                name
-            },
-            where: { uuid } 
-
-        })
-        console.log(res)
+        let res = await db.gp_categories.update({ data: {  name }, where: { uuid } })
+        //console.log(res)
         return return_server_response()
     } catch (ex) {
         //console.log('ex1', ex.code, 'ex2', ex.name, 'ex3', ex.message)
@@ -164,17 +221,90 @@ export async function admin_category_update (uuid, name, parent_uuid = null) {
 export async function admin_category_delete (uuid) {
     try {
         //DELETE FROM gp_categories WHERE uuid = uuid
-        await db.gp_categories.delete({ where: { uuid } })
+        let ds = await db.gp_categories.delete({ where: { uuid } })
+        console.log(ds)
         return return_server_response()
     } catch (ex) {
         console.log(ex)
         if (ex?.code == 'P2003') {
             return return_server_response( 400, `Cannot delete categorie. Categorie may not have child categories or companies`,  'admin_category_update' )
         }        
+        return return_server_response(500, ex.name +' '+ex.message, { uuid, ex }, 'admin_category_delete' )
+    }
+}
+
+
+
+/**
+ * 
+ * @param {string} uuid 
+ */
+export async function admin_company_toggle_public (uuid) {
+    try {
+        // first get current value of public
+        // toggle it
+        // update value of public
+        let ds
+
+        // SELECT public FROM gp_companies WHERE uuid = uuid
+        // UPDATE public FROM gp_companies WHERE uuid = uuid
+        ds = await db.gp_companies.findFirst({ where: { uuid } })
+        ds.is_public = ds.is_public == false ? true : false
+        ds = await db.gp_companies.update({ data: ds, where: { uuid } })
+
+        return return_server_response()
+    } catch (ex) {
+        console.log(ex)     
+        return return_server_response(500, ex.name +' '+ex.message, { uuid, ex }, 'admin_category_delete' )
+    }
+}
+
+
+
+/**
+ * 
+ * @param {string} uuid 
+ */
+export async function admin_company_update (uuid, data) {
+    try {
+        // first get the ds
+        // update ds with content in data
+        // save changes to dbs
+
+        // SELECT public FROM gp_companies WHERE uuid = uuid
+        ds = db.gp_companies.findFirst({ where: { uuid } })
+        // update ds
+        for (let [key, value] in ds) {
+            console.log(key, value)
+            ds[key] = data[key]
+        }
+        // UPDATE ...ds FROM gp_companies WHERE uuid = uuid
+        ds = db.gp_companies.update({ where: { uuid }, ds })
+
+
+        return return_server_response()
+    } catch (ex) {
+        console.log(ex)     
         return return_server_response(500, ex.name +' '+ex.message, { uuid, error }, 'admin_category_delete' )
     }
 }
 
+
+
+/**
+ * 
+ * @param {string} uuid 
+ */
+export async function admin_company_delete (uuid) {
+    try {
+        //DELETE FROM gp_companies WHERE uuid = uuid
+        await db.gp_companies.delete({ where: { uuid } })
+        return return_server_response()
+    } catch (ex) {
+        console.log(ex)     
+        return return_server_response(500, ex.name +' '+ex.message, { uuid, error }, 'admin_category_delete' )
+    }
+}
 
 //#endregion
 

@@ -163,7 +163,7 @@
             <form action="?/insert_category" method="post" id="insert_category">
                 <input type="hidden" name="formid" value="insert_category">
                 <input type="text" size="6" name="name" value="{form?.name || ''}">
-                <button type="submit">+</button>
+                <button type="submit"><i class="fa fa-plus"></i></button>
             </form>
         </th>
 
@@ -178,7 +178,7 @@
                     <input type="hidden" name="formid" value="insert_bcategory">
                     <input type="hidden" name="parent_uuid" value="{uuid}">
                     <input type="text" size="6" name="name" value="{form?.name || ''}">
-                    <button type="submit">+</button>
+                    <button type="submit"><i class="fa fa-plus"></i></button>
                 </form>
             </td>
         {/each}
