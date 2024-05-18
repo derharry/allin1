@@ -4,9 +4,12 @@ import { db } from '$lib/db.server'  // import the centralized connection
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
-    let categories = await get_treeview_of_categories()
+
+	// return the category_list
+    let category_list = await get_treeview_of_categories()
+	console.log(category_list)
 	return {
-		categories
+		category_list
 	}
 }
 

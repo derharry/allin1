@@ -10,8 +10,8 @@
     /**
      * containing the list of categories returned by load()
     */
-    let category_list = data.categories || []
-    //$: console.log({category_list})
+    let category_list = data?.category_list || []
+    $: console.log({category_list})
 
 
     /**
@@ -60,7 +60,7 @@
             // reference dom_elements and get content
             let div      = event.target
             let uuid     = div.getAttribute('data-uuid')
-            let uuid_sub = div.getAttribute('data-uuid-sub') || null
+            let uuid_sub = div.getAttribute('data-parent-uuid') || null
             let name     = div.innerText
 
             // prevent default and set back to read-mode
@@ -82,11 +82,12 @@
 
     function send_delete(event) {
         try {
+            event.preventDefault();
+
             let div  = event.target
             let uuid = div.getAttribute('data-uuid')
 
-            // prevent default and set back to read-mode
-            event.preventDefault();
+            // set back to read-mode
             div.class = "read-mode"
             div.contentEditable = false
 
@@ -149,7 +150,7 @@
                     contentEditable="false"
                     class="read-mode" 
                     data-uuid="{uuid}"
-                    data-uuid-sub=""
+                    data-parent-uuid=""
                 >
                     {attrs.name}
                 </span>
@@ -194,7 +195,7 @@
         {#each Object.entries(category_list) as [uuid, attrs] }
             <td>
                 <ul>
-                {#each Object.entries(attrs.subs) as [ uuid, subname ] }
+                {#each Object.entries(attrs.subs) as [ uuid, attrs ] }
                     <li>
                     <span
                         on:dblclick={ () => handle_dblclick() }
@@ -202,9 +203,9 @@
                         contentEditable="false"
                         class="read-mode" 
                         data-uuid="{uuid}"
-                        data-uuid-sub="{uuid}"
+                        data-parent-uuid="{uuid}"
                     >
-                        {subname}
+                        {attrs.name}
                     </span>
                     </li>
                 {/each}     

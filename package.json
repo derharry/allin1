@@ -32,15 +32,22 @@
     "svelte": "^4.2.7",
     "svelte-check": "^3.6.0",
     "tslib": "^2.4.1",
-    "typescript": "^5.0.0",
+    "typescript": "^5.4.5",
     "vite": "^5.0.3",
     "vitest": "^1.2.0"
   },
   "type": "module",
   "dependencies": {
-    "rollup": "^4.17.2"
+    "@types/node": "^20.12.12",
+    "rollup": "^4.17.2",
+    "ts-node": "^10.9.2"
   },
   "trustedDependencies": [
+    "@prisma/client",
+    "@prisma/engines",
+    "@sveltejs/kit",
+    "esbuild",
+    "prisma",
     "svelte-preprocess"
   ]
 }

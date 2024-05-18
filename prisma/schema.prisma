@@ -8,7 +8,7 @@ datasource db {
 }
 
 model gp_categories {
-  uuid                String          @id @db.VarChar(36)
+  uuid                String          @id @default(uuid()) @db.VarChar(36)
   parent_uuid         String?         @db.VarChar(36)
   name                String          @db.VarChar(50)
   date_created        DateTime        @default(now()) @db.DateTime(0)
@@ -16,13 +16,12 @@ model gp_categories {
   other_gp_categories gp_categories[] @relation("gp_categoriesTogp_categories")
   gp_companies        gp_companies[]
 
-  @@index([name], map: "name")
-  @@index([uuid], map: "uuid")
-  @@index([parent_uuid], map: "parent_uuid")
+  @@unique([parent_uuid, name], map: "Unique_name_and_parentUuid")
+  @@index([parent_uuid], map: "Index_parent_uuid")
 }
 
 model gp_companies {
-  uuid          String        @id @db.VarChar(36)
+  uuid          String        @id @default(uuid()) @db.VarChar(36)
   name          String        @db.VarChar(50)
   logo          String?       @db.VarChar(300)
   urlwww        String?       @db.VarChar(300)
@@ -42,7 +41,5 @@ model gp_companies {
   date_updated  DateTime?     @db.DateTime(0)
   gp_categories gp_categories @relation(fields: [category_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "gp_companies_ibfk_1")
 
-  @@index([category_uuid], map: "category_uuid")
-  @@index([name], map: "name")
-  @@index([uuid], map: "uuid")
+  @@index([category_uuid], map: "Index_category_uuid")
 }

@@ -17,7 +17,17 @@ export async function get_category_list () {
 
 /**
  * return the category list in a 2 class treeview style
- * @returns object category / subcategories
+ * @returns object {
+ *    main_category_uuid: {
+ *          name: main_category_name,
+ *          subs: {
+ *              sub_category_uuid: {
+ *                  name: sub_category_name,
+ *                  subs: {}
+ *              }
+ *          } 
+ *    }
+ * }
  */
 export async function get_treeview_of_categories () {
     try {
@@ -25,7 +35,7 @@ export async function get_treeview_of_categories () {
         // SELECT * FROM gp_categories ORDER BY parent_id ASC, name ASC
         let dataset = await db.gp_categories.findMany({
             orderBy: [
-                { parent_id: 'asc' },
+                { parent_uuid: 'asc' },
                 { name: 'asc' }
             ]
         })
@@ -34,14 +44,14 @@ export async function get_treeview_of_categories () {
         // create a tree view
         let treeview = {}
         for (let row of dataset) {
-            if (row.parent_id == null) {
-                treeview[row.uuid] = {}
+            if (row.parent_uuid == null) {
+                treeview[row.uuid] = { name: row.name, subs: {} }
                 treeview[row.uuid].name = row.name
                 treeview[row.uuid].subs = {}
             } else {
                 //if (treeview[row.parent_uuid]) // just prevent breaks if data is screwed up
-                    treeview[row.parent_uuid].subs[row.uuid] = { name: row.name, subs = {} }
-                //dataset[row.parent_uuid].subs[]
+
+                treeview[row.parent_uuid].subs[row.uuid] = { name: row.name, subs: {} }
             }
         }
         console.log(treeview)
@@ -134,33 +144,23 @@ export async function register_company (data) {
  */
 export async function admin_category_insert(name, parent_uuid = null) {
     try {
-        // we can prepare 1 insert statemetn to insert both - main and sub. we then not need a if/else
-        let uuid   = generateUID()
-        let parent_id = null
+        // we can prepare 1 insert statement to insert both - main and sub. we then not need a if/else
 
-        // if parent_id is null we insert a root categorie
+        // if parent_uuid is null we insert a root categorie
         //    we need to check if the categorie name exists already 
         //    (future todo - let it handle by DB-server)
-        // else if parent_id is not null we are inserting a sub categorie. 
-        //    we need to now the parent_id for this
         if (parent_uuid == null) {
-            // TODO where clause
             // SELET * FROM gp_categories WHERE name = name AND parent_id = null
-            let x = await db.gp_categories.findFirst({ where: {  AND: [  { name: name }, { parent_id: null } ]  } })  // { where: name: name } just checks name
+            let x = await db.gp_categories.findFirst({ where: {  AND: [  { name: name }, { parent_uuid: null } ]  } })  // { where: name: name } just checks name
             if (x?.name == name) throw new Error(`Categorie ${name} already exists`)
-        } else {
-            // SELET * FROM gp_categories WHERE uuid = parent_uuid
-            let x = await db.gp_categories.findFirst({ where: { uuid: parent_uuid } })
-            parent_id = x['id']
-            if (parent_id == null) throw new Error ('Could not find id for parent category')
         }
 
         // now we can insert the category of subcategoy
-        // because of previous part we parent_id_uuid is null or set with its parent value
-        // INSERT INTO gp_categories SET (name, uuid, parent_id)
+        // INSERT INTO gp_categories SET (name, uuid)
+        // uuid: generateUID() not needed anymore - done by DBS and prisma @default(uuid())
         let newrow = await db.gp_categories.create({ 
             data: {   
-                uuid, name, parent_uuid: parent_uuid, parent_id
+                name, parent_uuid
             }
         })
         return return_server_response()
