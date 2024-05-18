@@ -1,0 +1,12 @@
+[
+    {
+        "uuid": "001",
+        "name": "Artzen",
+        "subof": ""
+    },
+    {
+        "uuid": "002",
+        "name": "Tandarts",
+        "subof": "001"
+    }
+]

@@ -1,4 +1,5 @@
 
+/* save to delete is in zeelte/form */
 export function formBody(body) {
     return [...body.entries()].reduce((data, [k, v]) => {
       let value = v;
@@ -19,7 +20,7 @@ export function formBody(body) {
     }, {});
   }
 
-
+/* save to delete is in zeelte/form */
   export async function send_request(url, data, method = 'post') { 
     let json_data = JSON.stringify(data);
     console.log(data, new URLSearchParams(data))

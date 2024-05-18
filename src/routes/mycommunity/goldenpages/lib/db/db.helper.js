@@ -1,54 +1,51 @@
-import { read_json, write_json } from '$zeelte/db/db.json'
-import { generateUID } from '$zeelte/helpers/utils'
+import { db } from '$lib/db.server'  // import the centralized connection
+import { generateUID, return_server_response } from '$zeelte/helpers/utils'
 
-
-// import the database !! this way its cached until server restart - changed to zeelte read
-// import database from './database.json'
-// path to database file process.cwd() is root of allin1
-const db_file_path = 'src/routes/mycommunity/goldenpages/lib/db/database.json'
-const db_cats_file_path = 'src/routes/mycommunity/goldenpages/lib/db/db.categories.json'
-
+try {
+    null
+} catch (ex) {
+    console.log(ex)
+}
 
 /**
- * returns list of categories and subcategories out of all db-entries
- * mainly used only for the goldenpages/+page.svelte with categegories
- * it simulates at the moment a own table for this
- * @returns array [
- *      category_name : [ (subcategory_name), ... ]
- * ]
+ * depricated
+ * @returns 
  */
 export async function get_category_list () {
-    try {
-        let database = await read_json(db_file_path)
-        let category_list = {}
-        //console.log('get_category_list()', database)
-        
-        database.forEach( (item) => {
-
-            if (item._is_public) {
-                // add category
-                if ( ! category_list[item.category] ) {
-                    category_list[item.category] = []
-                }
-                // add subcategory
-                if ( ! category_list[item.category].includes( item.subcategory ))
-                    category_list[item.category].push(item.subcategory)
-            }
-        })
-        //console.log('get_category_list()', category_list)
-        
-        return category_list
-    } catch (ex) {
-        console.log(ex)
-    }
+    return get_category_list_new()
 }
 
-
+/**
+ * return the category list in a 2 class treeview style
+ * @returns object category / subcategories
+ */
 export async function get_category_list_new () {
     try {
+        // select all categories
+        // SELECT * FROM gp_categories ORDER BY parent_id ASC, name ASC
+        let dataset = await db.gp_categories.findMany({
+            orderBy: [
+                { parent_id: 'asc' },
+                { name: 'asc' }
+            ]
+        })
+        console.log(dataset)
 
-        let ds_categories = await read_json(db_cats_file_path)
-        
+        // create a tree view
+        let treeview = {}
+        for (let row of dataset) {
+            if (row.parent_id == null) {
+                treeview[row.uuid] = {}
+                treeview[row.uuid].name = row.name
+                treeview[row.uuid].subs = {}
+            } else {
+                //if (treeview[row.parent_uuid]) // just prevent breaks if data is screwed up
+                    treeview[row.parent_uuid].subs[row.uuid] = row.name
+                //dataset[row.parent_uuid].subs[]
+            }
+        }
+        console.log(treeview)
+        return treeview
 
     } catch (ex) {
         console.log(ex)
@@ -57,131 +54,21 @@ export async function get_category_list_new () {
 
 
 /**
- * returns list of companies by category
- * @returns array [
- *      { (company_values) }, 
- *      ...
- * ]
+ * get GP statistics
+ * @returns object
  */
-export async function get_list_of_companies (category) {
-    try {
-        let database = await read_json(db_file_path)
-        let company_list = []
-        //console.log('get_list_of_companies()', database)
-
-        for (const item of database) {
-            if (category == '*') {
-                let data = await get_company_info(item.uuid)
-                company_list.push(  data )
-            }
-            else if ( item.subcategory == category && item._is_public) {
-                let data = await get_company_info(item.uuid)
-                //console.log(data)
-                company_list.push(  data )
-                //console.log(company_list.length)
-            }
-        }
-        /* OLD - has problems with async - its not waiting...
-        database.forEach( (item) => {
-            if ( item.subcategory == category) { //&& ! list.includes(item.name) ) {
-                let data = get_company_info(item.uuid)
-                company_list.push(  data )
-                console.log(company_list.length)
-            }
-        })
-        */
-        
-        //console.log('get_list_of_companies() ', company_list)
-        //console.log(company_list.length)
-
-        return company_list
-    } catch (ex) {
-        console.log(ex)
-    }
-}
-
-
-
-/**
- * returns key value list of company - without empty values
- * @returns array [
- *      { (company_key_value_list_not_empty) },
- *      ...
- * ]
- */
-export async function get_company_info (uuid) {
-    try {
-        let database = await read_json(db_file_path)
-        let company_info = {}
-
-        for (const item of database) {
-            if ( item.uuid == uuid ) {
-                for ( const [key, value] of Object.entries(item) ) {
-                    //console.log(key, value)
-                    if (value != '')
-                        company_info[key] = value
-                }
-            }
-        }
-        /*
-        /* OLD - has problems with async - its not waiting...
-        await database.forEach( (item) => {
-            if ( item.uuid == uuid )
-                Object.entries(item).forEach( ([key, value]) => {
-                    //console.log('get_company_info() X ', key, value)
-                    if (value != '')
-                        company_info[key] = value
-                })
-        })
-        */
-        //console.log('get_company_info() Y ', company_info)
-
-        return company_info
-    } catch (ex) {
-        console.log(ex)
-    }
-}
-
-
-
-export async function insert_company_info (dataset) {
-    try {
-        let database = await read_json(db_file_path)
-
-        dataset.uuid = generateUID()
-        
-        dataset.date_inserted = new Date().getTime()
-        dataset._date_changed = ""
-        dataset._is_public = false
-        dataset._is_set_public_by = ''
-        dataset._is_set_public_on = ''
-
-        database.push(dataset)
-        //console.log('insert_company_info()', database)
-        await write_json(db_file_path, database)
-    } catch (ex) {
-        console.log(ex)
-    }
-}
-
-
-
 export async function get_statistic () {
     try {
-        let database  = await read_json(db_file_path)
         let statistic = {}
-
-        statistic.total_companies = database.length
-        statistic.total_companies_public = 0
-        for (const item of database) {
-            if (item._is_public)
-                statistic.total_companies_public += 1
-        }
-        statistic.total_companies_unpublic = database.length - statistic.total_companies_public
-
+        
+        // SELECT count(*) FROM gp_companies
+        // SELECT * FROM gp_companies WHERE is_public = true
+        // SELECT * FROM gp_companies WHERE is_public = false
+        statistic.entries_total    = await db.gp_entries.count()
+        statistic.entries_public   = await (await db.gp_entries.findMany({ where: { is_public: true } })).entries.length
+        statistic.entries_unpublic = (await db.gp_entries.findMany({ where: { is_public: false } })).entries.length
 
         return statistic
-    
     } catch (ex) {
         console.log(ex)
     }    
@@ -189,11 +76,106 @@ export async function get_statistic () {
 
 
 
-export async function admin_get_dashboard_info() {
+//#region ADMIN
+
+
+/**
+ * 
+ * @param {string} name 
+ * @param {string} optional parent_uuid of parent categorie. if set = sub_category else main_category
+ */
+export async function admin_category_insert(name, parent_uuid = null) {
     try {
-        let database = await read_json(db_file_path)
+        // we can prepare 1 insert statemetn to insert both - main and sub. we then not need a if/else
+        let uuid   = generateUID()
+        let parent_id = null
+
+        // if parent_id is null we insert a root categorie
+        //    we need to check if the categorie name exists already 
+        //    (future todo - let it handle by DB-server)
+        // else if parent_id is not null we are inserting a sub categorie. 
+        //    we need to now the parent_id for this
+        if (parent_uuid == null) {
+            // TODO where clause
+            // SELET * FROM gp_categories WHERE name = name AND parent_id = null
+            let x = await db.gp_categories.findFirst({ where: { name: name } })
+            if (x?.name == name) throw new Error(`Categorie ${name} already exists`)
+        } else {
+            // SELET * FROM gp_categories WHERE uuid = parent_uuid
+            let x = await db.gp_categories.findFirst({ where: { uuid: parent_uuid } })
+            parent_id = x['id']
+            if (parent_id == null) throw new Error ('Could not find id for parent category')
+        }
+
+        // now we can insert the category of subcategoy
+        // because of previous part we parent_id_uuid is null or set with its parent value
+        // INSERT INTO gp_categories SET (name, uuid, parent_id)
+        let newrow = await db.gp_categories.create({ 
+            data: {   
+                uuid, name, parent_uuid: parent_uuid, parent_id
+            }
+        })
+        return return_server_response()
 
     } catch (ex) {
-        console.log(ex)
-    }  
+        //console.log('ex1', ex.code, 'ex2', ex.name, 'ex3', ex.message)
+        if (ex?.code == 'P2002') {
+            return return_server_response( 403, `${name} already exists`, { name, parent_uuid },  'admin_category_insert' )
+        }
+        return return_server_response(500, ex.name +' '+ex.message, { name, parent_uuid }, 'admin_category_insert' )
+    }
 }
+
+
+
+/**
+ * 
+ * @param {string} uuid 
+ * @param {string} name 
+ * @param {string} parent_uuid  not needed yet - future feature to move subcats to other maincat
+ */
+export async function admin_category_update (uuid, name, parent_uuid = null) {
+    try {
+        // UPDATE name = name FROM gp_categoreis WHERE uuid = uuid
+        let res = await db.gp_categories.update({
+            data: {   
+                name
+            },
+            where: { uuid } 
+
+        })
+        console.log(res)
+        return return_server_response()
+    } catch (ex) {
+        //console.log('ex1', ex.code, 'ex2', ex.name, 'ex3', ex.message)
+        if (ex?.code == 'P2002') {
+            return return_server_response( 403, `${name} already exists`, { name, uuid },  'admin_category_update' )
+        }
+        return return_server_response(500, ex.name +' '+ex.message, { name, parent_uuid, error }, 'admin_category_update' )
+    }
+}
+
+
+
+/**
+ * 
+ * @param {string} uuid 
+ */
+export async function admin_category_delete (uuid) {
+    try {
+        //DELETE FROM gp_categories WHERE uuid = uuid
+        await db.gp_categories.delete({ where: { uuid } })
+        return return_server_response()
+    } catch (ex) {
+        console.log(ex)
+        if (ex?.code == 'P2003') {
+            return return_server_response( 400, `Cannot delete categorie. Categorie may not have child categories or companies`,  'admin_category_update' )
+        }        
+        return return_server_response(500, ex.name +' '+ex.message, { uuid, error }, 'admin_category_delete' )
+    }
+}
+
+
+//#endregion
+
+

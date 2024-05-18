@@ -10,6 +10,9 @@
         </td>
     </tr>
     <tr>
+        <td><hr></td>
+    </tr>
+    <tr>
         <td>
             <slot />
         </td>

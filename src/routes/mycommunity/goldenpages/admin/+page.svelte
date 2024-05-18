@@ -13,15 +13,18 @@
 &nbsp;
 <table>
     <tr>
+        <td colspan="2">Companies</td>
+    </tr>
+    <tr>
         <td>Total:</td>
-        <td>{stats.total_companies}</td>
+        <td>{stats.entries_total}</td>
     </tr>
     <tr>
         <td>Public:</td>
-        <td>{stats.total_companies_public}</td>
+        <td>{stats.entries_public}</td>
     </tr>
     <tr>
         <td><a href="">Hidden:</a></td>
-        <td>{stats.total_companies}</td>
+        <td>{stats.entries_unpublic}</td>
     </tr>
 </table>
