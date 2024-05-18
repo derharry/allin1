@@ -10,41 +10,39 @@
     /** @type {import('./$types').ActionData} */
     export let form = {}
 
+    
+    // grap loaded data
+    let category_list = data?.category_list || {}
+    let company_info  = form?.data || {}
+
     //$: console.log(data)
     //$: console.log(form)
+    //$: console.log('register.svelte', category_list)
 
-    
-    let company_info = form?.data || {}
+
+    // component bindings
     let frmCompanyInfo;
 
+
+    // component logic
 
     function collectFormData() {
         //company_info = frmCompanyInfo.serializeArray()
         company_info = Object.fromEntries(new FormData(frmCompanyInfo));
         //console.log(company_info)
     }
-    /*
 
-    //$: console.log(company_info)
-    not needed - done by onchange/onkeyup directly on dom-form
-    import { onMount } from 'svelte';
-    onMount(() => {    
-        frmCompanyInfo.addEventListener('change', function() {
-           // alert('Hi!');
-        });
-	});
-    */
 
 </script>
 
 
-{#if form?.company_is_saved}
+{#if form?.ok}
 
 
     <h1>Uw bedrijf is geregistreerd</h1>
 
     <p>Uw bedrijf staat in onze database</p>
-    <p>Wij zullen deze eerst checken en als alles ok is schakeln wij jouw vrij</p>
+    <p>Wij zullen deze eerst checken en als alles ok is schakeln wij jouw vrij.</p>
     <p>Als je in toekomst data wilt verandern stuur ons alstublief een e-mail met de data die verandert moet worden.</p>
     <p>Bedankt dat je jouw bedrijf hebt geregistreerd.</p>
 
@@ -71,7 +69,7 @@
 
 
     <form action="?/register" method="POST" bind:this={frmCompanyInfo} on:keyup={collectFormData}>
-        <CompanyEdit {company_info} />
+        <CompanyEdit {company_info} {category_list} />
     </form>
 
     <h2>Voorbeeld in de resultaten:</h2>

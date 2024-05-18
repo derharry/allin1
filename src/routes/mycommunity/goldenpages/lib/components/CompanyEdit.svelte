@@ -1,6 +1,52 @@
 <script>
 
-    export let company_info;
+    export let company_info  = {}
+    export let category_list = {}
+
+    //$: console.log(category_list)
+    $: list_categories    = get_list_of_categories(category_list)
+    $: list_subcategories = get_list_of_categories(category_list, selected_category_uuid)
+
+
+    //$: console.log('list_categories', list_categories)
+    //$: console.log('list_subcategories', list_subcategories)
+    //$: console.log('selected_category_uuid', selected_category_uuid)
+
+    // dom value bindings
+    let selected_category_uuid = 0;
+
+    
+    function get_list_of_categories (cat_list, parent_id = null) {
+        try {
+            let list = []
+
+            if (parent_id == null) {
+                for (let uuid in cat_list) {
+                    //console.log('uuid', uuid)
+                    list.push([ uuid, cat_list[uuid].name ])
+                }
+            } else if (cat_list[parent_id]) {
+                let subs = cat_list[parent_id].subs
+                //console.log('subcatlist', subs)
+                for (let sub in subs) {
+                    //console.log('sub', sub, subs[sub])
+                    list.push([ sub, subs[sub] ])
+                }
+            } else {
+                console.log('check', selected_category_uuid)
+            }
+
+            //console.log('list', list)
+            return list
+        } catch (ex) {
+            console.log(ex)
+        }
+    }
+
+
+    function handle_category_change(event) {
+        let select = event.target
+    }
 
 </script>
 
@@ -36,17 +82,22 @@
     <tr>
         <td>Categorie</td>
         <td>
-            <select>
+            <!-- no name because we don't need this categorie into the db -->
+            <select bind:value={selected_category_uuid}>
+                {#each list_categories as [key, value] }
+                    <option value={key}>{value}</option>
+                {/each}
             </select>
-            <input name="category" type="text"  value="{company_info?.category || ''}">
         </td>
     </tr>
     <tr>
         <td>Subcategorie</td>
         <td>
-            <select>
+            <select name="category_id">
+                {#each list_subcategories as [key, value] }
+                    <option value={key}>{value}</option>
+                {/each}
             </select>
-            <input name="subcategory" type="text" value="{company_info?.subcategory || ''}" >
         </td>
     </tr>
     <tr>
@@ -65,13 +116,22 @@
         <td>Plaats</td>
         <td><input name="city" type="text"  value="{company_info?.city || ''}"></td>
     </tr>
+    <!--
+        not needed at the moment
     <tr>
         <td>Regio *</td>
         <td><input name="region" type="text"  value="{company_info?.region || ''}"></td>
     </tr>
+    -->
     <tr>
         <td>Land</td>
-        <td><input name="country" type="text"  value="{company_info?.country || 'Oostenrijk'}"></td>
+        <td>
+            <select name="country_id">
+                <option value="43" selected>Oostenrijk</option>
+                <option value="31">Nederland</option>
+                <option value="32">Belgie</option>
+            </select>
+        </td>
     </tr>
     <tr>
         <td>&nbsp;</td>
@@ -107,7 +167,7 @@
     </tr>
     <tr>
         <td>Infotext</td>
-        <td><textarea name="intotext" rows="5">{company_info?.infotext || ''}</textarea></td>
+        <td><textarea name="infotext" rows="5">{company_info?.infotext || ''}</textarea></td>
     </tr>
     
     <tr>

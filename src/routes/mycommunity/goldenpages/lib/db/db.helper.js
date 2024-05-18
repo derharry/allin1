@@ -53,25 +53,6 @@ export async function get_treeview_of_categories () {
 }
 
 
-export async function get_list_of_categories () {
-    try {
-        // SELECT uuid, name FROM gp_categories WHERE parent_id = null ORDER BY parent_id ASC, name ASC
-        let dataset = await db.gp_categories.findMany({
-            where: {
-                parent_id: null
-            },
-            orderBy: [
-                { parent_id: 'asc' },
-                { name: 'asc' }
-            ]
-        })
-        console.log(dataset)
-    } catch (ex) {
-        console.log(ex)
-    }
-}
-
-
 export async function get_list_of_companies (category) {
     try {
         let list = []
@@ -127,11 +108,15 @@ export async function register_company (data) {
         data.uuid      = generateUID()
         data.is_public = false // its a default value in dbs, but lets be sure
 
+        // change the uuid in category_id with its id
+        let x = await db.gp_categories.findFirst({ where: { uuid: data.category_id } })
+        data.category_id = x.id
+        console.log(data)
+
         let ds = await db.gp_companies.create({  data  })
+        //console.log(uuid, ds)
 
-        console.log(uuid, ds)
-
-        return return_server_response(300)
+        return return_server_response()
     } catch (ex) {
         console.log(ex)
         return return_server_response(500, ex.name +' '+ex.message, data, 'admin_category_insert' )

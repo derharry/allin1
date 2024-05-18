@@ -1,16 +1,18 @@
-import { get_list_of_companies, admin_company_toggle_public, admin_company_update, admin_company_delete } from '../../lib/db/db.helper'
+import { get_list_of_companies, admin_company_toggle_public, admin_company_update, admin_company_delete, get_treeview_of_categories } from '../../lib/db/db.helper'
 
 
 export async function load({ params }) {
 
     let list = []
+	let category_list = await get_treeview_of_categories()
     list = await get_list_of_companies('*')
     //let statistic = await get_statistic()
 
     //console.log( params)
 
 	return {
-        list
+        list,
+		category_list
     }
 }
 

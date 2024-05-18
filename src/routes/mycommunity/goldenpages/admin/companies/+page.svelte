@@ -5,25 +5,33 @@
     import CompanyInfo from '../../lib/components/CompanyInfo.svelte'
 
 
-    export let data; // load
-    export let form; // actions
+    /** @type {import('./$types').PageData} */
+	export let data;
+
+    /** @type {import('./$types').ActionData} */
+    export let form = {}
+
 
     //$: console.log({data})
     //$: console.log({form})
 
 
     // grep the loaded data
-    let list = data.list || {}
+    let list = data?.list || {}
+    let category_list = data?.category_list || {}
 
     // state edit mode needed for company edit
     $: edit_mode = false
 
+
+    // component bindings
 
     /**
      * hidden HTLM Form Element to delete any category by using Svelte-actions
     */  
     let frm_actions
 
+    // component logic
 
     function company_edit(event) {
         //console.log('fire in the hole! ', event.detail, {event})
@@ -68,7 +76,7 @@
 
     <button on:click="{ () => edit_mode = false }">Terug</button>
     <form action="?/update_company" method="POST">
-        <CompanyEdit company_info={form} />
+        <CompanyEdit company_info={form} {category_list} />
     </form>
     
 {:else}
@@ -88,7 +96,7 @@
         list all entries
     -->
     {#each list as company_info}
-        <CompanyInfo {company_info} mode="admin" on:edit={company_edit} on:delete={company_delete} on:toggle_public={company_toggle_public} />
+        <CompanyInfo {company_info}  mode="admin" on:edit={company_edit} on:delete={company_delete} on:toggle_public={company_toggle_public} />
     {/each}
 
     <!--
