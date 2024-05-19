@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2024 at 06:21 PM
+-- Generation Time: May 19, 2024 at 11:27 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,6 +31,7 @@ CREATE TABLE `gp_categories` (
   `uuid` varchar(36) NOT NULL,
   `parent_uuid` varchar(36) DEFAULT NULL,
   `name` varchar(50) NOT NULL,
+  `slug` varchar(50) NOT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -38,15 +39,9 @@ CREATE TABLE `gp_categories` (
 -- Dumping data for table `gp_categories`
 --
 
-INSERT INTO `gp_categories` (`uuid`, `parent_uuid`, `name`, `date_created`) VALUES
-('1045ac10-3a14-43b8-af4c-d1fc09e9c8d9', 'd4d9a0f7-0307-4eae-83b7-5f4bb8b4490a', 'Café/Restaurant', '2024-05-19 16:19:02'),
-('32d294dc-5e47-42b2-bcf7-7d1d009fdfef', 'd4d9a0f7-0307-4eae-83b7-5f4bb8b4490a', 'Café', '2024-05-19 16:19:31'),
-('955c12f9-359b-4e68-bcdb-5a5a537deb2d', 'd4d9a0f7-0307-4eae-83b7-5f4bb8b4490a', 'Bar/Pub', '2024-05-19 16:19:44'),
-('9ad7724c-b82f-4d25-b9fc-39706635d414', NULL, 'zit er niet bij', '2024-05-19 16:16:36'),
-('b503e595-76f4-4376-9e85-d2e7bf54816d', '9ad7724c-b82f-4d25-b9fc-39706635d414', 'zit er niet bij', '2024-05-19 16:16:38'),
-('d4d9a0f7-0307-4eae-83b7-5f4bb8b4490a', NULL, 'Gastronomie', '2024-05-19 16:15:27'),
-('e1cea94d-9339-4071-af0d-ecb17f67ee2d', 'd4d9a0f7-0307-4eae-83b7-5f4bb8b4490a', 'Catering', '2024-05-19 16:19:52'),
-('ed0f5d97-1a65-4a4d-af1e-5395d466b67f', 'd4d9a0f7-0307-4eae-83b7-5f4bb8b4490a', 'Restaurant', '2024-05-19 16:19:38');
+INSERT INTO `gp_categories` (`uuid`, `parent_uuid`, `name`, `slug`, `date_created`) VALUES
+('1045ac10-3a14-43b8-af4c-d1fc09e9c8d9', 'd4d9a0f7-0307-4eae-83b7-5f4bb8b4490a', 'Café/Restaurant', 'caferestaurant', '2024-05-19 16:19:02'),
+('d4d9a0f7-0307-4eae-83b7-5f4bb8b4490a', NULL, 'Gastronomie', 'gastronomie', '2024-05-19 16:15:27');
 
 -- --------------------------------------------------------
 
@@ -81,7 +76,7 @@ CREATE TABLE `gp_companies` (
 --
 
 INSERT INTO `gp_companies` (`uuid`, `name`, `logo`, `urlwww`, `urlgoogle`, `phone`, `mobile`, `email`, `street`, `postalcode`, `city`, `country_id`, `tags`, `infotext`, `category_uuid`, `is_public`, `date_created`, `date_updated`, `category_wish`) VALUES
-('ca7a23ee-2083-4ebc-8b4f-0063d900270e', 'Café Strozzi', '', '', '', '', '', '', '', '', '', '43', '', '', '1045ac10-3a14-43b8-af4c-d1fc09e9c8d9', 0, '2024-05-19 16:19:25', NULL, '');
+('5c496251-7342-4158-b57c-b4c8410aef44', 'Café Strozzi', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRzMRoi1m99uwY-IPBVg0wEANnXzbjsvHhoA&s', 'http://www.strozzi.at', 'https://g.co/kgs/RLNPsZp', '01 4063115', '', 'strozzi@chello.at', 'Strozzigasse 24', '1080', 'Wenen', '43', '', 'Het Café Restaurant van Hinno. Hij heeft altijd een zelfgebakken nederlandse Appeltaart en Genever klaar staan. \r\nDe Oostenrijkse keuken...', '1045ac10-3a14-43b8-af4c-d1fc09e9c8d9', 1, '2024-05-19 18:09:32', NULL, '');
 
 --
 -- Indexes for dumped tables

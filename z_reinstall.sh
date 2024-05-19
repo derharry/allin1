@@ -16,5 +16,9 @@ bun pm trust --all
 bun install prisma typescript ts-node @types/node --save-dev
 bun install @prisma/client
 
+# resync db schema
+bun prisma db pull
+bun prisma generate
+
 #prisma run issue
 #https://github.com/prisma/prisma/discussions/22980
