@@ -26,7 +26,6 @@
     //$: console.log({company_list})
 
     $: if (form && form?.data !== undefined && form.data.formid == 'update_company') {
-        console.log('chelkjlwekjflwkj')
         edit_mode = true
     }
 

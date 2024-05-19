@@ -95,22 +95,19 @@ export async function get_company_list(category_uuid, by_slug = false) {
     try {
 
         let company_list = []
-        
-        console.log('ccccccccccccc', db.gp_categories.fields)
 
         if (category_uuid == '*')  {
             // SELECT * FROM gp_companies WHERE category
-            company_list = await db.gp_companies.findMany()  
-        } 
-        else if (by_slug) {
-            // SELECT * FROM gp_companies WHERE slug = slug
-            const slug = category_uuid
-            company_list = await db.gp_companies.findMany({ where: { slug } })  
-            console.log(slug, company_list)
+            company_list = await db.gp_companies.findMany({ orderBy: [ { name: 'asc' } ] })
         }
         else {
+            // get the category_uuid first when by_slug
+            if (by_slug) {
+                let ds = await db.gp_categories.findFirst({ where: { slug: category_uuid }})
+                category_uuid = ds.uuid
+            }
             // SELECT * FROM gp_companies WHERE category_uuid
-            company_list = await db.gp_companies.findMany({ where: { category_uuid } })  
+            company_list = await db.gp_companies.findMany({ where: { category_uuid }, orderBy: [ { name: 'asc' } ] })
         }
         //console.log(company_list)
 

@@ -29,7 +29,7 @@
 <style>
     
     table {
-        width: 100%;
+        max-width:600px;
     }
     
     div {

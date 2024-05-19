@@ -8,7 +8,9 @@
     /** @type {import('./$types').PageData} */
     export let data;
 
-    $: company_list = data?.company_list || []
+    // grap loaded data
+    let category_list = data?.category_list || {}
+    let company_list  = data?.company_list || []
 
 </script>
 
@@ -26,3 +28,19 @@
 </table>
 
 &nbsp;
+
+
+{#each company_list as company_info}
+
+    <CompanyInfo {company_info} {category_list} mode="short" />
+
+{/each}
+
+
+<style>
+
+    table {
+        width: 100%;
+    }
+
+</style>

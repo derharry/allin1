@@ -4,7 +4,7 @@ slug controller
 
 */
 
-import { get_company_list } from '../../lib/db.controller'
+import { get_category_list, get_company_list } from '../../lib/db.controller'
 
 
 
@@ -13,14 +13,20 @@ import { get_company_list } from '../../lib/db.controller'
 export async function load({ params }) {
     try {
 
-        let res_companies = await get_company_list( params.slug , true)
+        // return the category_list
+        let res_cats = await get_category_list()
+        if (!res_cats.ok) 
+            throw new Error('Problem loading list of categories')
 
+        let res_companies = await get_company_list( params.slug , true)
         if (!res_companies.ok)
             throw new Error('Problem loading list of companies')
     
         return {
+            category_list: res_cats.data,
             company_list:  res_companies.data
-        }
+        }      
+
 
         /* previous */
         /*
