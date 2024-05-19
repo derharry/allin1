@@ -4,12 +4,13 @@
 
     let nav_menu = [
             { name: 'home', path: '/', icon: ''},
+            { name: 'GoldenPages', path: '/goldenpages/', icon: '' },
             { name: 'MyHP', path: '/myhp', icon: '' },
             { name: '10in2', path: '/10in2', icon: '' },
             { name: 'Surf-Office', path: '/surf-office', icon: '' },
             { name: 'SinglePlanets', path: '/singleplanets', icon: '' },
-            { name: 'MyCommunity', path: '/mycommunity/goldenpages/admin', icon: '' },
             { name: 'MyCash', path: '/mycash', icon: '' },
+            //{ name: 'MyCommunity', path: '/mycommunity/', icon: '' },
             //{ name: 'ShowCase', path: '/svelteshowcase', icon: '' },
             //{ name: 'Software', path: '/software', icon: '' },
             //{ name: 'Over mij', path: '/aboutme', icon: '' },

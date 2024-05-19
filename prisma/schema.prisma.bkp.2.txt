@@ -11,18 +11,18 @@ model gp_categories {
   uuid                String          @id @default(uuid()) @db.VarChar(36)
   parent_uuid         String?         @db.VarChar(36)
   name                String          @db.VarChar(50)
-  slug                String          @db.VarChar(50)
   date_created        DateTime        @default(now()) @db.DateTime(0)
-  gp_categories       gp_categories?  @relation("gp_categoriesTogp_categories", fields: [parent_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "fk_parent_uuid")
+  gp_categories       gp_categories?  @relation("gp_categoriesTogp_categories", fields: [parent_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "gp_categories_ibfk_1")
   other_gp_categories gp_categories[] @relation("gp_categoriesTogp_categories")
   gp_companies        gp_companies[]
 
-  @@unique([parent_uuid, name], map: "Unique_name_parent_uuid")
+  @@unique([parent_uuid, name], map: "Unique_name_and_parentUuid")
+  @@index([parent_uuid], map: "Index_parent_uuid")
 }
 
 model gp_companies {
   uuid          String        @id @default(uuid()) @db.VarChar(36)
-  name          String        @unique(map: "name") @db.VarChar(50)
+  name          String        @db.VarChar(50)
   logo          String?       @db.VarChar(300)
   urlwww        String?       @db.VarChar(300)
   urlgoogle     String?       @db.VarChar(300)
@@ -40,7 +40,5 @@ model gp_companies {
   date_created  DateTime      @default(now()) @db.DateTime(0)
   date_updated  DateTime?     @db.DateTime(0)
   category_wish String?       @db.VarChar(100)
-  gp_categories gp_categories @relation(fields: [category_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "fk_category_uuid")
-
-  @@index([category_uuid], map: "fk_category_uuid")
+  gp_categories gp_categories @relation(fields: [category_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "gp_companies_ibfk_1")
 }

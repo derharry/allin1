@@ -1,6 +1,6 @@
 <script>
 
-    import logo from '../images/logo.jpeg'
+    import logo from './logo.jpeg'
     
 </script>
 
@@ -9,13 +9,13 @@
 <table>
     <tr>
         <td>
-            <a href="/mycommunity/goldenpages/"><img src="{logo}" alt="logo"></a>
+            <a href="/goldenpages/public"><img src="{logo}" alt="logo"></a>
         </td>
         <td class="">
             <input name="search" placeholder="Wat zoek je? " />
         </td>
         <td align="right">
-            <a href="/mycommunity/goldenpages/register/">Jouw bedrijf registreeren</a>
+            <a href="/goldenpages/register/">Jouw bedrijf registreeren</a>
         </td>
     </tr>
     <tr>

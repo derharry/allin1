@@ -1,7 +1,7 @@
 <script>
 
-    import GPheader from './lib/components/GPheader.svelte'
-    import GPfooter from './lib/components/GPfooter.svelte'
+    import GPheader from '../lib/GPheader.svelte'
+    import GPfooter from '../lib/GPfooter.svelte'
 
 </script>
 

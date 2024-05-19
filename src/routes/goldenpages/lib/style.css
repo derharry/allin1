@@ -1,0 +1,15 @@
+
+* > :global(*) {
+    font-family: Verdana, Arial;
+    font-size: 12pt;
+    color: black
+}
+
+table > :global(table) {
+    width: 100%;
+    border: 1px black solid;
+}
+
+table td {
+    padding: 5px;
+}

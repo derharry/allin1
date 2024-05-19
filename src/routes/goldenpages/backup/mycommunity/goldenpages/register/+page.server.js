@@ -21,7 +21,7 @@ export const actions = {
 		let data = {}
 		formData.forEach((value, key) => { data[key] = value});
 		console.log(data)
-		let res = register_company(data)
+		let res = register_company(data, true)
 		return res
 	}
 };

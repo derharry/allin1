@@ -20,16 +20,13 @@
     //$: console.log('register.svelte', category_list)
 
 
-    // component bindings
+    // component bindings and logic to update the preview
     let frmCompanyInfo;
-
-
-    // component logic
-
     function collectFormData() {
         //company_info = frmCompanyInfo.serializeArray()
         company_info = Object.fromEntries(new FormData(frmCompanyInfo));
-        //console.log(company_info)
+        company_info = company_info
+        console.log(company_info)
     }
 
 

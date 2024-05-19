@@ -54,7 +54,7 @@ export async function get_treeview_of_categories () {
                 treeview[row.parent_uuid].subs[row.uuid] = { name: row.name, subs: {} }
             }
         }
-        console.log(treeview)
+        //console.log(treeview)
         return treeview
 
     } catch (ex) {
@@ -110,20 +110,33 @@ export async function get_statistic () {
 }
 
 
-export async function register_company (data) {
+export async function register_company (data, admin = false) {
     try {
         console.log('register company', data)
+        let ds
         // check if company name already exists
 
-        data.uuid      = generateUID()
-        data.is_public = false // its a default value in dbs, but lets be sure
+        // if admin == true  update existing
+        // else create new
+        if (admin) {
+            // grap the uuid and delete from data
+            let uuid = data.uuid
+            delete data.uuid
+            ds = await db.gp_companies.update({
+                data,
+                where: {
+                    uuid
+                }
+            })
+        } 
+        else {
+            // prevent injection
+            data.uuid      = null    // done by DBS default primary key UUID
+            data.is_public = null    // done by DBS default bool false
+            data.is_public_by = null 
+            ds = await db.gp_companies.create({  data  })
+        }
 
-        // change the uuid in category_id with its id
-        let x = await db.gp_categories.findFirst({ where: { uuid: data.category_id } })
-        data.category_id = x.id
-        console.log(data)
-
-        let ds = await db.gp_companies.create({  data  })
         //console.log(uuid, ds)
 
         return return_server_response()
