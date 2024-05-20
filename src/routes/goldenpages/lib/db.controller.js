@@ -119,6 +119,32 @@ export async function get_company_list(category_uuid, by_slug = false) {
 }
 
 
+export async function get_company_list_by_search(search_string) {
+    try {
+        let company_list = []
+
+        search_string = `%${search_string}%`
+        // SELECT * FROM gp_companies WHERE name LIKE *search_string*, infotext *search_string*, 
+        company_list = await db.gp_companies.findMany({ 
+            where: { 
+                OR: [
+                    { name: { contains: search_string } },
+                    { infotext: { contains: search_string } },
+                    { urlwww: { contains: search_string } },
+                    { tags: { contains: search_string } },
+                ]
+            }, 
+            orderBy: [ { name: 'asc' } ] 
+        })
+
+        return get_response_ok(company_list)
+        
+    } catch (error) {
+        return get_response_err('get_companies_list()', error)
+    }
+} 
+
+
 
 /**
  * register or update a company

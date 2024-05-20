@@ -5,8 +5,8 @@
 <script>
     
     // import components that are used at admin and public
-    import CompanyEdit from '../lib/CompanyEdit.svelte'
-    import CompanyInfo from '../lib/CompanyInfo.svelte'
+    import CompanyEdit from '../../lib/CompanyEdit.svelte'
+    import CompanyInfo from '../../lib/CompanyInfo.svelte'
 
 
     /** @type {import('./$types').PageData} */

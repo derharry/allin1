@@ -5,7 +5,7 @@ admin/companies
 
 */
 
-import { admin_company_delete, admin_company_toggle_public, get_category_list, get_company_list, register_company } from "../lib/db.controller"
+import { admin_company_delete, admin_company_toggle_public, get_category_list, get_company_list, register_company } from "../../lib/db.controller"
 
 
 

@@ -1,6 +1,8 @@
 <script>
 
     import logo from './logo.jpeg'
+
+    let search_string = ''
     
 </script>
 
@@ -9,10 +11,13 @@
 <table>
     <tr>
         <td>
-            <a href="/goldenpages/public"><img src="{logo}" alt="logo"></a>
+            <a href="/goldenpages/"><img src="{logo}" alt="logo"></a>
         </td>
         <td class="">
-            <input name="search" placeholder="Wat zoek je? " />
+            <form action="/goldenpages/+{search_string}" method="get">
+                <input name="search" bind:value={search_string} placeholder="Wat zoek je? " />
+                <button type="submit">S</button>
+            </form>
         </td>
         <td align="right">
             <a href="/goldenpages/register/">Jouw bedrijf registreeren</a>

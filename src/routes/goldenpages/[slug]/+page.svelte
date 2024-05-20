@@ -3,14 +3,14 @@
 -->
 <script>
 
-    import CompanyInfo from '../../lib/CompanyInfo.svelte'
+    import CompanyInfo from '../lib/CompanyInfo.svelte'
 
     /** @type {import('./$types').PageData} */
     export let data;
 
     // grap loaded data
-    let category_list = data?.category_list || {}
-    let company_list  = data?.company_list || []
+    $: category_list = data?.category_list || {}
+    $: company_list  = data?.company_list || []
 
 </script>
 
@@ -18,8 +18,7 @@
 <table>
     <tr>
         <td>
-            <button onclick="history.back();">Terug</button>
-            Resultaten: {company_list.length}
+            Zoek resultaten voor: {company_list.length}
         </td>
     </tr>
     <tr>

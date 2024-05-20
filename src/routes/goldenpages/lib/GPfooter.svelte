@@ -6,7 +6,7 @@
             <div class="left">
                 * Disclaimer *<br>
                 Deze Gouden Gids ..                    
-                <a href="/goldenpages/">Admin</a>
+                <a href="/goldenpages/admin/">Admin</a>
             </div>
         </td>
         <td>

@@ -9,7 +9,7 @@ main admin page with statistical data
 
 
 // imports
-import { get_category_list, admin_category_insert, admin_category_delete, admin_category_update } from '../lib/db.controller'
+import { get_category_list, admin_category_insert, admin_category_delete, admin_category_update } from '../../lib/db.controller'
 
 
 

@@ -1,36 +1,38 @@
 /*
 
-admin/dashboard
-
-main admin page with statistical data
-
-
+main public page - start of the journey
 
 */
 
 
-
 // imports
-import { get_statistics } from './lib/db.controller'
+import { get_category_list, get_statistics } from './lib/db.controller'
 
 
 
 /**
- * load statistical data
- * 
- *  @type {import('./$types').PageServerLoad} 
+ * return list of categories and sub_categories
  */
-export async function load() {
-    try {
+/** @type {import('./public/$types').PageServerLoad} */
+export async function load({ params }) {
+	try {
+        // return the category_list
+        let res_cats  = await get_category_list()
+        let res_stats = await get_statistics()
 
-        // get statistical data
-        let stats = await get_statistics()
+        if (!res_cats.ok) 
+            throw new Error('Problem loading list of categories')
+
+        //if (!res_stats.ok)
+        //    throw new Error('Problem loading list of statistics')
 
         return {
-            stats
+            category_list: res_cats.data,
+            statistics:    res_stats
         }
-        
-    } catch (e) {
-        console.log(e)
-    }
+
+	} catch (ex) {
+		console.log('exp', ex)
+	}
 }
+

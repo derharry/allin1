@@ -212,3 +212,41 @@
     </table>
 
 </main>
+
+
+
+
+<style>
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    span {
+        margin-bottom: 10px;
+        padding: 5px 10px;
+        border-radius: 20px;
+        line-height: 40px;
+        margin: auto;
+    }
+
+    .error {
+        padding: 8px;
+        background-color: red;
+        border-radius: 10px;
+        color: white;
+        font-size: 10pt
+    }
+
+    .read-mode {
+      border: 1px solid orange;
+    }
+
+    .edit-mode {
+      background-color: lightgreen;
+      border: 3px solid green;
+    }
+
+  </style>
