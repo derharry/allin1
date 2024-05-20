@@ -63,11 +63,13 @@
     @import './style.css';
 </style>
 
-<table class="itemBoxMain">
-    <tr>
-        <td colspan="2" class="itemName">
 
-            {company_info.name}
+
+<table class="companyInfoBoxTable">
+    <tr>
+        <td colspan="2" class="companyInfoBoxName">
+
+            {company_info.name || ''}
 
             {#if mode == 'admin'}
                 <!-- previously the buttons where here-->
@@ -76,78 +78,67 @@
     </tr>
     <tr>
         <td valign="top">
+            
             {#if company_info?.logo}
-                <div class="imgCompanyBox">
-                    <img src="{company_info.logo}" alt="" class="imgCompany">
+                <div class="companyInfoBoxIMGbox">
+                    <img src="{company_info.logo}" alt="" class="companyInfoBoxIMG">
                 </div>
             {/if}
+            
         </td>
         <td valign="top">
             <table>
 
                 <tr>
-                    <td class="categoryPath">
+                    <td class="companyInfoBoxCategoryPath">
                         {company_info?.main_category_name || ''} / {company_info?.sub_category_name || ''}
                     </td>
                 </tr>
-
-                {#if adres != ''}
-                    <tr>
-                        <td>
+                <tr>
+                    <td class="companyInfoBoxSpacer"></td>
+                </tr>
+                <tr>
+                    <td class="companyInfoBoxStreet">
+                        {#if adres != ''}
                             <i class='fa fa-street-view'></i>&nbsp; {adres}
-                        </td>
-                    </tr>
-                {/if}
-
-                {#if company_info?.urlgoogle}
-                    <tr>
-                        <td>
+                            <br>
+                        {/if}
+                        {#if company_info?.urlgoogle}
                             <i class='fa fa-map-pin'></i>&nbsp; <a href="{company_info.urlgoogle}"> Google Maps</a>
-                        </td>
-                    </tr>
-                {/if}
-
+                        {/if}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="companyInfoBoxSpacer"></td>
+                </tr>
                 <tr>
                     <td>
                         
                         {#if company_info?.phone}
-                            <div class="contactdetail">
-                                <i class="fa fa-phone"></i>&nbsp; <a href="tel:{company_info.phone}">{company_info.phone}</a>
-                            </div>
+                            <a href="tel:{company_info.phone}" class="companyInfoBoxContactDetail"><i class="fa fa-phone"></i> {company_info.phone}</a>
                         {/if}
                         
                         {#if company_info?.mobile}
-                            <div class="contactdetail">
-                                <i class="fa fa-mobile-phone"></i>&nbsp; <a href="tel:{company_info.mobile}">{company_info.mobile}</a>
-                            </div>
+                            <a href="tel:{company_info.mobile}" class="companyInfoBoxContactDetail"><i class="fa fa-mobile"></i> {company_info.mobile}</a>
                         {/if}
                         
                         {#if company_info?.email}
-                            <div class="contactdetail">
-                                <i class="fa fa-envelope"></i>&nbsp; <a href="mailto:{company_info.email}">{company_info.email}</a>
-                            </div>
+                            <a href="mailto:{company_info.email}" class="companyInfoBoxContactDetail"><i class="fa fa-envelope"></i> {company_info.email}</a>
                         {/if}
                         
                         {#if company_info?.urlwww}
-                        
-                            <div class="contactdetail">
-                                <i class="fa fa-globe"></i>&nbsp; <a href="{company_info.urlwww}" target="_blank">Website</a>
-                            </div>
-                            
+                            <a href="tel:{company_info.urlwww}" class="companyInfoBoxContactDetail"><i class="fa fa-globe"></i> Website</a>
                         {/if}
 
                     </td>
                 </tr>
-
-
-                {#if company_info?.infotext}
-                    <tr>
-                        <td>
+                <tr>
+                    <td class="companyInfoBoxInfoText">
+                        {#if company_info?.infotext}
                             {@html company_info.infotext}
-                        </td>
-                    </tr>
-                {/if}
-
+                        {/if}
+                    </td>
+                </tr>
             </table>
         </td>
     </tr>
@@ -157,16 +148,19 @@
     <tr>
         <td colspan="2">
             <hr>
-            <table width="100%" class="admin_hidden">
+            <table width="100%" class="companyInfoBoxInfoAdminTable">
+                {#if company_info.category_wish != ''}
+                    <tr>
+                        <td colspan="4" class="error">
+                            Category wish: {company_info.category_wish} 
+                            <!-- todo - add functionality to remove category wish -->
+                            <button style="float:right"><i class="fa">d</button>
+                        </td>
+                    </tr>
+                {/if}
                 <tr>
-                    <td width=""></td>
-                    <td width="25%"></td>
-                    <td width=""></td>
-                    <td width="25%"></td>
-                </tr>
-                <tr>
-                    <td>Tags:</td>
-                    <td colspan="3" valign="top">
+                    <th>Tags:</th>
+                    <td colspan="3">
                         {company_info.tags || '-'}
                         
                         <span style="float:right">
@@ -178,15 +172,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-wrap: nowrap;">Is Public</td>
+                    <th style="text-wrap: nowrap;">Is Public</th>
                     <td>{company_info.is_public ? 'yes' : 'no'}</td>
-                    <td style="text-wrap: nowrap;">Register date</td>
+                    <th style="text-wrap: nowrap;">Register date</th>
                     <td>{get_date_time_form_Date(company_info.date_created)}</td>
                 </tr>
                 <tr>
-                    <td style="text-wrap: nowrap;">Is Public By</td>
+                    <th style="text-wrap: nowrap;">Is Public By</th>
                     <td></td>
-                    <td style="text-wrap: nowrap;">Last updated date</td>
+                    <th style="text-wrap: nowrap;">Last updated date</th>
                     <td>{get_date_time_form_Date(company_info.date_updated)}</td>
                 </tr>
             </table>

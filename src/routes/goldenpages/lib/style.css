@@ -6,13 +6,35 @@
 */
 
 * {
-    font-family: Inter, Cardo, Arial, Helvetica, sans-serif;
+    font-family: Inter, Cardo, sans-serif, Arial, Helvetica, sans-serif;
     font-size: 11pt;
     color: black;
 }
 
+h1 {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+h2 {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+h4 {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+small {
+    font-size: 0.9em;
+}
+
+
 hr {
-    border: 1px blue solid;
+    border: 1px gainsboro solid;
 }
 
 table {
@@ -25,9 +47,10 @@ table td {
 }
 
 
-input {
-    padding: 5px 10px;
-    border-radius: 20px;
+input, select, textarea {
+    padding: 5px 0px 5px 10px;
+    margin: 0px;
+    border-radius: 10px;
     width: 100%;
 }
 
@@ -35,31 +58,148 @@ div {
     display: table;
 }
 
-
-.gp_logo  {
-    padding-right: 20px;
-    max-width: 60px;
+.nowrap {
+    text-wrap: nowrap;
+    white-space: nowrap;
 }
 
-.itemBoxMain {
+.gpHeaderLogoTD {
+    width: 1px;
+    text-align: center;
+}
+
+.gpHeaderLogoIMG  {
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.gpHeaderSearchTD {
+    max-width: 125px;
+    text-align: center;
+}
+
+.gpHeaderRightTD {
+    padding-left: 20px;
+    text-align: right;
+    text-wrap: nowrap;
+    white-space: nowrap;
+    background-color: none;
+}
+
+
+
+.gpFooterTable {
+    background-color: lightblue;
+}
+
+.gpFooterTable * {
+    font-size: 0.95em;
+}
+
+.gpFooterLeftTD {
+    vertical-align: top;
+    padding: 10px;
+}
+
+.gpFooterRightTD {
+    vertical-align: top;
+    padding: 10px;
+}
+
+
+/* Global styles */
+
+.button {
+    padding: 7px 15px;
+    border: 1px silver solid;
+    border-radius: 15px;
+    background-color: aliceblue;
+    text-decoration: none;
+}
+.button:hover {
+    background-color:lavender;
+}
+
+
+/* todo - replace error with errorMessage */
+.error, 
+.errorMessage {
+    padding: 8px;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+    font-size: 10pt
+}
+
+
+
+/* GROD boxes for categorie listing */
+
+.grid {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    background-color: none;
+}
+
+.grid .box {
+    min-width: 150px;
+    max-width: 200px;
+    margin: 10px;
+    padding: 10px;  
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border: 1px orange solid;
+    background-color: #FFE5B4;
+    display: table;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.grid .title {
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: none;
+}
+
+.grid .item {
+    width: 100%;
+    margin: 3px 0px;
+}
+
+
+
+/* Company Info Box */
+
+.companyInfoBoxTable {
     width: 100%;
     border: 1px orange solid;
     background-color: #FFE5B4;
     border-radius: 15px;
     margin-bottom: 20px;
     padding: 8px;
-
-    font-family: Verdana, Arial;
-    font-size: 10pt;
+    font-size: 11pt;
 }
 
-.itemName {
+.companyInfoBoxSpacer {
+    height: 5px;
+    margin: 0px;
+    padding: 0px;
+    font-size: 0pt;
+}
+
+.companyInfoBoxName {
     font-size: 1.1em;
     font-weight: bolder;
 }
 
-.imgCompanyBox {
-    padding: 8px;
+.companyInfoBoxIMGbox {
+    padding: 5px;
     background-color: white;
     max-width: 125px;
     max-height: 100px;
@@ -67,30 +207,80 @@ div {
     text-align: center;
 }
 
-.imgCompany {
-    max-width: 125px;
-    max-height: 100px;
+.companyInfoBoxIMG {
+    max-width:  100px;
+    max-height: 150px;
 }
 
-.categoryPath {
-    font-size: 0.9em;
+.companyInfoBoxCategoryPath {
+    margin: 0px;
+    padding: 0px;
+    font-size: 0.95em;
 }
 
-.contactdetail {
-    display: table;
-    float: left;
+.companyInfoBoxStreet {
+    margin: 0px;
+    padding: 0px;
+    font-size: 0.95em;
+}
+
+.companyInfoBoxStreet A {
+    font-size: 0.95em;
+}
+
+.companyInfoBoxContactDetail {
+    display: block;
     padding: 5px 10px;
-    margin-right: 10px;
+    margin: 1px;
+    float: left;
     border-radius: 15px;
     background-color: orange;
+    font-size: 0.95em;
+    text-decoration: none;
+}
+.companyInfoBoxContactDetail:hover {
+    background: lightblue;
+}
+
+.companyInfoBoxContactDetail A {
+    font-size: 0.95em;
+}
+
+.companyInfoBoxInfoText {
+    font-size: 0.95em;
+}
+
+
+/* todo */
+.companyInfoBoxInfoAdminTable * {
     font-size: 0.91em;
 }
 
-
-.admin_hidden {
-    font-size: 0.8em;
+.companyInfoBoxInfoAdminTable BUTTON {
+    font-size: 1.0em;
 }
 
+.companyInfoBoxInfoAdminTable TH {
+    text-align: left;
+    width: 1%;
+    text-wrap: nowrap;
+    white-space: nowrap;
+}
+.companyInfoBoxInfoAdminTable TD {
+    text-align: left;
+    width: 25%;
+}
+
+/* todo */
+.companyInfoBoxTag {
+    display: block;
+    padding: 5px 10px;
+    margin: 1px;
+    float: left;
+    border-radius: 10px;
+    background-color: orange;
+    font-size: 0.95em;
+}
 
 
 
@@ -116,10 +306,7 @@ div {
     display: block
 }
 
-.error {
-    padding: 8px;
-    background-color: red;
-    border-radius: 10px;
-    color: white;
-    font-size: 10pt
-}
+
+
+
+

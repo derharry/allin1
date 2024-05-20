@@ -73,8 +73,11 @@
                     <CompanyEdit bind:company_info={company_info} {category_list} />
                 </form>
             
-                <h2>Voorbeeld in de resultaten:</h2>
-                <CompanyInfo bind:company_info={company_info} />
+                <!--
+                     moved to EditCompany.svelte
+                    <h2>Voorbeeld in de resultaten:</h2>
+                    <CompanyInfo bind:company_info={company_info} />
+                -->
 
             {/if}
 

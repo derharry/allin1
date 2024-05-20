@@ -6,19 +6,22 @@
 </style>
 
 
-<table width="100%">
+<hr>
+<table width="100%" class="gpFooterTable">
     <tr>
-        <td width="50%">
-            <div class="left">
-                * Disclaimer *<br>
-                Deze Gouden Gids ..                    
+        <td width="50%" class="gpFooterLeftTD">
+            <div class="gpFooterText">
+                <p><b>Privacy / Disclaimer</b></p>
+                <p>Deze Gouden Gids is ter informatie voor Nederlanse bedrijfen in Oostenrijk.
+                    <br>Wij zijn niet verantwoordelijk voor de inhoud nog hebben wij ..
+                </p>
                 <a href="/goldenpages/admin/">Admin</a>
             </div>
         </td>
-        <td>
-            <div class="right" style="">
-                <p>Uw bedrijf staat er niet bij?<br>
-                    <a href="/goldenpages/register/">Jouw bedrijf registreeren</a></p>
+        <td class="gpFooterRightTD">
+            <div class="gpFooterText">
+                <p><b>Uw bedrijf staat er niet bij?</b></p>
+                <a href="/goldenpages/register/" class="button">Jouw bedrijf registreeren</a>
             </div>
         </td>
     </tr>

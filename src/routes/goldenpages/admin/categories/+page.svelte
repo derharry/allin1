@@ -34,8 +34,10 @@
     */
     function handle_dblclick() {
         let div = event.target;
-        div.class = "edit-mode"
+        div.class = "editMode"
         div.contentEditable = true
+        // todo editMode css is not taken .. 
+        // console.log(div.class)
     }
 
 
@@ -65,7 +67,7 @@
 
             // prevent default and set back to read-mode
             event.preventDefault();
-            div.class = "read-mode"
+            div.class = "readMode"
             div.contentEditable = false
 
             // update db functionality goes here
@@ -91,7 +93,7 @@
             let uuid = div.getAttribute('data-uuid')
 
             // set back to read-mode
-            div.class = "read-mode"
+            div.class = "readMode"
             div.contentEditable = false
 
             // update db functionality goes here
@@ -106,28 +108,37 @@
 
 </script>
 
+<style>
 
-<table>
-    <tr>
-        <td>
+    @import '../../lib/style.css';
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    span {
+        margin-bottom: 10px;
+        padding: 5px 10px;
+        border-radius: 20px;
+        line-height: 40px;
+        margin: auto;
+    }
+
+    .readMode {
+        border: 1px solid orange;
+    }
+
+    .editMode {
+        background-color: lime;
+        border: 3px solid lime;
+    }
+
+</style>
+
+
     
-    <!-- show error messages of any form -->
-    {#if form?.ok == false}
-        <div style="background-color: red; color: white; padding: 10px; border-radius: 10px">
-            Er is een fout gebeurt: {form.message}
-        </div>
-    {/if}
-
-
-    <!-- form to add main categories -->
-    <form action="?/insert_category" method="post">
-        <input type="hidden" name="formid" value="add_main_category">
-        <input type="text" name="name" placeholder="Add new main category"
-            value="{form?.ok == false && form?.formid == 'add_main_category' && form?.data.name || ''}" 
-        />
-        <button type="submit"><i class="fa fa-plus"></i></button>
-    </form>
-
 
     <!--
      here are 2 hidden forms to use Svelte-actions for update and delete categories
@@ -147,107 +158,95 @@
     </form>
 
 
-    <table>
-        <tr>
 
-            <!-- add main category names  -->
-            {#each Object.entries(category_list) as [uuid, main_cat_attrs] }
-                <th>
-                    <span 
-                        on:dblclick={ () => handle_dblclick() }
-                        on:keydown={handle_keydown} 
-                        contentEditable="false"
-                        class="read-mode" 
-                        data-uuid="{uuid}"
-                        data-parent-uuid=""
+
+
+
+<div class="grid">
+
+    <div class="box">
+        <!-- form to add main categories -->
+        <div class="nowrap">
+            <form action="?/insert_category" method="post" >
+                <input type="hidden" name="formid" value="add_main_category">
+                <input type="text" name="name" placeholder="Add new main category"
+                    style="box-sizing: border-box;  max-width:100%"
+                    value="{form?.ok == false && form?.formid == 'add_main_category' && form?.data.name || ''}" 
+                />
+                <button type="submit" style="position:relative; margin-left: -30px"><i class="fa fa-plus"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- show error messages of any form -->
+    {#if form?.ok == false}
+        <div class="box errorMessage" style="background-color:red">
+            <b>Er is een fout gebeurt: </b><br>
+            {form.message}
+        </div>
+    {/if}
+
+</div>
+
+<div class="grid">
+    <!--
+        List categories with sub-categories
+    -->
+    {#each Object.entries(category_list) as [uuid, main_cat_attrs] }
+        
+
+
+        <div class="box">
+            <div class="title">
+                <span 
+                    on:dblclick={ () => handle_dblclick() }
+                    on:keydown={handle_keydown} 
+                    contentEditable="false"
+                    class="button readMode"
+                    data-uuid="{uuid}"
+                    data-parent-uuid=""
+                >
+                    {main_cat_attrs.name}
+                </span>
+            </div>
+
+
+            <div class="nowrap">
+                <form action="?/insert_category" method="post" id="insert_subcategory">
+                    <input type="hidden" name="formid" value="insert_bcategory">
+                    <input type="hidden" name="parent_uuid" value="{uuid}">
+                    <input type="text" name="name" value="{form?.name || ''}"
+                        style="box-sizing: border-box; max-width:100%"
                     >
-                        {main_cat_attrs.name}
-                    </span>
-                </th>
-            {/each}
-
-        </tr>
-
-        <tr>
-
-            <!-- add  input fields to add subcategories  -->
-            {#each Object.entries(category_list) as [uuid, attrs] }
-                <td>
-                    <form action="?/insert_category" method="post" id="insert_subcategory">
-                        <input type="hidden" name="formid" value="insert_bcategory">
-                        <input type="hidden" name="parent_uuid" value="{uuid}">
-                        <input type="text" size="6" name="name" value="{form?.name || ''}">
-                        <button type="submit"><i class="fa fa-plus"></i></button>
-                    </form>
-                </td>
-            {/each}
-    
-        </tr>
-        <tr>
-
-            <!-- add  all subcategories form main categories  -->
-            {#each Object.entries(category_list) as [uuid, main_cat_attrs] }
-                <td>
-                    <ul>
-                        {#each Object.entries(main_cat_attrs.subs) as [ uuid, attrs ] }
-                            <li>
-                                <span
-                                    on:dblclick={ () => handle_dblclick() }
-                                    on:keydown={handle_keydown} 
-                                    contentEditable="false"
-                                    class="read-mode" 
-                                    data-uuid="{uuid}"
-                                    data-parent-uuid="{uuid}"
-                                >
-                                    {attrs.name}
-                                </span>
-                            </li>
-                        {/each}     
-                    </ul>
-                </td>           
-            {/each}
-
-        </tr>
-    </table>
-
-</td>
-</tr>
-</table>
+                    <button type="submit" style="position:relative; margin-left: -30px"><i class="fa fa-plus"></i></button>
+                </form>
+            </div>
+            <br>
+            
+            <!-- todo <p><img src="../lib/images/{category}.jpg" alt="{category}"></p>-->
 
 
+            <ul>
+                {#each Object.entries(main_cat_attrs.subs) as [ uuid, attrs ] }
+                    <li>
+                        <span
+                            on:dblclick={ () => handle_dblclick() }
+                            on:keydown={handle_keydown} 
+                            contentEditable="false"
+                            class="button readMode"
+                            data-uuid="{uuid}"
+                            data-parent-uuid="{uuid}"
+                        >
+                            {attrs.name}
+                        </span>
+                    </li>
+                {/each}     
+            </ul>            
 
+        </div> 
 
-<style>
+        
 
-    ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
+    {/each}
+</div>
 
-    span {
-        margin-bottom: 10px;
-        padding: 5px 10px;
-        border-radius: 20px;
-        line-height: 40px;
-        margin: auto;
-    }
-
-    .error {
-        padding: 8px;
-        background-color: red;
-        border-radius: 10px;
-        color: white;
-        font-size: 10pt
-    }
-
-    .read-mode {
-      border: 1px solid orange;
-    }
-
-    .edit-mode {
-      background-color: lightgreen;
-      border: 3px solid green;
-    }
-
-  </style>

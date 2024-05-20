@@ -19,67 +19,50 @@
 
 </script>
 <style>
+
     @import './lib/style.css';
+
 </style>
 
 
 
-<table>
-    <tr>
-        <td>
+<h1>
+    Vind Nederlandse bedrijven in Oostenrijk
+    <br>of bedrijven waar Nederlanders werken.
+    <br><small><small>met adres, contactgegevens, locatie en meer</small></small>
+</h1>
 
-            <p>
-                Vind Nederlandse bedrijven in Oostenrijk
-                <br>of bedrijven waar Nederlanders werken.
-                <br><small>met adres, contactgegevens, locatie en meer</small>
-            </p>
 
-        </td>
-    </tr>
-    <tr>
-        <td>
 
-            <!--
-                List categories with sub-categories
-            -->
-
-            <!-- add  all subcategories form main categories  -->
-            {#each Object.entries(category_list) as [uuid, main_cat_attrs] }
-
-                <div class="box_category">
-                    <h3>{main_cat_attrs.name}</h3>
-
-                    <!--<p><img src="../lib/images/{category}.jpg" alt="{category}"></p>-->
-                    <ul>
-                        {#each Object.entries(main_cat_attrs.subs) as [ uuid, attrs ] }
-                            <li>
-                                <a href="/goldenpages/{attrs.slug}">
-                                    {attrs.name}
-                                </a>
-                            </li>
-                        {/each}
-                    </ul>
-
-                </div> 
-
-            {:else}
-
-                <p>Er zijn nog geen bedrijven vrijgeschakelt.</p>
-                
+<div class="grid">
+    <!--
+        List categories with sub-categories
+    -->
+    {#each Object.entries(category_list) as [uuid, main_cat_attrs] }
+        
+        <div class="box">
+            <div class="title">{main_cat_attrs.name}</div>
+            <!-- todo <p><img src="../lib/images/{category}.jpg" alt="{category}"></p>-->
+            {#each Object.entries(main_cat_attrs.subs) as [ uuid, attrs ] }
+                <div class="item">
+                    <a href="/goldenpages/{attrs.slug}"> {attrs.name} </a>
+                </div>
             {/each}
+        </div> 
 
-        </td>
-    </tr>
-    <tr>
-        <td>
+    {:else}
 
-            &nbsp;
-            <hr>
-            Er zijn {statistic.companies_total || '-'} in onze database, waarvan {statistic.companies_public || '-'} u kan vinden. 
-            <br>De rest wacht nog op vrijschakeling. ;-)
+        <p>Er zijn nog geen bedrijven vrijgeschakelt.</p>
+        
+    {/each}
 
-        </td>
-    </tr>
-</table>
+</div>
 
+
+<br>
+<hr>
+<p>
+    Er zijn {statistic.companies_total || '-'} in onze database, waarvan {statistic.companies_public || '-'} u kan vinden. 
+    <br>De rest wacht nog op vrijschakeling. ;-)
+</p>
 

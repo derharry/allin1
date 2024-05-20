@@ -1,19 +1,22 @@
 <script>
 
     import SelectField from './SelectField.svelte'
+    import CompanyInfo from './CompanyInfo.svelte'
 
     export let company_info  = {}
     export let category_list = {}
     export let mode = 'public' || 'admin'
 
-    //$: console.log('CompanyEdit / company_info', company_info)
-    //$: console.log('list_categories', list_categories)
-    //$: console.log('list_subcategories', list_subcategories)
-    //$: console.log('selected_category_uuid', selected_category_uuid)
 
     //$: console.log(category_list)
-    $: list_categories    = get_list_of_categories(category_list)
-    $: list_subcategories = get_list_of_categories(category_list, company_info.main_category_uuid)
+    let list_categories    = get_list_of_categories() // we need it only at init
+    $: list_subcategories  = get_list_of_categories(company_info?.main_category_uuid, true) 
+    let no_category_in_list_69_42_ref = {
+        main_uuid: category_list[69].uuid,
+        main_text: category_list[69].name,
+        sub_uuid : category_list[69].subs[42].uuid,
+        sub_text : category_list[69].subs[42].name,
+    }
 
 
     // dynamic state for the 2 select fields 
@@ -35,18 +38,84 @@
 
 
     /**
+     * handle the onchange event of select field and set 
+     * 
+     * this does not work !!
+     * //$: if (company_info.category_uuid == 42) company_info.main_category_uuid = 69
+     * //$: if (company_info.main_category_uuid != 69) company_info.category_uuid = null
+    */
+    function handleSelectChange(event) {
+        try {
+            let select = event.target.name
+            let value  = event.target.value
+            if (select == 'main_category') {
+                //console.log('maincat change && subcats generation...')
+                if (value == 69) {
+                    //console.log('69.... 42', value)
+                    company_info.category_uuid = no_category_in_list_69_42_ref.sub_uuid
+                } 
+                else if (value != 69 && company_info.category_uuid == 42) {
+                    //console.log('not 69.... do nothing?', value)
+                    company_info.category_uuid = 99
+                }
+                return
+            }
+
+            if (select == 'category_uuid') {
+                //console.log('subcats change...', company_info.main_category)
+                if (value == 42) {
+                    //console.log('set main to undefined', value)
+                    company_info.main_category_uuid = no_category_in_list_69_42_ref.main_uuid
+                }
+                else if (value != 42 && company_info.main_category_uuid == 69) {
+                    console.log('nothing todo :-)', value)
+                    company_info.main_category_uuid = 99
+                }
+                return
+            }
+            /*
+            if (event.target.name == 'category_uuid' && event.target.value == '42') {
+                list_subcategories = get_list_of_categories(category_list, company_info.main_category_uuid) 
+                company_info.category_uuid = 42
+                company_info.main_category_uuid = undefined
+                return
+            } else if (event.target.name == 'category_uuid') {
+                //nothing todo
+                return
+            }
+            */
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    /**
      * transform the treeview back to a normal list for select-options
     */
-    function get_list_of_categories (category_list, parent_id = null) {
+    function get_list_of_categories (parent_id = null, get_sub = false) {
         try {
-            let list = []
+            //console.log(`get_list_of_categories(${parent_id}, ${get_sub})`)
 
-            if (parent_id == null) {
+            let list = []
+            list.push([ 99, ''])
+
+            if (parent_id == null && !get_sub) {
+
+                //list.push([ 69, ' * geen gevonden * '])
                 for (let uuid in category_list) {
-                    //console.log('uuid', uuid)
-                    list.push([ uuid, category_list[uuid].name ])
+                    list.push([ uuid,  category_list[uuid].name ])
                 }
+
             } else if (category_list[parent_id]) {
+
+                // push the references to 69_42
+                if (parent_id != 69) {
+                    //console.log({no_category_in_list_69_42_ref})
+                    list.push( [ no_category_in_list_69_42_ref.sub_uuid , no_category_in_list_69_42_ref.sub_text  ])
+                }
+                
                 let subcats = category_list[parent_id].subs
                 for (let uuid in subcats) {
                     list.push([ uuid, subcats[uuid].name ])
@@ -61,27 +130,33 @@
     }
 
 
-    function set_main_category_by_subcategory() {
-        
-    }
-
-
-
 </script>
 <style>
+
     @import './style.css';
+
+    TD, TH {
+        margin: 0px;
+        padding: 0px;
+        text-align: left;
+        word-wrap: nowrap;
+        white-space: nowrap;
+    }
+
 </style>
 
+<input type="text" name="x" bind:value={company_info.main_category_uuid}>
+<input type="text" name="x" bind:value={company_info.category_uuid}>
 
 
-<table width="100%">
+<table width="100%" cellspacing="0" cellpadding="0">
 
     <tr>
         <td width="1"></td>
         <td></td>
     </tr>
     <tr>
-        <td>Naam *</td>
+        <th>Naam *</th>
         <td><input name="name" type="text" bind:value="{company_info.name}" placeholder="hoe heet je bedrijf?"></td>
     </tr>
     <tr>
@@ -89,37 +164,41 @@
         <td></td>
     </tr>
     <tr>
-        <td>Kategorie</td>
+        <th>Kategorie</th>
         <td style="white-space: nowrap;">
             <SelectField name="main_category"
                 datalist={list_categories}
                 bind:selected_id={company_info.main_category_uuid}
                 bind:selected_text={company_info.main_category_name}
+                onchange={handleSelectChange}
             />
             /
             <SelectField name="category_uuid"
                 datalist={list_subcategories}
                 bind:selected_id={company_info.category_uuid}
                 bind:selected_text={company_info.category_name}
+                onchange={handleSelectChange}
             />
-            <br>
-            <input type="text" name="category_wish" value="" placeholder="Geen kategorie gevonden? Maak een voorstel zoals naam / naam">
         </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td><input type="text" name="category_wish" value="" placeholder="Geen kategorie gevonden? Maak een voorstel zoals naam / naam"></td>
     </tr>
     <tr>
         <td>&nbsp;</td>
         <td></td>
     </tr>
     <tr>
-        <td>Straat</td>
+        <th>Straat</th>
         <td><input name="street" type="text"  bind:value="{company_info.street}"></td>
     </tr>
     <tr>
-        <td>PLZ</td>
+        <th>PLZ</th>
         <td><input name="postalcode" type="text"  bind:value="{company_info.postalcode}"></td>
     </tr>
     <tr>
-        <td>Plaats</td>
+        <th>Plaats</th>
         <td><input name="city" type="text"  bind:value="{company_info.city}"></td>
     </tr>
     <!--
@@ -130,7 +209,7 @@
     </tr>
     -->
     <tr>
-        <td>Land</td>
+        <th>Land</th>
         <td>
             <select name="country_id" bind:value={company_info.country_id}>
                 <option value="43" selected>Oostenrijk</option>
@@ -140,66 +219,88 @@
         </td>
     </tr>
     <tr>
+        <th>&nbsp;</th>
+        <td></td>
+    </tr>
+    <tr>
+        <th>Telefoon</th>
+        <td><input name="phone" type="text"  bind:value="{company_info.phone}" 
+            placeholder="Vul hier je telefonnummer nummer in">
+       </td>
+    </tr>
+    <tr>
+        <th>Mobile</th>
+        <td><input name="mobile" type="text"  bind:value="{company_info.mobile}" 
+            placeholder="Vul hier je 06 nummer in">
+       </td>
+    </tr>
+    <tr>
+        <th>E-mail</th>
+        <td><input name="email" type="text"  bind:value="{company_info.email}" 
+            placeholder="Vul hier je email adres in waar je primair gecontacteerd wordt">
+       </td>
+    </tr>
+    <tr>
+        <th>&nbsp;</th>
+        <td></td>
+    </tr>
+    <tr>
+        <th>URL Website</th>
+        <td><input name="urlwww" type="text"  bind:value="{company_info.urlwww}"
+            placeholder="Vul hier het adres van jouw website in">
+       </td>
+    </tr>
+    <tr>
+        <th>URL Google</th>
+        <td><input name="urlgoogle" type="text"  bind:value="{company_info.urlgoogle}" 
+             placeholder="Vul hier de URL van jouw Goolge Profile in">
+        </td>
+    </tr>
+    <tr>
+        <th>URL Logo</th>
+        <td><input name="logo" type="text"  bind:value="{company_info.logo}"
+            placeholder="Vul hier de URL van een Logo van je website in">
+       </td>
+    </tr>
+    <tr>
         <td>&nbsp;</td>
         <td></td>
     </tr>
     <tr>
-        <td>Telefoon</td>
-        <td><input name="phone" type="text"  bind:value="{company_info.phone}"></td>
-    </tr>
-    <tr>
-        <td>Mobile</td>
-        <td><input name="mobile" type="text"  bind:value="{company_info.mobile}" ></td>
-    </tr>
-    <tr>
-        <td>E-mail</td>
-        <td><input name="email" type="text"  bind:value="{company_info.email}" ></td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Website URL</td>
-        <td><input name="urlwww" type="text"  bind:value="{company_info.urlwww}"></td>
-    </tr>
-    <tr>
-        <td>Google URL</td>
-        <td><input name="urlgoogle" type="text"  bind:value="{company_info.urlgoogle}" ></td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Infotext</td>
-        <td><textarea name="infotext" rows="5"  bind:value={company_info.infotext}></textarea></td>
+        <th>Infotext</th>
+        <td><textarea name="infotext" rows="5"  bind:value={company_info.infotext} 
+            placeholder="Geef een korte beschrijving over je bedrijf"
+            ></textarea>
+        </td>
     </tr>
     
     <tr>
-        <td>Logo</td>
-        <td><input name="logo" type="text"  bind:value="{company_info.logo}"></td>
-    </tr>
-    <tr>
-        <td>Tags</td>
-        <td><input name="tags" type="text"  bind:value="{company_info.tags}"></td>
+        <th>Tags</th>
+        <td><input name="tags" type="text"  bind:value="{company_info.tags}"
+            placeholder="bvb: eten drinken bijles medicijnen uitgaan physio">
+        </td>
     </tr>
     <tr>
         <td>&nbsp;</td>
         <td></td>
     </tr>
     <tr>
-        <td colspan="2" align="center">
+        <td colspan="2">
 
+            <CompanyInfo bind:company_info={company_info} />
+
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center" style="text-align:center">
+            
             {#if mode == 'admin'}
-               <input type="hidden" name="uuid" value="{company_info.uuid}">
-               <button type="submit">Veranderingen opslaan</button>
+                <input type="hidden" name="uuid" value="{company_info.uuid}">
+               <button type="submit" class="button">Veranderingen opslaan</button>
             {:else}
-                <button type="submit">Bedrijf registratie voltooien</button>
+                <button type="submit" class="button">Bedrijf registratie voltooien</button>
             {/if}
             
-
-
         </td>
     </tr>
         

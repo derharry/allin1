@@ -66,11 +66,11 @@ export async function get_category_list () {
         // create a tree view - we only have a root/sub
         for (let row of dataset) {
             if (row.parent_uuid == null) {
-                treeview[row.uuid] = { name: row.name, subs: {} }
+                treeview[row.uuid] = { name: row.name, uuid: row.uuid, subs: {} }
             } else {
             //} else if (treeview[row.parent_uuid]) {
                 //console.log(treeview[row.parent_uuid].subs)
-                treeview[row.parent_uuid].subs[row.uuid] = { name: row.name, slug: row.slug, subs: {} }
+                treeview[row.parent_uuid].subs[row.uuid] = { name: row.name, uuid: row.uuid, slug: row.slug, subs: {} }
                 //treeview[row.parent_uuid].subs[row.uuid].name = row.name,
                 //treeview[row.parent_uuid].subs[row.uuid].subs = {}
             }

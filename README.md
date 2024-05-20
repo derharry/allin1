@@ -1,38 +1,45 @@
-# create-svelte
+# allin1
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
-## Creating a project
+## problems
+* with package dependencies
+* with primsa and mysql 
+- reinstall all by executing z_reinstall.sh
 
-If you're seeing this, you've probably already done this step. Congrats!
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+## enable local lib zeelte
+add alias to svelte.config.js/kit
+```
+	kit: {
+		alias: {
+			$zeelte: path.resolve("../zeelte/src/lib"),
+		}
+	}
 ```
 
-## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+## disable unused css
+add following to svelte.config.js/config
+https://github.com/sveltejs/language-tools/issues/650#issuecomment-1729917996
+```
+const config = {
+    onwarn: (warning, handler) => {
+        if (warning.code === 'css-unused-selector') {
+            return;
+        }
+        handler(warning);
+    },
+}
 ```
 
-## Building
 
-To create a production version of your app:
-
-```bash
-npm run build
+## exclude directories from dev or build 
+add test/exclude to vite.config.js
+```
+export default defineConfig({
+	test: {
+		exclude: ['**/backup/**',  'backup/**', 'backup/*', 'backup', '/backup', 'src/backup', '**/_accessoires/**',  '_accessoires/**', '_accessoires/*', '_accessoires']
+	}
+});
 ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

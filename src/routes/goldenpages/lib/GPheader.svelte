@@ -1,5 +1,6 @@
 <script>
 
+    import SearchField from './SearchField.svelte'
     import logo from './logo.jpeg'
 
     let search_string = ''
@@ -11,28 +12,21 @@
 
 
 
-<table>
+<table width="100%">
     <tr>
-        <td>
-            <a href="/goldenpages/"><img src="{logo}" alt="logo" class="gp_logo"></a>
+        <td class="gpHeaderLogoTD">
+            <a href="/goldenpages/"><img src="{logo}" alt="logo" class="gpHeaderLogoIMG"></a>
         </td>
-        <td class="">
+        <td class="gpHeaderSearchTD">
+
             <form action="/goldenpages/+{search_string}" method="get">
-                <table>
-                    <tr>
-                        <td><input name="search" bind:value={search_string} placeholder="Wat zoek je? " /></td>
-                        <td><button type="submit"><i class='fa fa-search'></i></button></td>
-                    </tr>
-                </table>
+                <SearchField name="search" bind:value={search_string} placeholder="Wat zoek je?" />
             </form>
+
         </td>
-        <td align="right">
-            <a href="/goldenpages/register/">Jouw bedrijf registreeren</a>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">
-            <hr>
+        <td class="gpHeaderRightTD">
+            <a href="/goldenpages/register/" class="button">Jouw bedrijf registreeren</a>
         </td>
     </tr>
 </table>
+<hr>
