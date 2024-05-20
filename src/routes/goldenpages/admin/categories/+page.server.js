@@ -9,7 +9,7 @@ main admin page with statistical data
 
 
 // imports
-import { get_category_list, admin_category_insert, admin_category_delete, admin_category_update } from '../../lib/db.controller'
+import { admin_category_insert, admin_category_delete, admin_category_update, get_category_list } from '../../lib/db.controller'
 
 
 
@@ -26,7 +26,7 @@ export async function load() {
         
         if (!res_cats.ok) 
             throw new Error('Problem loading list of categories')
-	    //console.log(res_cats)
+	    //console.log(res_cats.data)
 
 	    return {
 		    category_list: res_cats.data

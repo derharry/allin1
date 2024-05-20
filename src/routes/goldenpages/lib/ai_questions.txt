@@ -1,0 +1,108 @@
+structure description 
+
+i have 2 tables. 
+1 with company info and 1 with categories. 
+companies belongs to a category.
+the categories is a treeview structure
+
+using MySQL
+
+table 'gp_categories'
+uuid: primary key 
+parent_uuid: foreign key to uuid
+name: string name of category
+slug: string a slugified string 
+
+table 'gp_companies'
+uuid: primary key
+name: string name of company
+category_uuid: foreign key to gp_categories.uuid
+is_public: bool public or hidden - i need only the public ones. true
+
+
+##########################################
+## Question 1:
+
+i would like to ask for a SQL query on 2 tables. the goal is to retreive data.
+the search parameter is a slug string.
+i want to select all companies ordered by name and belonging to category slug.
+because gp_companies.category_uuid is a fkcat i need to, i think, join the 2 tables to be able to get the pkcat via the slug to filter by fkcat.
+
+
+SQL:
+SELECT gp_companies.*
+FROM gp_companies
+JOIN gp_categories ON gp_companies.category_uuid = gp_categories.uuid
+WHERE gp_categories.slug = 'your_category_slug_here' AND gp_companies.is_public = true;
+
+
+Prisma:
+const companiesInCategory = await prisma.company.findMany({
+  where: {
+    category: {
+      slug: 'your_category_slug_here'
+    },
+    public: true
+  }
+  orderBy: {
+    name: 'asc'
+  }
+});
+
+
+##########################################
+## Question 2:
+I would like to retrieve a resultset with all categories with the count of companies belonging to the category. ordered by name asc.
+
+
+SQL
+SELECT c1.uuid AS category_uuid, 
+       c1.name AS category_name, 
+       COUNT(c2.uuid) AS company_count
+FROM gp_categories c1
+LEFT JOIN gp_categories c2 ON c1.uuid = c2.parent_uuid
+LEFT JOIN gp_companies ON c2.uuid = gp_companies.category_uuid
+WHERE gp_companies.is_public = true
+GROUP BY c1.uuid
+ORDER BY c1.name;
+
+In this SQL statement:
+
+We are selecting the uuid and name columns from gp_categories as category_uuid and category_name, respectively.
+We are using a self-join to link categories to their parent categories.
+We are counting the number of companies (COUNT(c2.uuid)) belonging to each category.
+We are using a LEFT JOIN to include categories even if they don't have any associated companies.
+We are filtering only the public companies with is_public = true.
+We are grouping the results by the primary key of the categories.
+
+
+Prisma:
+const categoriesWithCompanyCount = await prisma.gp_categories.findMany({
+  select: {
+    uuid: true,
+    name: true,
+    companies: {
+      where: { is_public: true },
+      select: { uuid: true }
+    }
+  }
+});
+
+const result = categoriesWithCompanyCount.map(category => ({
+  category_uuid: category.uuid,
+  category_name: category.name,
+  company_count: category.companies.length
+}));
+
+In this Prisma code snippet:
+- We are using the `findMany` method to retrieve all categories from the `gpCategories` table.
+- We are selecting the `uuid` and `name` fields from the categories table and also selecting companies belonging to each category where `is_public` is `true`.
+- We then map over the retrieved data to format it as required, including the category UUID, category name, and count of companies associated with each category.
+
+
+##########################################
+## Question 3:
+
+
+
+

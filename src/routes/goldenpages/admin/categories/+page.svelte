@@ -15,7 +15,7 @@
      * containing the list of categories returned by load()
     */
     let category_list = data?.category_list || []
-    //$: console.log({category_list})    
+    $: console.log({category_list})    
 
 
     /**
@@ -195,57 +195,64 @@
     {#each Object.entries(category_list) as [uuid, main_cat_attrs] }
         
 
+        {#if uuid != '69' && uuid !=  '42' }
 
-        <div class="box">
-            <div class="title">
-                <span 
-                    on:dblclick={ () => handle_dblclick() }
-                    on:keydown={handle_keydown} 
-                    contentEditable="false"
-                    class="button readMode"
-                    data-uuid="{uuid}"
-                    data-parent-uuid=""
-                >
-                    {main_cat_attrs.name}
-                </span>
-            </div>
-
-
-            <div class="nowrap">
-                <form action="?/insert_category" method="post" id="insert_subcategory">
-                    <input type="hidden" name="formid" value="insert_bcategory">
-                    <input type="hidden" name="parent_uuid" value="{uuid}">
-                    <input type="text" name="name" value="{form?.name || ''}"
-                        style="box-sizing: border-box; max-width:100%"
+            <div class="box">
+                <div class="title">
+                    <span 
+                        on:dblclick={ () => handle_dblclick() }
+                        on:keydown={handle_keydown} 
+                        contentEditable="false"
+                        class="button readMode"
+                        data-uuid="{uuid}"
+                        data-parent-uuid=""
                     >
-                    <button type="submit" style="position:relative; margin-left: -30px"><i class="fa fa-plus"></i></button>
-                </form>
-            </div>
-            <br>
-            
-            <!-- todo <p><img src="../lib/images/{category}.jpg" alt="{category}"></p>-->
+                        {main_cat_attrs.name}
+                    </span>
+                </div>
 
 
-            <ul>
-                {#each Object.entries(main_cat_attrs.subs) as [ uuid, attrs ] }
-                    <li>
-                        <span
-                            on:dblclick={ () => handle_dblclick() }
-                            on:keydown={handle_keydown} 
-                            contentEditable="false"
-                            class="button readMode"
-                            data-uuid="{uuid}"
-                            data-parent-uuid="{uuid}"
+                <div class="nowrap">
+                    <form action="?/insert_category" method="post" id="insert_subcategory">
+                        <input type="hidden" name="formid" value="insert_bcategory">
+                        <input type="hidden" name="parent_uuid" value="{uuid}">
+                        <input type="text" name="name" value="{form?.name || ''}"
+                            style="box-sizing: border-box; max-width:100%"
                         >
-                            {attrs.name}
-                        </span>
-                    </li>
-                {/each}     
-            </ul>            
+                        <button type="submit" style="position:relative; margin-left: -30px"><i class="fa fa-plus"></i></button>
+                    </form>
+                </div>
+                <br>
+                
+                <!-- todo <p><img src="../lib/images/{category}.jpg" alt="{category}"></p>-->
 
-        </div> 
+
+                <ul>
+                    {#each Object.entries(main_cat_attrs.subs) as [ uuid, attrs ] }
+                        <li>
+                            <span
+                                on:dblclick={ () => handle_dblclick() }
+                                on:keydown={handle_keydown} 
+                                contentEditable="false"
+                                class="button readMode"
+                                data-uuid="{uuid}"
+                                data-parent-uuid="{uuid}"
+                            >
+                                <button>
+                                    {attrs.company_count}
+                                </button>
+                                &nbsp;
+                                {attrs.name}
+                            </span>
+                        </li>
+                    {/each}     
+                </ul>            
+
+            </div> 
 
         
+            
+        {/if}
 
     {/each}
 </div>

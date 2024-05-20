@@ -4,7 +4,7 @@ slug controller
 
 */
 
-import { get_category_list, get_company_list, get_company_list_by_search } from '../lib/db.controller'
+import { get_category_list, get_company_list_new, get_company_list_by_search } from '../lib/db.controller'
 
 
 
@@ -22,7 +22,7 @@ export async function load({ params }) {
         }
         // select all via category_slug
         else {
-            res_companies = await get_company_list( params.slug , true)
+            res_companies = await get_company_list_new(false, 'category', params.slug)   //( params.slug , true)
         }
         
         if (!res_companies.ok)

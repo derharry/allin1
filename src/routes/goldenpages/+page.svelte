@@ -40,15 +40,22 @@
     -->
     {#each Object.entries(category_list) as [uuid, main_cat_attrs] }
         
-        <div class="box">
-            <div class="title">{main_cat_attrs.name}</div>
-            <!-- todo <p><img src="../lib/images/{category}.jpg" alt="{category}"></p>-->
-            {#each Object.entries(main_cat_attrs.subs) as [ uuid, attrs ] }
-                <div class="item">
-                    <a href="/goldenpages/{attrs.slug}"> {attrs.name} </a>
-                </div>
-            {/each}
-        </div> 
+        {#if uuid != '69' && uuid !=  '42' }
+
+            <div class="box">
+
+                <div class="title">{main_cat_attrs.name}</div>
+
+                <!-- todo <p><img src="../lib/images/{category}.jpg" alt="{category}"></p>-->
+                {#each Object.entries(main_cat_attrs.subs) as [ uuid, attrs ] }
+                    <div class="item">
+                        <a href="/goldenpages/{attrs.slug}"> {attrs.name} </a> ({attrs.company_count})
+                    </div>
+                {/each}
+
+            </div> 
+
+        {/if}
 
     {:else}
 

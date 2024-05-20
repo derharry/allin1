@@ -48,42 +48,164 @@ export async function get_statistics() {
  *    }
  * @returns object
  */
-export async function get_category_list () {
+export async function get_category_list() {
     try {
-        let treeview = {}
-        let dataset  = []
-
-        // select all categories
-        // SELECT * FROM gp_categories ORDER BY parent_id ASC, name ASC
-        dataset = await db.gp_categories.findMany({
+    
+        const categoriesWithCompanyCount = await db.gp_categories.findMany({
+            include: {
+              _count: {
+                select: { gp_companies: true }
+              }
+            },
             orderBy: [
                 { parent_uuid: 'asc' },
                 { name: 'asc' }
             ]
-        })
-        //console.log(dataset)
+        });
+        //console.log(categoriesWithCompanyCount)
+
+        const result = categoriesWithCompanyCount.map(category => ({
+            uuid: category.uuid,
+            parent_uuid:   category.parent_uuid,
+            name: category.name,
+            slug: category.slug,
+            company_count: category._count.gp_companies
+        }));
+        console.log(result)
 
         // create a tree view - we only have a root/sub
-        for (let row of dataset) {
+        let treeview = {}
+        for (let row of result) {
+            let obj = { 
+                name: row.name, 
+                slug: row.slug,
+                uuid: row.uuid, 
+                parent_uuid: row.parent_uuid,
+                company_count: row.company_count,
+                subs: {} 
+            }
+
             if (row.parent_uuid == null) {
-                treeview[row.uuid] = { name: row.name, uuid: row.uuid, subs: {} }
+                treeview[row.uuid] = obj
             } else {
-            //} else if (treeview[row.parent_uuid]) {
-                //console.log(treeview[row.parent_uuid].subs)
-                treeview[row.parent_uuid].subs[row.uuid] = { name: row.name, uuid: row.uuid, slug: row.slug, subs: {} }
-                //treeview[row.parent_uuid].subs[row.uuid].name = row.name,
-                //treeview[row.parent_uuid].subs[row.uuid].subs = {}
+                treeview[row.parent_uuid].subs[row.uuid] = obj
             }
         }
-        //console.log(treeview)
+        console.log(treeview)
         //return get_response_ok({})
-        return get_response_ok(treeview)
+        return get_response_ok(treeview)        
+
+        return get_response_ok(result)
+
+    } catch (error) {
+        console.log(error)
+        return get_response_err('get_category_list', error)
+    }
+}
+
+
+
+
+/**
+ * 
+ * @param {bool} is_admin are we using this in admin mode? if not - add where is_public = true
+ * @param {string} action category|search|*|public|unpublic
+ * @param {string} slug   categorie_uuid, search_string
+ * @returns 
+ */
+export async function get_company_list_new(is_admin = false, action = 'category|search|allunpublic', slug = '') {
+    try {
+
+        let res            // responses
+        let x        = []  // for tempory usage with no meaning
+        let queryObj = {}  // the prisma query-object
+        let queryRaw       // string - if set - it will be priorized! instead of queryObj
+        let dataset  = []  // the dataset to return
+
+
+        // prepare final statement via action
+        switch (action) {
+
+            case 'category':
+
+                        // the slug is given as a slugify string.
+                        // - we need a (1) JOIN or (2) grap the category_uuid first
+                        // 1.1 : uuid = SELECT uuid FROM gp_categories WHERE slug = slug
+                        // 1.2 : data = SELECT * FROM gp_companies WHERE category_uuid = uuid
+                        // 2.1 : data = SELECT gp_companies.* 
+                        //              FROM gp_companies 
+                        //              JOIN gp_categories ON gp_companies.category_uuid = gp_categories.uuid
+                        //              WHERE gp_categories.slug = `slug` AND gp_companies.is_public = true;
+                        //              ORDER BY gp_companies.name ASC;
+                        queryObj = {
+                            where: {
+                                gp_categories: {
+                                    slug: slug
+                                },
+                            }
+                        }
+
+                break;
+
+
+            case 'search':
+
+                        /*
+                        // SELECT * FROM gp_companies WHERE name LIKE *search_string*, infotext *search_string*, 
+                        let search_string = `%${slug}%`
+                        let 
+
+                        company_list = await db.gp_companies.findMany({ 
+                            where: { 
+                                OR: [
+                                    { name: { contains: search_string } },
+                                    { infotext: { contains: search_string } },
+                                    { urlwww: { contains: search_string } },
+                                    { tags: { contains: search_string } },
+                                ]
+                            }, 
+                            orderBy: [ { name: 'asc' } ] 
+                        })
+                        */
+
+                break;
+
+
+            case 'allunpublic':
+                break;
+
+
+            default:
+                    throw new Error('wrong action given. dont know what to do. check your spelling ;-)')
+                break;
+        }
+
+
+        if (!queryRaw) {
+
+            // do not forget the where is_public clause ;-) not neeeded when we are in admin mode :-)
+            if (true && !is_admin)
+                queryObj.where.is_public = true
+
+            // we order by name by default :-)
+            queryObj.orderBy = {
+              name: 'asc'
+            }
+
+            dataset = await db.gp_companies.findMany( queryObj )
+        }
+        else {
+            // nothing todo yet...
+        } 
+
+        console.log(dataset)
+
+        return get_response_ok(dataset)
 
     } catch (error) {
         return get_response_err('get_category_list', error)
     }
 }
-
 
 
 /**
