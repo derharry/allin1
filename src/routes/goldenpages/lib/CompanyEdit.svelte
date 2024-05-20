@@ -39,6 +39,7 @@
 
     /**
      * handle the onchange event of select field and set 
+     * and make even more dynamic handlings between them...
      * 
      * this does not work !!
      * //$: if (company_info.category_uuid == 42) company_info.main_category_uuid = 69
@@ -53,10 +54,12 @@
                 if (value == 69) {
                     //console.log('69.... 42', value)
                     company_info.category_uuid = no_category_in_list_69_42_ref.sub_uuid
+                    company_info.category_name = no_category_in_list_69_42_ref.sub_text
                 } 
-                else if (value != 69 && company_info.category_uuid == 42) {
+                else if (value != 69 && company_info.category_uuid.includes( 42 , 99) ) {
                     //console.log('not 69.... do nothing?', value)
-                    company_info.category_uuid = 99
+                    company_info.category_uuid = null
+                    company_info.category_name = ''
                 }
                 return
             }
@@ -66,10 +69,12 @@
                 if (value == 42) {
                     //console.log('set main to undefined', value)
                     company_info.main_category_uuid = no_category_in_list_69_42_ref.main_uuid
+                    company_info.main_category_name = no_category_in_list_69_42_ref.main_text
                 }
                 else if (value != 42 && company_info.main_category_uuid == 69) {
                     console.log('nothing todo :-)', value)
-                    company_info.main_category_uuid = 99
+                    company_info.main_category_uuid = null
+                    company_info.main_category_name = ''
                 }
                 return
             }
@@ -145,8 +150,6 @@
 
 </style>
 
-<input type="text" name="x" bind:value={company_info.main_category_uuid}>
-<input type="text" name="x" bind:value={company_info.category_uuid}>
 
 
 <table width="100%" cellspacing="0" cellpadding="0">

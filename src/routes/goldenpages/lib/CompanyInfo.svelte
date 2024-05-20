@@ -9,20 +9,20 @@
     export let category_list = {}
     export let mode = 'public' || 'admin'
     
-    //$: { console.log('company_info.svelte', company_info ) }
+    $: { console.log('company_info.svelte', company_info ) }
 
     // dynamic state for the address
     $: adres = get_adres()
     
 
     // dynamic state for the 2 select fields 
-    // set main_category_name and sub_category_name by the (sub/parent)category_id 
-    $: if (company_info.main_category_name == undefined || company_info.sub_category_name == undefined) {
+    // set main_category_name and category_name by the (sub/parent)category_id 
+    $: if (company_info.main_category_name == undefined || company_info.category_name == undefined) {
         for (let main_uuid in category_list) {
             for (let sub_uuid in category_list[main_uuid].subs) {
                 if (sub_uuid == company_info.category_uuid) {
                     company_info.main_category_name = category_list[main_uuid].name
-                    company_info.sub_category_name  = category_list[main_uuid].subs[sub_uuid].name
+                    company_info.category_name  = category_list[main_uuid].subs[sub_uuid].name
                     break
                 }
             }
@@ -91,7 +91,7 @@
 
                 <tr>
                     <td class="companyInfoBoxCategoryPath">
-                        {company_info?.main_category_name || ''} / {company_info?.sub_category_name || ''}
+                        {company_info?.main_category_name || ''} / {company_info?.category_name || ''}
                     </td>
                 </tr>
                 <tr>
@@ -152,7 +152,7 @@
                 {#if company_info.category_wish != ''}
                     <tr>
                         <td colspan="4" class="error">
-                            Category wish: {company_info.category_wish} 
+                            Category wish: {company_info.category_wish}
                             <!-- todo - add functionality to remove category wish -->
                             <button style="float:right"><i class="fa">d</button>
                         </td>
