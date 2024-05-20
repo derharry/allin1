@@ -60,6 +60,9 @@
                     //console.log('not 69.... do nothing?', value)
                     company_info.category_uuid = null
                     company_info.category_name = ''
+                } else if (value == 99) {
+                    company_info.category_uuid = null
+                    company_info.category_name = ''
                 }
                 return
             }
