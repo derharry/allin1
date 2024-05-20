@@ -2,8 +2,10 @@
     Root Public Layout of Golden Pages
 -->
 <script>
-
 </script>
+<style>
+    @import '../lib/style.css';
+</style>
 
 
 
@@ -16,8 +18,10 @@
                         <a href="/goldenpages/admin/">Dashboard</a>
                         <a href="/goldenpages/admin/categories">Categories</a>
                         <a href="/goldenpages/admin/companies">Companies</a>
+                        <!--
                         <a href="/goldenpages/register">Register</a>
                         <a href="/goldenpages/">Public</a>
+                        -->
                     </td>
                 </tr>
                 <tr>
@@ -49,33 +53,7 @@
     </tr>
     <tr>
         <td>
-            footer
+            
         </td>
     </tr>
 </table>
-
-
-
-
-<style>
-    
-    table {
-        max-width:600px;
-    }
-    
-    div {
-        display: table;
-    }
-
-    .main {
-        padding: 5px
-    } 
-
-    .header {
-        margin: 10px;
-        padding: 3px 15px;
-        background-color: #E3DAC9;
-        border-radius: 8px;
-
-    }
-</style>

@@ -107,10 +107,9 @@
 </script>
 
 
-<main>
-
-    <h1>Categories</h1>
-
+<table>
+    <tr>
+        <td>
     
     <!-- show error messages of any form -->
     {#if form?.ok == false}
@@ -211,7 +210,9 @@
         </tr>
     </table>
 
-</main>
+</td>
+</tr>
+</table>
 
 
 

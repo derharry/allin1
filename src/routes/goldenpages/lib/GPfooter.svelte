@@ -1,5 +1,11 @@
 
-<p>&nbsp;</p>
+<script>
+</script>
+<style>
+    @import './style.css';
+</style>
+
+
 <table width="100%">
     <tr>
         <td width="50%">
@@ -17,15 +23,3 @@
         </td>
     </tr>
 </table>
-
-
-
-<style>
-    
-    table {
-        width: 100%;
-        background-color: beige
-    }
-
-
-</style>

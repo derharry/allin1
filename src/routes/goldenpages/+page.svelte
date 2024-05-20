@@ -18,17 +18,21 @@
 
 
 </script>
+<style>
+    @import './lib/style.css';
+</style>
 
 
 
 <table>
     <tr>
         <td>
-            <h2>
+
+            <p>
                 Vind Nederlandse bedrijven in Oostenrijk
                 <br>of bedrijven waar Nederlanders werken.
                 <br><small>met adres, contactgegevens, locatie en meer</small>
-            </h2>
+            </p>
 
         </td>
     </tr>
@@ -79,39 +83,3 @@
 </table>
 
 
-
-<style>
-
-    table {
-        width: 100%;
-    }
-
-    h2 {
-        text-align: left;
-        font-size: 14pt;
-    }
-
-    .box_category {
-        display: block;
-        float: left;
-        margin: 10px;
-        padding: 10px 25px;
-        border-radius: 10px;
-        border: 1px orange solid;
-        background-color: #FFE5B4;
-    }
-
-    .box_category h3 {
-        text-align: center;
-    }
-
-    .box_category ul {
-        padding: 0px;
-    }
-
-    .box_category ul li {
-        display: block
-    }
-
-
-</style>

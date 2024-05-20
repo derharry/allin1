@@ -59,7 +59,9 @@
     }
 
 </script>
-
+<style>
+    @import './style.css';
+</style>
 
 <table class="itemBoxMain">
     <tr>
@@ -193,59 +195,3 @@
     {/if}
 
 </table>
-
-
-
-<style>
-
-    .itemBoxMain {
-        width: 100%;
-        border: 1px orange solid;
-        background-color: #FFE5B4;
-        border-radius: 15px;
-        margin-bottom: 20px;
-        padding: 8px;
-
-        font-family: Verdana, Arial;
-        font-size: 10pt;
-    }
-
-    .itemName {
-        font-size: 1.1em;
-        font-weight: bolder;
-    }
-
-    .imgCompanyBox {
-        padding: 8px;
-        background-color: white;
-        max-width: 125px;
-        max-height: 100px;
-        border-radius: 8px;
-        text-align: center;
-    }
-
-    .imgCompany {
-        max-width: 125px;
-        max-height: 100px;
-    }
-
-    .categoryPath {
-        font-size: 0.9em;
-    }
-
-    .contactdetail {
-        display: table;
-        float: left;
-        padding: 5px 10px;
-        margin-right: 10px;
-        border-radius: 15px;
-        background-color: orange;
-        font-size: 0.91em;
-    }
-
-
-    .admin_hidden {
-        font-size: 0.8em;
-    }
-
-</style>

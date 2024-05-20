@@ -5,18 +5,25 @@
     let search_string = ''
     
 </script>
+<style>
+    @import './style.css';
+</style>
 
 
 
 <table>
     <tr>
         <td>
-            <a href="/goldenpages/"><img src="{logo}" alt="logo"></a>
+            <a href="/goldenpages/"><img src="{logo}" alt="logo" class="gp_logo"></a>
         </td>
         <td class="">
             <form action="/goldenpages/+{search_string}" method="get">
-                <input name="search" bind:value={search_string} placeholder="Wat zoek je? " />
-                <button type="submit">S</button>
+                <table>
+                    <tr>
+                        <td><input name="search" bind:value={search_string} placeholder="Wat zoek je? " /></td>
+                        <td><button type="submit"><i class='fa fa-search'></i></button></td>
+                    </tr>
+                </table>
             </form>
         </td>
         <td align="right">
@@ -24,29 +31,8 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3" class="hr">
+        <td colspan="3">
             <hr>
         </td>
     </tr>
 </table>
-
-
-
-<style>
-    
-    table {
-        width: 100%;
-    }
-
-    img {
-        padding-right: 20px;
-        max-width: 60px;
-    }
-
-    input {
-        padding: 5px 10px;
-        border-radius: 20px
-    }
-    
-
-</style>

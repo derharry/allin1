@@ -68,18 +68,8 @@
 
 
 </script>
-
-
 <style>
-
-    input, textarea {
-        width: 100%;
-    }
-
-    td {
-        white-space: nowrap;
-    }
-
+    @import './style.css';
 </style>
 
 

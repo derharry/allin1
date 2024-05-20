@@ -78,8 +78,6 @@
 
 <main>
 
-    <h1>Companies</h1>
-
     <!--
         Either 
             edit an entry when edit_mode is true
