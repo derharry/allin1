@@ -8,7 +8,29 @@ Layer between Svelte and Server
 
 import { db } from "$lib/db.server"
 import { generateUID } from "$zeelte/helpers/utils"
+import { get_query } from "./db.query"
 
+
+// name of models
+const table = {
+    categories: 'gp_categories',
+    companies : 'gp_companies'
+}
+
+/** */
+async function do_query(query, model) {
+    try {
+        // do SQL or PRISMA
+        if (typeof query === "string") {
+            return await db.$queryRawUnsafe(query)
+        } else {
+            return await db[model].findMany(query);
+        }
+        
+    } catch (error) {
+        return get_response_err('do_query()', error, query)
+    }
+}
 
 
 /**
@@ -48,30 +70,71 @@ export async function get_statistics() {
  *    }
  * @returns object
  */
-export async function get_category_list() {
+export async function get_category_list(only_public = true) {
     try {
-    
-        const categoriesWithCompanyCount = await db.gp_categories.findMany({
-            include: {
-              _count: {
-                select: { gp_companies: true }
-              }
-            },
-            orderBy: [
-                { parent_uuid: 'asc' },
-                { name: 'asc' }
-            ]
-        });
-        //console.log(categoriesWithCompanyCount)
+        
+        let query_name = 'select_categories_with_companies'
+        let query
+
+
+        if (only_public)
+            query = get_query('sql-', query_name)
+        else
+            query = get_query('sql*', query_name)
+
+
+        if (!query) 
+            throw new Error('Query not found')
+
+        //querySql = 'select * from gp_categories'
+        const categoriesWithCompanyCount = await do_query(query, table.categories)
+        console.log(categoriesWithCompanyCount)
+
 
         const result = categoriesWithCompanyCount.map(category => ({
             uuid: category.uuid,
-            parent_uuid:   category.parent_uuid,
+            parent_uuid: category.parent_uuid,
             name: category.name,
             slug: category.slug,
-            company_count: category._count.gp_companies
+            company_count: category.company_count 
+            //parent_uuid company_count: category._count.gp_companies, // PRISMA - not working with ORDER BY 
+          }));
+        //console.log(result)
+
+
+        // create a tree view - we only have a root/sub
+        let treeview = {}
+        for (let row of result) {
+            console.log(row)
+            let obj = { 
+                name: row.name, 
+                slug: row.slug,
+                uuid: row.uuid, 
+                parent_uuid: row.parent_uuid,
+                company_count: row.company_count,
+                subs: {} 
+            }
+
+            if (row.parent_uuid == null) {
+                treeview[row.uuid] = obj
+            } else {
+                treeview[row.parent_uuid].subs[row.uuid] = obj
+            }
+        }
+        console.log(treeview)
+        //return get_response_ok({})
+        return get_response_ok(treeview) 
+
+        return
+        /*
+        const result = categoriesWithCompanyCount.map(category => ({
+            uuid: category.category_uuid,
+            parent_uuid:   category.parent_uuid,
+            name: category.category_name,
+            slug: category.category_slug,
+            company_count: category.company_count
         }));
-        console.log(result)
+        //console.log(result)
 
         // create a tree view - we only have a root/sub
         let treeview = {}
@@ -94,8 +157,11 @@ export async function get_category_list() {
         console.log(treeview)
         //return get_response_ok({})
         return get_response_ok(treeview)        
+        *
+        return get_response_ok([])
 
-        return get_response_ok(result)
+        */
+        return get_response_ok([])
 
     } catch (error) {
         console.log(error)

@@ -2,8 +2,8 @@ structure description
 
 i have 2 tables. 
 1 with company info and 1 with categories. 
-companies belongs to a category.
 the categories is a treeview structure
+companies belongs to a category.
 
 using MySQL
 
@@ -17,7 +17,7 @@ table 'gp_companies'
 uuid: primary key
 name: string name of company
 category_uuid: foreign key to gp_categories.uuid
-is_public: bool public or hidden - i need only the public ones. true
+is_public: bool public or hidden 
 
 
 ##########################################
@@ -52,7 +52,7 @@ const companiesInCategory = await prisma.company.findMany({
 
 ##########################################
 ## Question 2:
-I would like to retrieve a resultset with all categories with the count of companies belonging to the category. ordered by name asc.
+I would like to retrieve a resultset with all data of gp_categories with the count of gp_companies belonging to the category. ordered by name asc.
 
 
 SQL
@@ -65,6 +65,23 @@ LEFT JOIN gp_companies ON c2.uuid = gp_companies.category_uuid
 WHERE gp_companies.is_public = true
 GROUP BY c1.uuid
 ORDER BY c1.name;
+
+
+SELECT 
+    c.uuid AS category_uuid,
+    c.parent_uuid,
+    c.name AS category_name,
+    c.slug AS category_slug,
+    COUNT(pc.name) AS public_company_count
+FROM
+    gp_categories c
+LEFT JOIN gp_companies pc ON c.uuid = pc.category_uuid
+WHERE
+    pc.is_public = true OR pc.is_public IS NULL
+GROUP BY
+    c.uuid, c.parent_uuid, c.name, c.slug
+ORDER BY
+    c.parent_uuid ASC , c.name ASC;
 
 In this SQL statement:
 

@@ -22,7 +22,7 @@ export async function load() {
     try {
         
         // return the category_list
-        let res_cats = await get_category_list()
+        let res_cats = await get_category_list(false)
         
         if (!res_cats.ok) 
             throw new Error('Problem loading list of categories')
