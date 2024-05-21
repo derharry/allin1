@@ -17,21 +17,6 @@ const table = {
     companies : 'gp_companies'
 }
 
-/** */
-async function do_query(query, model) {
-    try {
-        // do SQL or PRISMA
-        if (typeof query === "string") {
-            return await db.$queryRawUnsafe(query)
-        } else {
-            return await db[model].findMany(query);
-        }
-        
-    } catch (error) {
-        return get_response_err('do_query()', error, query)
-    }
-}
-
 
 /**
  * collect database statistics
@@ -88,9 +73,9 @@ export async function get_category_list(only_public = true) {
 
         //querySql = 'select * from gp_categories'
         const categoriesWithCompanyCount = await do_query(query, table.categories)
-        console.log(categoriesWithCompanyCount)
+        //console.log(categoriesWithCompanyCount)
 
-
+        //remap the results to create the treeview
         const result = categoriesWithCompanyCount.map(category => ({
             uuid: category.uuid,
             parent_uuid: category.parent_uuid,
@@ -101,11 +86,9 @@ export async function get_category_list(only_public = true) {
           }));
         //console.log(result)
 
-
         // create a tree view - we only have a root/sub
         let treeview = {}
         for (let row of result) {
-            console.log(row)
             let obj = { 
                 name: row.name, 
                 slug: row.slug,
@@ -121,47 +104,9 @@ export async function get_category_list(only_public = true) {
                 treeview[row.parent_uuid].subs[row.uuid] = obj
             }
         }
-        console.log(treeview)
+        //console.log(treeview)
         //return get_response_ok({})
         return get_response_ok(treeview) 
-
-        return
-        /*
-        const result = categoriesWithCompanyCount.map(category => ({
-            uuid: category.category_uuid,
-            parent_uuid:   category.parent_uuid,
-            name: category.category_name,
-            slug: category.category_slug,
-            company_count: category.company_count
-        }));
-        //console.log(result)
-
-        // create a tree view - we only have a root/sub
-        let treeview = {}
-        for (let row of result) {
-            let obj = { 
-                name: row.name, 
-                slug: row.slug,
-                uuid: row.uuid, 
-                parent_uuid: row.parent_uuid,
-                company_count: row.company_count,
-                subs: {} 
-            }
-
-            if (row.parent_uuid == null) {
-                treeview[row.uuid] = obj
-            } else {
-                treeview[row.parent_uuid].subs[row.uuid] = obj
-            }
-        }
-        console.log(treeview)
-        //return get_response_ok({})
-        return get_response_ok(treeview)        
-        *
-        return get_response_ok([])
-
-        */
-        return get_response_ok([])
 
     } catch (error) {
         console.log(error)
@@ -172,130 +117,32 @@ export async function get_category_list(only_public = true) {
 
 
 
-/**
- * 
- * @param {bool} is_admin are we using this in admin mode? if not - add where is_public = true
- * @param {string} action category|search|*|public|unpublic
- * @param {string} slug   categorie_uuid, search_string
- * @returns 
- */
-export async function get_company_list_new(is_admin = false, action = 'category|search|allunpublic', slug = '') {
-    try {
-
-        let res            // responses
-        let x        = []  // for tempory usage with no meaning
-        let queryObj = {}  // the prisma query-object
-        let queryRaw       // string - if set - it will be priorized! instead of queryObj
-        let dataset  = []  // the dataset to return
-
-
-        // prepare final statement via action
-        switch (action) {
-
-            case 'category':
-
-                        // the slug is given as a slugify string.
-                        // - we need a (1) JOIN or (2) grap the category_uuid first
-                        // 1.1 : uuid = SELECT uuid FROM gp_categories WHERE slug = slug
-                        // 1.2 : data = SELECT * FROM gp_companies WHERE category_uuid = uuid
-                        // 2.1 : data = SELECT gp_companies.* 
-                        //              FROM gp_companies 
-                        //              JOIN gp_categories ON gp_companies.category_uuid = gp_categories.uuid
-                        //              WHERE gp_categories.slug = `slug` AND gp_companies.is_public = true;
-                        //              ORDER BY gp_companies.name ASC;
-                        queryObj = {
-                            where: {
-                                gp_categories: {
-                                    slug: slug
-                                },
-                            }
-                        }
-
-                break;
-
-
-            case 'search':
-
-                        /*
-                        // SELECT * FROM gp_companies WHERE name LIKE *search_string*, infotext *search_string*, 
-                        let search_string = `%${slug}%`
-                        let 
-
-                        company_list = await db.gp_companies.findMany({ 
-                            where: { 
-                                OR: [
-                                    { name: { contains: search_string } },
-                                    { infotext: { contains: search_string } },
-                                    { urlwww: { contains: search_string } },
-                                    { tags: { contains: search_string } },
-                                ]
-                            }, 
-                            orderBy: [ { name: 'asc' } ] 
-                        })
-                        */
-
-                break;
-
-
-            case 'allunpublic':
-                break;
-
-
-            default:
-                    throw new Error('wrong action given. dont know what to do. check your spelling ;-)')
-                break;
-        }
-
-
-        if (!queryRaw) {
-
-            // do not forget the where is_public clause ;-) not neeeded when we are in admin mode :-)
-            if (true && !is_admin)
-                queryObj.where.is_public = true
-
-            // we order by name by default :-)
-            queryObj.orderBy = {
-              name: 'asc'
-            }
-
-            dataset = await db.gp_companies.findMany( queryObj )
-        }
-        else {
-            // nothing todo yet...
-        } 
-
-        console.log(dataset)
-
-        return get_response_ok(dataset)
-
-    } catch (error) {
-        return get_response_err('get_category_list', error)
-    }
-}
 
 
 /**
  * get all companies or just by category of parent_uuid
  * @param {string} category_uuid * for all, uuid for specific categorie parent_uuid-
+ * @param {bool} by_slug 
  * @returns 
  */
-export async function get_company_list(category_uuid, by_slug = false) {
+export async function get_company_list_old(category_uuid, by_slug = false) {
     try {
 
         let company_list = []
 
-        if (category_uuid == '*')  {
+        if (category_uuid == '*' && by_slug == false)  {
             // SELECT * FROM gp_companies WHERE category
             company_list = await db.gp_companies.findMany({ orderBy: [ { name: 'asc' } ] })
         }
-        else {
+        else if (by_slug) {
             // get the category_uuid first when by_slug
-            if (by_slug) {
-                let ds = await db.gp_categories.findFirst({ where: { slug: category_uuid }})
-                category_uuid = ds.uuid
-            }
+            let ds = await db.gp_categories.findFirst({ where: { slug: category_uuid }})
+            category_uuid = ds.uuid
             // SELECT * FROM gp_companies WHERE category_uuid
             company_list = await db.gp_companies.findMany({ where: { category_uuid }, orderBy: [ { name: 'asc' } ] })
+        }
+        else {
+            company_list = [{'uuid':42, 'name': 'method not implemented'}]
         }
         //console.log(company_list)
 
@@ -307,27 +154,60 @@ export async function get_company_list(category_uuid, by_slug = false) {
 }
 
 
+
+
+/**
+ * 
+ * @param {string} action category|search|*|public|unpublic
+ * @param {string} slug   categorie_uuid, search_string
+ * @returns 
+ */
+export async function get_company_list_by_category(parent_uuid_slug = '') {
+    try {
+
+        let queryRaw       // string - if set - it will be priorized! instead of queryObj
+        let dataset  = []  // the dataset to return
+
+        dataset = await db.gp_companies.findMany({
+            where: {
+              is_public: true,
+              gp_categories: {
+                slug: parent_uuid_slug,
+              },
+            },
+            include: {
+              gp_categories: true,
+            },
+          });
+
+        console.log(dataset)
+        return get_response_ok(dataset)
+
+    } catch (error) {
+        return get_response_err('get_category_list', error)
+    }
+}
+
+
+
 export async function get_company_list_by_search(search_string) {
     try {
+        // use SQL - Prisma finds results which do not have search_string
         let company_list = []
+        let querySql = get_query('sql-', 'select_companies_by_search')
 
-        search_string = `%${search_string}%`
-        // SELECT * FROM gp_companies WHERE name LIKE *search_string*, infotext *search_string*, 
-        company_list = await db.gp_companies.findMany({ 
-            where: { 
-                OR: [
-                    { name: { contains: search_string } },
-                    { infotext: { contains: search_string } },
-                    { urlwww: { contains: search_string } },
-                    { tags: { contains: search_string } },
-                ]
-            }, 
-            orderBy: [ { name: 'asc' } ] 
-        })
+        if (!querySql) 
+            throw new Error('Query not found')
+
+        // replace with search_string
+        querySql     = querySql.replace(/SearchString/g, search_string)
+        //console.log(querySql)
+        company_list = await do_query(querySql, table.categories)
 
         return get_response_ok(company_list)
         
     } catch (error) {
+        console.log(error)
         return get_response_err('get_companies_list()', error)
     }
 } 
@@ -566,6 +446,55 @@ export async function admin_company_update (uuid, data) {
     }
 }
 
+
+export async function admin_get_company_list_by_public_show(show) {
+    try {
+        let company_list = []
+        
+        switch (show) {
+
+            case 'onlyPublic':    
+
+                        // SELECT * FROM gp_companies WHERE is_public = true
+                        company_list = await db.gp_companies.findMany({
+                            where: {
+                              is_public: true,
+                            },
+                            orderBy: {
+                              name: 'asc', // Order by name in ascending order
+                            }
+                        })
+
+                break;
+
+            case 'onlyNonPublic':
+
+                        // SELECT * FROM gp_companies WHERE is_public = false
+                        company_list = await db.gp_companies.findMany({
+                            where: {
+                              is_public: false,
+                            },
+                            orderBy: {
+                              name: 'asc', // Order by name in ascending order
+                            }
+                        }) 
+
+                break;
+            
+            default:
+                        // SELECT * FROM gp_companies
+                        company_list = await db.gp_companies.findMany({ orderBy: [ { name: 'asc' } ] })
+                break;
+        }
+
+        return get_response_ok(company_list)
+
+    } catch (error) {
+        console.log(error)
+        return get_response_err('get_companies_list()', error)
+    }
+}
+
 //#endregion
 
 //#region helpers+
@@ -619,6 +548,21 @@ function get_response_err(url, error, data, code = 500, message = '') {
     }
 }
 
+
+
+/** */
+async function do_query(query, model) {
+    try {
+        // do SQL or PRISMA
+        if (typeof query === "string") {
+            return await db.$queryRawUnsafe(query)
+        } else {
+            return await db[model].findMany(query);
+        }
+    } catch (error) {
+        return get_response_err('do_query()', error, query)
+    }
+}
 
 
 

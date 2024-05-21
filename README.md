@@ -43,3 +43,18 @@ export default defineConfig({
 });
 ```
 
+
+
+
+Svelte Snippets
+
++page.svelte
+import { page } from '$app/stores'
+const url_param_show = $page.url.searchParams.get('show')
+
+https://stackoverflow.com/questions/69922685/how-to-set-menu-item-to-active-in-sveltekit-app
+class:active={$page.url.pathname.includes('goldenpages/admin')}
+
+page is a store like object that among other things hold the current path, it will automatically be updated with the new path
+as a bonus:
+class:active is an easy shorthand, removing that ternary expression there.

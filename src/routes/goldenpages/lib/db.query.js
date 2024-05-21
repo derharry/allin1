@@ -6,8 +6,12 @@
  */
 export function get_query(what = 'sql[-|*] | objc[-|*]', name) {
     try {
-        return queries[name][what]
+        //console.log('get_query()', what, name)
+        let x = queries[name][what] 
+        //console.log(' - found: ', x)
+        return x
     } catch (error) {
+        console.log(`Query ${what} for ${name} not found`)
         //throw new Error(`Query ${what} for ${name} not found`)
         return false
     }
@@ -29,7 +33,8 @@ const queries = {
                             COUNT(c.uuid) AS company_count FROM gp_categories cat 
                         LEFT JOIN gp_companies c ON cat.uuid = c.category_uuid 
                         GROUP BY cat.uuid, cat.parent_uuid, cat.name, cat.slug 
-                        ORDER BY cat.parent_uuid, cat.name ASC;`,
+                        ORDER BY cat.parent_uuid, cat.name ASC;
+        `,
         "sql-": `SELECT  
                             cat.uuid, 
                             cat.parent_uuid, 
@@ -38,7 +43,8 @@ const queries = {
                         FROM gp_categories cat 
                         LEFT JOIN gp_companies c ON cat.uuid = c.category_uuid AND c.is_public = true 
                         GROUP BY cat.uuid, cat.parent_uuid, cat.name, cat.slug 
-                        ORDER BY cat.parent_uuid, cat.name ASC;`,
+                        ORDER BY cat.parent_uuid, cat.name ASC;
+        `,
 
         // PRISMA cannot do ORDER BY parent_uuid in this case - use SQL
         "prisma*":  {
@@ -67,5 +73,24 @@ const queries = {
                             name: 'asc',
                         },
                     }
+    },
+
+
+    "select_companies_by_search": {
+        "sql-": `SELECT * 
+                    FROM gp_companies 
+                    WHERE 
+                        is_public = true AND (
+                            name LIKE '%SearchString%' OR
+                            street LIKE '%SearchString%'  OR
+                            postalcode LIKE '%SearchString%'  OR
+                            city LIKE '%SearchString%' OR
+                            phone LIKE '%SearchString%'  OR
+                            mobile LIKE '%SearchString%'  OR
+                            email LIKE '%SearchString%'  OR
+                            tags LIKE '%SearchString%'  OR
+                            infotext LIKE '%SearchString%' 
+                        );
+        `
     }
 }

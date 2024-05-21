@@ -63,6 +63,11 @@ div {
     white-space: nowrap;
 }
 
+.wrap {
+    text-wrap: normal;
+    white-space: normal;
+}
+
 .gpHeaderLogoTD {
     width: 1px;
     text-align: center;
@@ -109,7 +114,9 @@ div {
 }
 
 
+
 /* Global styles */
+
 
 .button {
     padding: 7px 15px;
@@ -118,9 +125,20 @@ div {
     background-color: aliceblue;
     text-decoration: none;
 }
+
 .button:hover {
     background-color:lavender;
 }
+
+.button:active {
+    background-color:lightskyblue;
+}
+
+
+.buttonActive {
+    background-color: lightskyblue;
+}
+
 
 
 /* todo - replace error with errorMessage */

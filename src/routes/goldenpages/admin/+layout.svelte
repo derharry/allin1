@@ -2,6 +2,8 @@
     Root Public Layout of Golden Pages
 -->
 <script>
+    import { page } from '$app/stores';
+    //console.log($page.url)
 </script>
 <style>
     @import '../lib/style.css';
@@ -15,9 +17,9 @@
             <table>
                 <tr>
                     <td>
-                        <a href="/goldenpages/admin/">Dashboard</a>
-                        <a href="/goldenpages/admin/categories">Categories</a>
-                        <a href="/goldenpages/admin/companies">Companies</a>
+                        <a href="/goldenpages/admin/"                             class="button {$page.url.pathname == '/goldenpages/admin'            ? 'buttonActive' : ''}">Dashboard</a>
+                        <a href="/goldenpages/admin/categories"                   class="button {$page.url.pathname == '/goldenpages/admin/categories' ? 'buttonActive' : ''}">Categories</a>
+                        <a href="/goldenpages/admin/companies?show=onlyNonPublic" class="button {$page.url.pathname == '/goldenpages/admin/companies'  ? 'buttonActive' : ''}">Companies</a>
                         <!--
                         <a href="/goldenpages/register">Register</a>
                         <a href="/goldenpages/">Public</a>

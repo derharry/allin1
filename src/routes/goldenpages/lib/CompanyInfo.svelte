@@ -9,7 +9,7 @@
     export let category_list = {}
     export let mode = 'public' || 'admin'
     
-    $: { console.log('company_info.svelte', company_info ) }
+    //$: { console.log('company_info.svelte', company_info ) }
 
     // dynamic state for the address
     $: adres = get_adres()

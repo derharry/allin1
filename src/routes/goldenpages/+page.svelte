@@ -14,7 +14,7 @@
 
     //debugging
     //$: console.log(category_list)
-    $: console.log('stats', statistic)
+    //$: console.log('stats', statistic)
 
 
 </script>

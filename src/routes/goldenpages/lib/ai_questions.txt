@@ -7,13 +7,13 @@ companies belongs to a category.
 
 using MySQL
 
-table 'gp_categories'
+model 'gp_categories'
 uuid: primary key 
 parent_uuid: foreign key to uuid
 name: string name of category
 slug: string a slugified string 
 
-table 'gp_companies'
+model 'gp_companies'
 uuid: primary key
 name: string name of company
 category_uuid: foreign key to gp_categories.uuid
@@ -38,16 +38,16 @@ WHERE gp_categories.slug = 'your_category_slug_here' AND gp_companies.is_public 
 
 Prisma:
 const companiesInCategory = await prisma.company.findMany({
-  where: {
-    category: {
-      slug: 'your_category_slug_here'
+    where: {
+      is_public: true,
+      gp_categories: {
+        slug: parent_uuid_slug,
+      },
     },
-    public: true
+    include: {
+      gp_categories: true,
+    },
   }
-  orderBy: {
-    name: 'asc'
-  }
-});
 
 
 ##########################################

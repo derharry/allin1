@@ -171,7 +171,9 @@
     </tr>
     <tr>
         <th>Kategorie</th>
-        <td style="white-space: nowrap;">
+        <td class="wrap">
+            <i><small>Kies hier het best toepassende kategorie voor jouw befijf uit.</small></i>
+            <br>            
             <SelectField name="main_category"
                 datalist={list_categories}
                 bind:selected_id={company_info.main_category_uuid}
@@ -189,7 +191,11 @@
     </tr>
     <tr>
         <th></th>
-        <td><input type="text" name="category_wish" value="" placeholder="Geen kategorie gevonden? Maak een voorstel zoals naam / naam"></td>
+        <td class="wrap">
+            <i><small>Zit er geen bij, selecteer dan geen gevonden en maak een voorstel die wij kunnen opnemen.</small></i>
+            <br>
+            <input type="text" name="category_wish" value="" placeholder="Geen kategorie gevonden? Maak een voorstel zoals naam / naam">
+        </td>
     </tr>
     <tr>
         <td>&nbsp;</td>

@@ -5,21 +5,23 @@ admin/companies
 
 */
 
-import { admin_company_delete, admin_company_toggle_public, get_category_list, get_company_list, register_company } from "../../lib/db.controller"
+import { admin_company_delete, admin_company_toggle_public, get_category_list, admin_get_company_list_by_public_show, register_company } from "../../lib/db.controller"
 
 
 
-export async function load({ params }) {
+export async function load({ params, url }) {
     try {
+
+        let show = url.searchParams.get('show')
+
+        let res_companies = await admin_get_company_list_by_public_show(show);
+        if (!res_companies.ok)
+            throw new Error('Problem loading list of companies')
 
         // return the category_list
         let res_cats = await get_category_list()
         if (!res_cats.ok) 
             throw new Error('Problem loading list of categories')
-
-        let res_companies = await get_company_list('*')
-        if (!res_companies.ok)
-            throw new Error('Problem loading list of companies')
     
         return {
             category_list: res_cats.data,

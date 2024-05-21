@@ -32,6 +32,9 @@
 
 
 </script>
+<style>
+    @import '../lib/style.css';
+</style>
 
 
 <table>
@@ -63,7 +66,7 @@
 
                 <!-- show error messages of any form -->
                 {#if form && !form?.ok}
-                    <div class="error">
+                    <div class="errorMessage">
                         {form?.message}
                     </div>
                 {/if}

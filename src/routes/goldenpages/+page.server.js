@@ -23,6 +23,7 @@ export async function load({ params }) {
         if (!res_cats.ok) 
             throw new Error('Problem loading list of categories')
 
+        // todo change get_statistics to get_server_response() in db.controller.js
         //if (!res_stats.ok)
         //    throw new Error('Problem loading list of statistics')
 
