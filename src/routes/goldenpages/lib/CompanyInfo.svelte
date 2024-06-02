@@ -60,7 +60,7 @@
 
 </script>
 <style>
-    @import './style.css';
+    /* @import './style.css'; */
 </style>
 
 
@@ -99,13 +99,26 @@
                 </tr>
                 <tr>
                     <td class="companyInfoBoxStreet">
-                        {#if adres != ''}
-                            <i class='fa fa-street-view'></i>&nbsp; {adres}
-                            <br>
-                        {/if}
-                        {#if company_info?.urlgoogle}
-                            <i class='fa fa-map-pin'></i>&nbsp; <a href="{company_info.urlgoogle}"> Google Maps</a>
-                        {/if}
+                        <table class="companyInfoBoxStreet">
+                            {#if adres != ''}
+                                <tr>
+                                    <td class="center" style="width:1px"><i class='fa fa-street-view'></i></td>
+                                    <td class="companyInfoBoxStreet">{adres} </td>
+                                </tr>
+                            {/if}
+                            
+                            {#if company_info?.urlgoogle == ''  &&  adres != '' }
+                                <tr>
+                                    <td class="center"><i class='fa fa-map-pin'></i></td>
+                                    <td class="companyInfoBoxStreet"><a href="https://www.google.com/maps/place/{adres}" target="_blank">Google Maps</a></td>
+                                </tr>
+                            {:else if company_info?.urlgoogle != '' }
+                                <tr>
+                                    <td class="center"><i class='fa fa-map-pin'></i></td>
+                                    <td class="companyInfoBoxStreet"><a href="{company_info.urlgoogle}" target="_blank">Google Maps</a></td>
+                                </tr>
+                            {/if}
+                        </table>
                     </td>
                 </tr>
                 <tr>

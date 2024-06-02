@@ -1,5 +1,7 @@
 <script>
 
+    import { onMount } from "svelte";
+
     /** 
      * returns stats
      * @type {import('./$types').PageData} 
@@ -11,12 +13,20 @@
 
     //debug
     //$: console.log(data, stats)
+    onMount( () => {
+        doit();
+    })
+
+    async function doit() {
+        
+    }
+
 
 </script>
 
 
 
-<table class="box">
+<table class="box_category">
     <tr>
         <th class="title" colspan="2">Companies</th>
     </tr>
@@ -29,7 +39,7 @@
         <td>{stats.companies_public || '-'}</td>
     </tr>
     <tr>
-        <th><a href="">Hidden:</a></th>
+        <th><a href="/goldenpages/admin/companies?show=onlyNonPublic">Hidden:</a></th>
         <td>{stats.companies_unpublic || '-'}</td>
     </tr>
 </table>

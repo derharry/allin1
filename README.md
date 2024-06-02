@@ -58,3 +58,33 @@ class:active={$page.url.pathname.includes('goldenpages/admin')}
 page is a store like object that among other things hold the current path, it will automatically be updated with the new path
 as a bonus:
 class:active is an easy shorthand, removing that ternary expression there.
+
+
+# Use CSS files as default via <link ref="stylesheet" href=""> without the need to do @import '.css' 
+# Use Font-Libs via CDN without the need to use an extra JS-Lib
+
+## a) Your own css or any other
+
+in app.html/<head> or with +layout.svelte/<svelte:head>
+```
+<link rel="stylesheet" href="path_to/your_style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+```
+
+# b) path_to/your_style.css for bun run dev 
+add the absolute path from /src to the file
+```
+<link rel="stylesheet" href="/src/lib/your_style.css">
+<link rel="stylesheet" href="/src/routes/subpages/lib/your_style.css">
+``` 
+
+## c) disable all CSS @imports in * pages|components.svelte
+if not doing so this import seems to like overwrite previous imports from step a)
+thus the @import like from CDN is gone. 
+```
+/* @import 'path_to/your_style.css'; */
+```
+Use @import only when you need it in that specific case.
+
+## problem like Font-Awesome Icons are not loading
+look at step c)

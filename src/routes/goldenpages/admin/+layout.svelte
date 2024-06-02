@@ -6,9 +6,8 @@
     //console.log($page.url)
 </script>
 <style>
-    @import '../lib/style.css';
+    /* @import '../lib/style.css'; */
 </style>
-
 
 
 <table>

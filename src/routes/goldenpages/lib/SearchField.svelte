@@ -8,7 +8,7 @@
 
 
 <div class="inner-addon left-addon">
-    <i class='icon fa fa-search'></i>
+    <i class="icon fa-solid fa fa-search"></i>
     <input type="text" class="form-control" 
         name={name}
         placeholder={placeholder}

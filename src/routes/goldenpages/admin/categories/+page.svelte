@@ -109,7 +109,7 @@
 </script>
 <style>
 
-    @import '../../lib/style.css';
+    /* @import '../../lib/style.css'; */
 
     ul {
         list-style: none;
@@ -135,8 +135,6 @@
     }
 
 </style>
-
-
     
 
     <!--
@@ -145,15 +143,15 @@
     -->
     <!-- hidden form to update existing categories -->
     <form bind:this={frm_update_category} method="POST" action="?/update_category" style="display:none">
-        <input type="text" name="name" value="">
-        <input type="text" name="uuid" value="">
-        <input type="text" name="parent_uuid" value="">
-        <button type="submit">+</button>
+        <input type="hidden" name="name" value="">
+        <input type="hidden" name="uuid" value="">
+        <input type="hidden" name="parent_uuid" value="">
+        <button type="submit"></button>
     </form>
     <!-- hidden form to delete any category by its uuid -->
     <form bind:this={frm_delete_category} method="POST" action="?/delete_category" style="display:none">
-        <input type="text" name="uuid" value="">
-        <button type="submit">+</button>
+        <input type="hidden" name="uuid" value="">
+        <button type="submit"></button>
     </form>
 
 
@@ -166,13 +164,17 @@
     <div class="box">
         <!-- form to add main categories -->
         <div class="nowrap">
-            <form action="?/insert_category" method="post" >
+            <form action="?/insert_category" method="post">
                 <input type="hidden" name="formid" value="add_main_category">
-                <input type="text" name="name" placeholder="Add new main category"
-                    style="box-sizing: border-box;  max-width:100%"
-                    value="{form?.ok == false && form?.formid == 'add_main_category' && form?.data.name || ''}" 
-                />
-                <button type="submit" style="position:relative; margin-left: -30px"><i class="fa fa-plus"></i></button>
+                <table class="reset" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="nowrap reset"><input type="text" name="name" placeholder="Add new main category"
+                            style="box-sizing: border-box;  max-width:100%" autocomplete="on"
+                            value="{form?.ok == false && form?.formid == 'add_main_category' && form?.data.name || ''}"
+                        /></td>
+                        <td width="1"><button type="submit"><i class="fa-solid fa fa-plus"></i></button></td>
+                    </tr>
+                </table>
             </form>
         </div>
     </div>
@@ -213,12 +215,15 @@
 
                 <div class="nowrap">
                     <form action="?/insert_category" method="post" id="insert_subcategory">
-                        <input type="hidden" name="formid" value="insert_bcategory">
-                        <input type="hidden" name="parent_uuid" value="{uuid}">
-                        <input type="text" name="name" value="{form?.name || ''}"
-                            style="box-sizing: border-box; max-width:100%"
-                        >
-                        <button type="submit" style="position:relative; margin-left: -30px"><i class="fa fa-plus"></i></button>
+                        <input type="hidden" name="formid" value="insert_bcategory"><input type="hidden" name="parent_uuid" value="{uuid}">
+                        <table class="reset" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td class="nowrap reset"><input type="text" name="name" value="{form?.name || ''}"
+                                    style="box-sizing: border-box; max-width:100%"  autocomplete="on"
+                                ></td>
+                                <td width="1"><button type="submit"><i class="fa-solid fa fa-plus"></i></button></td>
+                            </tr>
+                        </table>
                     </form>
                 </div>
                 <br>
@@ -236,13 +241,8 @@
                                 class="button readMode"
                                 data-uuid="{uuid}"
                                 data-parent-uuid="{uuid}"
-                            >
-                                <button>
-                                    {attrs.company_count}
-                                </button>
-                                &nbsp;
-                                {attrs.name}
-                            </span>
+                            >{attrs.name}
+                            </span> ({attrs.company_count})
                         </li>
                     {/each}     
                 </ul>            

@@ -1,7 +1,5 @@
 <!--
-
-
-
+ main public start page
 -->
 <script>
 
@@ -20,10 +18,9 @@
 </script>
 <style>
 
-    @import './lib/style.css';
+    /*@import './lib/style.css';*/
 
 </style>
-
 
 
 <h1>
@@ -49,7 +46,9 @@
                 <!-- todo <p><img src="../lib/images/{category}.jpg" alt="{category}"></p>-->
                 {#each Object.entries(main_cat_attrs.subs) as [ uuid, attrs ] }
                     <div class="item">
-                        <a href="/goldenpages/{attrs.slug}"> {attrs.name} </a> ({attrs.company_count})
+                        <a href="/goldenpages/{attrs.slug}"  
+                            class="{attrs.company_count > 0 ? '' : 'disabled' }"
+                        > {attrs.name} </a> ({attrs.company_count})
                     </div>
                 {/each}
 

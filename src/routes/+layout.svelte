@@ -19,6 +19,9 @@
     ]
 
 </script>
+<svelte:head>
+    <link rel="stylesheet" href="/src/routes/goldenpages/lib/style.css">
+</svelte:head>
 
 <main>
 

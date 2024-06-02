@@ -68,6 +68,26 @@ div {
     white-space: normal;
 }
 
+.center {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.disabled {
+    pointer-events: none; 
+    text-decoration:none;
+}
+
+.reset {
+    margin:0px;
+    padding:0px;
+}
+
+
+
 .gpHeaderLogoTD {
     width: 1px;
     text-align: center;
@@ -325,6 +345,16 @@ div {
 }
 
 
+.input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
 
+.input-container input {
+    flex-grow: 1;
+    margin-right: 10px;
+}
 
 

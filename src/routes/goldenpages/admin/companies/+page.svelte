@@ -104,7 +104,7 @@
 
 </script>
 <style>
-    @import '../../lib/style.css';
+    /* @import '../../lib/style.css'; */
 </style>
 
 
@@ -119,7 +119,7 @@
             <SearchField name="search" bind:value={SearchFieldValue} placeholder="Wat zoek je?" />
         </td>
         <td class="nowrap" style="padding:15px">
-                <input type="checkbox" bind:checked={SearchFieldsExtended} /><br>URL
+                <input type="checkbox" bind:checked={SearchFieldsExtended} name="search_extended" /><br>URL
         </td>
     </tr>
 </table>
