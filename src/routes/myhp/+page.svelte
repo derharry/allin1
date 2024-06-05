@@ -5,6 +5,65 @@
 
 </script>
 
+
+What am I doing?
+<ul>
+    <li>IT-Support
+        <ul>
+            <li>General support for Windows, MacOS, IT-Infrastruture</li>
+            <li>General support on distance (remote)</li>
+            <li>Linux Server</li>
+        </ul>
+    </li>
+    <li>Development & Automations
+        <ul>
+            <li>Website & Web-Application</li>
+            <li>Scripting Perl, Python</li>
+            <li>Mail-Template optimization and development</li>
+        </ul>
+    </li>
+    <li>IT-Infrastruture Monitoring
+        <ul>
+            <li>Broadcom (CA) Spectrum & Report Manager</li>
+            <li>Nagios</li>
+        </ul>
+    </li>
+</ul>
+
+Skillset
+<ul>
+    <li>Website & App-Application: 
+        <ul>
+            <li>Svelte + SvelteKit (SSR, SPA/CSR)</li>
+            <li>PHP</li>
+        </ul>
+    </li>
+    <li>Development & Automations
+        <ul>
+            <li>Scripting Perl, Python</li>
+            
+        </ul>
+    </li>
+    <li>Mail-Template optimization and development
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            
+        </ul>
+    </li>
+    <li>IT-Infrastruture Monitoring
+        <ul>
+            <li>Broadcom (CA) Spectrum & Report Manager</li>
+            <li>Nagios</li>
+        </ul>
+    </li>
+</ul>
+
+
+
+
+<hr>
 <h1>What we do - our DNA</h1>
 <ul>
     <li>Custom App Development
@@ -23,14 +82,6 @@
 <ul>
     <li>explain your issue, we take care of the rest</li>
 </ul>
-
-* Mail-Template optimization and development
-* Script development
-
-
-* Broadcom Spectrum
-* Nagios
-* 
 
 
 <h3>   ..</h3> 

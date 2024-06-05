@@ -6,6 +6,7 @@ export let nav_menu = [
     { id:2,  name: 'Projects', path: '/myhp/projects', icon: '' },
     { id:3,  name: 'Support', path: '/myhp/support', icon: '' },
     { id:4,  name: 'Blog', path: '/myhp/blog', icon: '' },
+    { id:5,  name: 'About', path: '/myhp/about', icon: '' },
 ]
 
 
