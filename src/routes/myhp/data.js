@@ -8,5 +8,3 @@ export let nav_menu = [
     { id:4,  name: 'Blog', path: '/myhp/blog', icon: '' },
     { id:5,  name: 'About', path: '/myhp/about', icon: '' },
 ]
-
-
